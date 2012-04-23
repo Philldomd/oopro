@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SceneSystem">
+      <UniqueIdentifier>{2650e3d9-37ba-4c7f-9a0d-e669ecb893c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneSystem\System">
+      <UniqueIdentifier>{bc1a02e6-39ab-4fc5-8141-9165453725e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneSystem\Scenes">
+      <UniqueIdentifier>{e6204ef4-b03a-4b3b-8dc6-d040d3f54053}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -27,6 +36,9 @@
     <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>SceneSystem\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -37,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>SceneSystem\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
