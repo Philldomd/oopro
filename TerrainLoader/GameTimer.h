@@ -1,3 +1,7 @@
+//=======================================================================================
+// GameTimer.h by Frank Luna (C) 2008 All Rights Reserved.
+//=======================================================================================
+
 #ifndef GAMETIMER_H
 #define GAMETIMER_H
 
@@ -28,4 +32,4 @@ private:
 	bool mStopped;
 };
 
-#endif
+#endif // GAMETIMER_H

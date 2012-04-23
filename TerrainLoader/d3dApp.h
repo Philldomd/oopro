@@ -1,7 +1,10 @@
-
+//=======================================================================================
+// d3dApp.h by Frank Luna (C) 2008 All Rights Reserved.
+//
+// Simple Direct3D demo application class.  
 // Make sure you link: d3d10.lib d3dx10d.lib dxerr.lib dxguid.lib.
 // Link d3dx10.lib for release mode builds instead of d3dx10d.lib.
-
+//=======================================================================================
 
 
 #ifndef D3DAPP_H
@@ -22,6 +25,8 @@ public:
 	HINSTANCE getAppInst();
 	HWND      getMainWnd();
 
+	void resetOMTargetsAndViewport();
+
 	int run();
 
 	// Framework methods.  Derived client class overrides these methods to 
@@ -36,7 +41,7 @@ public:
 protected:
 	void initMainWindow();
 	void initDirect3D();
-
+	
 protected:
 
 	HINSTANCE mhAppInst;
@@ -49,7 +54,7 @@ protected:
 	GameTimer mTimer;
 
 	std::wstring mFrameStats;
-
+ 
 	ID3D10Device*    md3dDevice;
 	IDXGISwapChain*  mSwapChain;
 	ID3D10Texture2D* mDepthStencilBuffer;

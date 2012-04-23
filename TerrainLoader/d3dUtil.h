@@ -1,3 +1,7 @@
+//=======================================================================================
+// d3dUtil.h by Frank Luna (C) 2008 All Rights Reserved.
+//=======================================================================================
+
 #ifndef D3DUTIL_H
 #define D3DUTIL_H
 
@@ -26,7 +30,15 @@
 #include <d3dx10.h>
 #include <dxerr.h>
 #include <cassert>
+#include <vector>
+#include "stdafx.h"
+#include <sstream>
 
+
+
+//*****************************************************************************
+// Simple d3d error checker for book demos.
+//*****************************************************************************
 
 #if defined(DEBUG) | defined(_DEBUG)
 	#ifndef HR
@@ -53,10 +65,18 @@
 
 #define ReleaseCOM(x) { if(x){ x->Release();x = 0; } }
 
-
 //*****************************************************************************
 // Convenience functions.
 //*****************************************************************************
+
+void BuildGeoSphere(
+	UINT numSubdivisions,
+	float radius,
+	std::vector<D3DXVECTOR3>& vertices, 
+	std::vector<DWORD>& indices);
+
+// Returns the polar angle of the point (x,y) in [0, 2*PI).
+float AngleFromXY(float x, float y); 
 
 // Converts ARGB 32-bit color format to ABGR 32-bit color format.
 D3DX10INLINE UINT ARGB2ABGR(UINT argb)
@@ -84,7 +104,7 @@ D3DX10INLINE float RandF(float a, float b)
 // Returns random vector on the unit sphere.
 D3DX10INLINE D3DXVECTOR3 RandUnitVec3()
 {
-	D3DXVECTOR3 v(RandF(), RandF(), RandF());
+	D3DXVECTOR3 v(RandF(-1.0f, 1.0f), RandF(-1.0f, 1.0f), RandF(-1.0f, 1.0f));
 	D3DXVec3Normalize(&v, &v);
 	return v;
 }
@@ -119,7 +139,7 @@ D3DX10INLINE T Clamp(const T& x, const T& low, const T& high)
 //*****************************************************************************
 
 const float INFINITY = FLT_MAX;
-const float PI       = 3.14159265358979323f;
+//const float PI       = 3.14159265358979323f;
 const float MATH_EPS = 0.0001f;
 
 const D3DXCOLOR WHITE(1.0f, 1.0f, 1.0f, 1.0f);

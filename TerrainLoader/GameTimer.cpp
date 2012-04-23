@@ -1,9 +1,13 @@
+//=======================================================================================
+// GameTimer.cpp by Frank Luna (C) 2008 All Rights Reserved.
+//=======================================================================================
+
 #include "GameTimer.h"
 #include <windows.h>
 
 GameTimer::GameTimer()
-	: mSecondsPerCount(0.0), mDeltaTime(-1.0), mBaseTime(0), 
-	mPausedTime(0), mPrevTime(0), mCurrTime(0), mStopped(false)
+: mSecondsPerCount(0.0), mDeltaTime(-1.0), mBaseTime(0), 
+  mPausedTime(0), mPrevTime(0), mCurrTime(0), mStopped(false)
 {
 	__int64 countsPerSec;
 	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
@@ -33,7 +37,7 @@ float GameTimer::getGameTime()const
 	//                     |<-------d------->|
 	// ----*---------------*-----------------*------------*------> time
 	//  mBaseTime       mStopTime        startTime     mCurrTime
-
+	
 	else
 	{
 		return (float)(((mCurrTime-mPausedTime)-mBaseTime)*mSecondsPerCount);
