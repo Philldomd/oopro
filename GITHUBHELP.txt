@@ -1,0 +1,50 @@
+	------------------------FÖR PORTABLA ANVÄNDARE!!!-------
+
+	i	Starta git.bash.bat på din sticka
+
+	ii	skriv:$ ls 
+		du ska nu få en utskrift med filnamn så som git
+		bash.vbs releaseNotes.rtf etc!!
+
+	iii	skriv:$ mkdir Projekt	eller något du vill 
+		kalla den.
+
+	iv	efter det ska vi in i den mappen. skriv då cd och namnet på mappen
+		exempel:$ cd Projekt
+
+	v	skriv:$ git clone git@github.com:Philldomd/oopro.git
+		skriv in lösen sedan vänta en stund
+
+	vi	efter den tankat ner master branch ska du in i den mappen. 
+		skriv:$ cd oopro
+		det ska nu stå /Project/oopro  <master> som rubrik
+
+	vii	du vill säkert ha ner dina egna filer så skriv då in följande.
+		skriv:$ git checkout NAMN 	där namn ska byttas till erat namn utan
+		caps.
+		det ska nu stå /Project/oopro  <NAMN> som rubrik
+
+	viii	skriv:$ git pull origin NAMN för att få ner allt. den ska nu skriva up to
+		date.
+		om origin inte finns se punkt ix!
+
+	ix	skriv:$ git remote add origin git@github.com:Philldomd/oopro.git
+		testa igen!
+
+	------------------------Ladda Upp------------------------
+	
+	i	se till att ditt namn står i rubriken, INTE MASTER!!!!!
+
+	ii	skriv:$ git add TestMap
+		testmap ska ersättas av erat mapp namn i oopro mappen.
+	
+	iii	skriv:$ git commit -am 'kommentera här'
+		om ni har raderat filer lokalt på datorn kommer de försvinna på git
+		SÅ OM NI SKA LADDA UPP EN ENSAM FIL KÖR NÄSTA KODRAD ANNARS 
+		FÖRSVINNER ALLA FILER PÅ GIT
+
+	iv	skriv:$ git commit -m 'kommentera här'
+		det måste skrivas en kommentar så vet ni det. denna raden kod kommer inte 
+		ta bort filer ni inte vill ha på git!
+
+	
