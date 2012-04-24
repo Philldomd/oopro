@@ -3,6 +3,7 @@
 #include <string>
 #include "d3dApp.h"
 #include "Factory.h"
+#include "Buffer.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ private:
 	UINT			m_terrainHeight, m_terrainWidth, m_terrainY;
 	D3DXVECTOR2		m_terrainScale;
 	vector<Color>	m_fileColorData;
+	vector<D3DXVECTOR2> m_corners;
 
 	//Factories
 	WallFactory*	m_wallFactory;
@@ -52,9 +54,9 @@ private:
 	EnemyFactory*	m_enemyFactory;
 	CandyFactory*	m_candyFactory;
 	PowerUpFactory* m_powerUpFactory;
-	CherryFactory*	m_cherryFactory; //Bort med CherryFactory En lista med positioner istället
+	CherryFactory*	m_cherryFactory; //Bort med CherryFactory En lista med positioner istället kanske
 
-	//DEBUG
+	//DEBUG Skall tas bort!!
 	UINT nrCandy, nrCherry, nrPowerUp, nrEnemies, nrPlayer, nrWalls;
 };
 

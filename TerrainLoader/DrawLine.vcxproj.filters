@@ -22,6 +22,9 @@
     <Filter Include="Terrain">
       <UniqueIdentifier>{6a3e3efd-4052-4bf8-8321-f0a99256a584}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OBJLOADER">
+      <UniqueIdentifier>{ff168c3a-0559-44af-ba42-784d4b8bd6fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="PowerUp.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJLoader.cpp">
+      <Filter>OBJLOADER</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>OBJLOADER</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="Pacman.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJLoader.h">
+      <Filter>OBJLOADER</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>OBJLOADER</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

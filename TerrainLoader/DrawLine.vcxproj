@@ -22,7 +22,9 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Init Direct3D.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -42,7 +44,9 @@
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Shader.h" />

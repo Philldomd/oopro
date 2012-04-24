@@ -71,11 +71,11 @@ void Main::updateInput(float pDt)
 
 	if(GetAsyncKeyState('R') & 0x8000)
 	{
-		mCamera->setY( pDt * 10 );
+		mCamera->setY( pDt * 100 );
 	}
 	else if(GetAsyncKeyState('F') & 0x8000)
 	{
-		mCamera->setY( -pDt * 10 );
+		mCamera->setY( -pDt * 100 );
 	}
 	else{}
 
@@ -105,7 +105,7 @@ void Main::render(wstring pFrameStats)
 	proj = mCamera->getProjectionMatrix();
 
 	mTerrain->prepToRender(view * proj, cameraPos);
-	mTerrain->render();
+	mTerrain->render(view , proj);
 }
 
 void Main::handleInput( UINT message, WPARAM wParam, LPARAM lParam, float dt )
@@ -117,15 +117,6 @@ void Main::handleInput( UINT message, WPARAM wParam, LPARAM lParam, float dt )
 
 	switch (message) 
 	{
-	case WM_KEYDOWN:
-
-		switch(wParam)
-		{
-		
-		default:
-			break;
-		}
-		break;
 	case WM_INPUT:
 		dwSize = 40;
 		static BYTE lpb[40];

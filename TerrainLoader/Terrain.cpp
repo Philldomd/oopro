@@ -8,6 +8,11 @@ Terrain::Terrain(ID3D10Device* pDevice, int pHeight, int pWidth)
 	mWidth = pWidth;
 	//DEBUG 
 	
+	objLoader = new OBJLoader();
+	m_mesh = new Mesh();
+	objLoader->LoadOBJ("Box.obj", m_mesh);
+
+	m_mesh->Initialize(mDevice);
 
 	mLoader = new WorldLoader(mDevice);
 	mLoader->loadFromFile("MapTest.png", mWidth,mHeight, 10, m_objects);
@@ -82,28 +87,49 @@ HRESULT Terrain::init()
 
 void Terrain::prepToRender(D3DXMATRIX& pWorld, D3DXVECTOR3 pEyePos)//, D3DXMATRIX& pView, D3DXMATRIX& pProjection)
 {
-	// Set Input Assembler params
-	mDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
-	fx::TerrainFX->SetMatrix("gWVP", pWorld);
+	//// Set Input Assembler params
+	//mDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+	//fx::TerrainFX->SetMatrix("gWVP", pWorld);
 	fx::TerrainFX->SetFloat3("gEyePosW", pEyePos);
 
-	//set Vertex buffer
-	mVertexBuffer->Apply(0);
-	//set Index buffer
-	//mIndexBuffer->Apply(0);
+	////set Vertex buffer
+	//mVertexBuffer->Apply(0);
+	////set Index buffer
+	////mIndexBuffer->Apply(0);
 }
 
-void Terrain::render()
+void Terrain::render(D3DXMATRIX& pView, D3DXMATRIX& pProjection)
 {
-	D3D10_TECHNIQUE_DESC techDesc;
+	//D3D10_TECHNIQUE_DESC techDesc;
 
-	fx::TerrainFX->GetTechnique()->GetDesc( &techDesc );
+	//fx::TerrainFX->GetTechnique()->GetDesc( &techDesc );
 
-	for( UINT p = 0; p < techDesc.Passes; p++ )
+	//for( UINT p = 0; p < techDesc.Passes; p++ )
+	//{
+	//	fx::TerrainFX->Apply(p);
+	//	//mDevice->DrawIndexed( mNrOfIndices, 0, 0);
+	//	mDevice->Draw(mNrOfVertices, 0);
+	//}
+	mDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	for(UINT i = 0; i < m_objects.size(); i++)
 	{
-		fx::TerrainFX->Apply(p);
-		//mDevice->DrawIndexed( mNrOfIndices, 0, 0);
-		mDevice->Draw(mNrOfVertices, 0);
+		if( m_objects.at(i) != NULL)
+		{
+			m_mesh->SetBuffer();
+			fx::TerrainFX->SetMatrix("gWVP", m_objects.at(i)->getWorldMatrix() * pView * pProjection);
+			//fx::TerrainFX->SetMatrix("gWorld", m_objects.at(i)->getNormalMatrix());
+		
+			D3D10_TECHNIQUE_DESC techDesc;
+
+			fx::TerrainFX->GetTechnique()->GetDesc( &techDesc );
+
+			for( UINT p = 0; p < techDesc.Passes; p++ )
+			{
+				fx::TerrainFX->Apply(p);
+				//mDevice->DrawIndexed( mNrOfIndices, 0, 0);
+				mDevice->Draw(m_mesh->getNrVertices(), 0);
+			}
+		}
 	}
 }
 

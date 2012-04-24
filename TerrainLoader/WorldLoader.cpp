@@ -167,16 +167,16 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<O
 
 void WorldLoader::findCorners()
 {
-	//Load all corners to a vector
-	vector<D3DXVECTOR2> corners;
+	//Load all m_corners to a vector
+	
 
 	for(UINT i = 0; i < m_height; i++)
 	{
 		for(UINT j = 0; j < m_width; j++)
 		{
-			//Check for Corners with alpha value 127.5 as int 128 50%
+			//Check for m_corners with alpha value 127.5 as int 128 50%
 			if(isCorner(j, i, Color(0,0,0,128)))
-				corners.push_back(D3DXVECTOR2((float)j,(float)i));
+				m_corners.push_back(D3DXVECTOR2((float)j,(float)i));
 		}
 	}
 }

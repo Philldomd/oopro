@@ -16,8 +16,8 @@ Camera::Camera(D3DXVECTOR3 initPos)
 	D3DXMatrixIdentity(&mView);
 	D3DXMatrixIdentity(&mProjection);
 
-	MAXpitch	= PI/2;
-	MINpitch	= -PI/2;
+	MAXpitch	= PI/2 - 0.2f;
+	MINpitch	= -PI/2  + 0.2f;
 
 	mCameraSpeed = 200.0f;
 	mFree = false;

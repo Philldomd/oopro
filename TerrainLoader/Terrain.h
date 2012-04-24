@@ -5,6 +5,8 @@
 #include "Buffer.h"
 #include "Effects.h"
 #include "WorldLoader.h"
+#include "OBJLoader.h"
+#include "Mesh.h"
 //#include "HeightMap.h"
 //#include "DrawTex2D.h"
 //#include "GameTimer.h" //DEBUG
@@ -17,7 +19,7 @@ public:
 	~Terrain();
 	HRESULT init();
 	void prepToRender(D3DXMATRIX& pWorld, D3DXVECTOR3 pEyePos);
-	void render();
+	void render(D3DXMATRIX& pView, D3DXMATRIX& pProjection);
 
 private:
 	struct Vertex
@@ -44,5 +46,7 @@ private:
 	int mWidth;
 	vector<Object*> m_objects;
 	WorldLoader* mLoader;
+	OBJLoader* objLoader;
+	Mesh* m_mesh;
 };
 #endif

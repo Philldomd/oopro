@@ -53,14 +53,15 @@ VS_OUT VS(VS_IN vIn)
 
 float4 PS(VS_OUT pIn) : SV_Target
 {
-	return float4(1,1,1,1); 
+	return float4(1,1,1,1) * saturate(max(dot(pIn.normalW, normalize(float4(0.5,0.5,0.5,0))), 0.0f) + 0.25f);
+	//return float4(pIn.stretchedUV.x,pIn.stretchedUV.y,0,1); 
 }
 
 RasterizerState Wireframe
 {
         FillMode = Solid;
         CullMode = NONE;
-        //FrontCounterClockwise = true;
+        FrontCounterClockwise = false;
 };
 
 technique10 Color

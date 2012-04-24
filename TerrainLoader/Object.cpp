@@ -5,6 +5,9 @@ Object::Object(ID3D10Device* p_device, D3DXVECTOR3 p_position)
 	m_device = p_device;
 	m_position = p_position;
 
+	//m_model = p_modelManager.getbyname("");
+	//m_shader = p_shaderManager.getbyname("");
+
 	D3DXMatrixIdentity(&m_rotation);
 	D3DXMatrixIdentity(&m_scale);
 	D3DXMatrixTranslation(&m_translate, m_position.x, m_position.y, m_position.z);
@@ -13,17 +16,20 @@ Object::Object(ID3D10Device* p_device, D3DXVECTOR3 p_position)
 void Object::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 {
 	D3DXMATRIX worldViewProj = getWorldMatrix() * p_view * p_projection;
-
-	/*fx::SpiderFX->SetMatrix("gWVP", worldViewProj);
-	fx::SpiderFX->SetMatrix("gWorld", getWorldMatrix());
-	fx::SpiderFX->SetMatrix("gNormalM", getNormalMatrix());
+	/*
+	m_model->setVertexBuffer()
+	m_model->setIndexBuffer()
+	
+	m_shader->SetMatrix("gWVP", worldViewProj);
+	m_shader->SetMatrix("gWorld", getWorldMatrix());
+	m_shader->SetMatrix("gNormalM", getNormalMatrix());
 	*/
 
 	/*D3D10_TECHNIQUE_DESC techDesc;
-	fx::TowerFX->GetTechnique()->GetDesc( &techDesc );
+	m_shader->GetTechnique()->GetDesc( &techDesc );
 	for( UINT p = 0; p < techDesc.Passes; p++ )
 	{
-		fx::TowerFX->Apply(p);
+		m_shader->Apply(p);
 		mDevice->DrawIndexed( mModel->size,0, 0);
 	}*/
 }
