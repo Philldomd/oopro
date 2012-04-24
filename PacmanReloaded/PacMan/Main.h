@@ -5,6 +5,8 @@
 
 #include "d3dApp.h"
 #include <vector>
+#include "SceneManager.h"
+
 using namespace std;
 
 class Main : public D3DApp
@@ -22,6 +24,7 @@ public:
 
 private:
 	 
+	SceneManager * g_sceneManager;
 
 };
 

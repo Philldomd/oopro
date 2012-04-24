@@ -22,6 +22,9 @@
     <Filter Include="SceneSystem\Scenes">
       <UniqueIdentifier>{e6204ef4-b03a-4b3b-8dc6-d040d3f54053}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HUD&amp;Sprites">
+      <UniqueIdentifier>{ffe9b2dc-0ccd-46bb-88d0-2c0565d72947}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -39,6 +42,12 @@
     <ClInclude Include="SceneManager.h">
       <Filter>SceneSystem\System</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>SceneSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -52,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>SceneSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>SceneSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>SceneSystem\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
