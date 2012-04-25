@@ -116,3 +116,8 @@ int Mesh::getNrVertices()
 //{
 //	m_vertexArray.reserve(p_size);
 //}
+
+Buffer* Mesh::GetBufferPointer()
+{
+	return m_vertexBuffer;
+}

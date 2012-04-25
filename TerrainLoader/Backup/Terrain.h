@@ -22,10 +22,6 @@ public:
 	void render(D3DXMATRIX& pView, D3DXMATRIX& pProjection);
 
 private:
-	struct INSTANCEDATA
-	{
-		D3DXMATRIX mMatWorld;
-	};
 	struct Vertex
 	{
 		D3DXVECTOR3 position;
@@ -52,7 +48,5 @@ private:
 	WorldLoader* mLoader;
 	OBJLoader* objLoader;
 	Mesh* m_mesh;
-	Buffer* mInstanceData;
-	int		mWallIndex;
 };
 #endif

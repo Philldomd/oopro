@@ -17,6 +17,7 @@ public:
 								vector<Object*>& p_objects);
 
 	D3DXVECTOR2*	getTerrainScale();	
+	int				getNrWalls();
 private:
 	struct Color
 	{
@@ -46,7 +47,9 @@ private:
 	UINT			m_terrainHeight, m_terrainWidth, m_terrainY;
 	D3DXVECTOR2		m_terrainScale;
 	vector<Color>	m_fileColorData;
-	vector<D3DXVECTOR2> m_corners;
+	vector<D3DXVECTOR2> m_corners; //Behövs troligen inte!
+	//Matrix representation of the map
+	vector<vector<char>> m_mapMatrix;
 
 	//Factories
 	WallFactory*	m_wallFactory;

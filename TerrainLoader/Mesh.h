@@ -42,6 +42,7 @@ void PrepareToRender(D3DXMATRIX& p_mMVP);
 void Render();
 void SetBuffer();
 int getNrVertices();
+Buffer* GetBufferPointer();
 
 };
 #endif

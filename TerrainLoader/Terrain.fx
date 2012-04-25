@@ -22,7 +22,11 @@ BlendState NoBlend
 	BlendEnable[0] = FALSE;
 };
 
-
+DepthStencilState EnableDepth
+{
+    DepthEnable = TRUE;
+    DepthWriteMask = ALL;
+};
 struct VS_IN
 {
 	float3 posL    : POSITION;
@@ -53,15 +57,15 @@ VS_OUT VS(VS_IN vIn)
 
 float4 PS(VS_OUT pIn) : SV_Target
 {
-	return float4(1,1,1,1) * saturate(max(dot(pIn.normalW, normalize(float4(0.5,0.5,0.5,0))), 0.0f) + 0.25f);
-	//return float4(pIn.stretchedUV.x,pIn.stretchedUV.y,0,1); 
+	//return float4(1,1,1,1) * saturate(max(dot(pIn.normalW, normalize(float4(0.5,0.5,0.5,0))), 0.0f) + 0.25f);
+	return float4(pIn.stretchedUV.x,pIn.stretchedUV.y,0,1); 
 }
 
 RasterizerState Wireframe
 {
         FillMode = Solid;
-        CullMode = NONE;
-        FrontCounterClockwise = false;
+        CullMode = None;
+        //FrontCounterClockwise = false;
 };
 
 technique10 Color
@@ -71,6 +75,7 @@ technique10 Color
         SetVertexShader( CompileShader( vs_4_0, VS() ) );
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PS() ) );
+		SetDepthStencilState( EnableDepth, 0 );
         SetBlendState(NoBlend, float4(0.0f,0.0f,0.0f,0.0f), 0xFFFFFFFF);
         SetRasterizerState(Wireframe);
     }

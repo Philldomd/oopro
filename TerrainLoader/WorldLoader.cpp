@@ -83,6 +83,9 @@ void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth,
 				);
 		//Allocate memory
 		ZeroMemory(&mapped, sizeof(D3D10_MAPPED_TEXTURE2D));
+		m_mapMatrix.resize(m_height);
+		for(UINT i = 0; i < m_height; i++)
+			m_mapMatrix.at(i).resize(m_width);
 
 		//Get pointer to data
 		spTexture->Map(0, D3D10_MAP_READ, 0, &mapped);
@@ -125,11 +128,15 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<O
 	//Calculate world coordinates
 	D3DXVECTOR3 position = D3DXVECTOR3(p_x * m_terrainScale.x, (float)m_terrainY, p_y * m_terrainScale.y);
 
+	//Default mark
+	m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = '-';
+
 	//If it's a Wall (0,0,255)
 	if(p_color->r == 0 && p_color->g == 0 && p_color->b == 255)
 	{
 		p_objects.push_back(m_wallFactory->createObjectInstance(m_device, position, m_terrainScale));
 		nrWalls++;
+		m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = 'W';
 	}
 	//If it's a Candy (255,255,0)
 	else if(p_color->r == 255 && p_color->g == 255 && p_color->b == 0)
@@ -161,6 +168,16 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<O
 		p_objects.push_back(m_cherryFactory->createObjectInstance());
 		nrCherry++;
 	}
+	//If it's tunnel mark on mapMatrix (128,128,128)
+	else if(p_color->r == 128 && p_color->g == 128 && p_color->b == 128)
+	{
+		m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = 'S';
+	}
+	//If it's Cant turn mark on mapMatrix (0,255,255)
+	else if(p_color->r == 0 && p_color->g == 255 && p_color->b == 255)
+	{
+		m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = 'T';
+	}
 	//Else undefined Rule
 	else{ }
 }
@@ -168,7 +185,6 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<O
 void WorldLoader::findCorners()
 {
 	//Load all m_corners to a vector
-	
 
 	for(UINT i = 0; i < m_height; i++)
 	{
@@ -176,7 +192,10 @@ void WorldLoader::findCorners()
 		{
 			//Check for m_corners with alpha value 127.5 as int 128 50%
 			if(isCorner(j, i, Color(0,0,0,128)))
+			{
 				m_corners.push_back(D3DXVECTOR2((float)j,(float)i));
+				m_mapMatrix.at(i).at(j) = 'C';
+			}
 		}
 	}
 }
@@ -243,4 +262,9 @@ bool WorldLoader::isCorner(int p_x, int p_y, Color p_color)
 D3DXVECTOR2* WorldLoader::getTerrainScale()
 {
 	return &m_terrainScale;
+}
+
+int WorldLoader::getNrWalls()
+{
+	return nrWalls;
 }
