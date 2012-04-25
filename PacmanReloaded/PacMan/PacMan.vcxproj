@@ -83,14 +83,20 @@
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MainMenuScene.h" />
+    <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="ModelManager.h" />
+    <ClInclude Include="ModelStructs.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="VertexStructs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>

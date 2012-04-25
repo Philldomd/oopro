@@ -25,6 +25,12 @@
     <Filter Include="HUD&amp;Sprites">
       <UniqueIdentifier>{ffe9b2dc-0ccd-46bb-88d0-2c0565d72947}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ModelSystem">
+      <UniqueIdentifier>{8a0e55a8-979d-40a3-8dbc-4a729e190a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structs">
+      <UniqueIdentifier>{c714742b-277f-4fb2-968b-9909c869fc13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -48,6 +54,18 @@
     <ClInclude Include="MainMenuScene.h">
       <Filter>SceneSystem\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="ModelManager.h">
+      <Filter>ModelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelStructs.h">
+      <Filter>Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>ModelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexStructs.h">
+      <Filter>Structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -67,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>SceneSystem\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelManager.cpp">
+      <Filter>ModelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>ModelSystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

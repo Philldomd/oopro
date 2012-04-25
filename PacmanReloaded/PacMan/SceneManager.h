@@ -31,15 +31,15 @@ private:
 	void createBlendState();
 
 private:
-	static bool m_instanceFlag;
-	static SceneManager* m_sceneManager;
-	ID3D10Device* m_d3dDevice;
-	Scene* m_primaryScene;
-	Scene* m_secondaryScene;
-	bool m_gamePaused;
-	D3D10_VIEWPORT m_viewPort;
-	ID3D10BlendState* m_alphaBlendState;
-	ID3DX10Sprite* m_spriteBatch;
+	static bool				m_instanceFlag;
+	static SceneManager*	m_sceneManager;
+	ID3D10Device*			m_d3dDevice;
+	Scene*					m_primaryScene;
+	Scene*					m_secondaryScene;
+	bool					m_gamePaused;
+	D3D10_VIEWPORT			m_viewPort;
+	ID3D10BlendState*		m_alphaBlendState;
+	ID3DX10Sprite*			m_spriteBatch;
 
 };
 #endif
