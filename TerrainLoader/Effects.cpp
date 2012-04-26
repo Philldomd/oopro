@@ -14,7 +14,7 @@ void fx::InitAll(ID3D10Device* device)
 	};
 
 	TerrainFX = new Shader();
-	TerrainFX->Init(device, "Terrain.fx", lineVertexLayout, sizeof(lineVertexLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC), "Color",
+	TerrainFX->init(device, "Terrain.fx", lineVertexLayout, sizeof(lineVertexLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC), "Color",
 		D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY);
 
 
@@ -36,7 +36,7 @@ void fx::InitAll(ID3D10Device* device)
     pPass->GetDesc( &PassDesc );*/
 
 	InstanceFX = new Shader();
-	InstanceFX->Init(device, "Instancing.fx", instlayout, sizeof(instlayout) / sizeof(D3D10_INPUT_ELEMENT_DESC), "RenderInstancedVertLighting",
+	InstanceFX->init(device, "Instancing.fx", instlayout, sizeof(instlayout) / sizeof(D3D10_INPUT_ELEMENT_DESC), "RenderInstancedVertLighting",
 		D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY);
 }
 

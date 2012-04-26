@@ -48,11 +48,19 @@ private:
 	int mNrOfIndices;
 	int mNrOfVertices;
 	int mWidth;
-	vector<Object*> m_objects;
+	//vector<Object*> m_objects;
 	WorldLoader* mLoader;
 	OBJLoader* objLoader;
 	Mesh* m_mesh;
 	Buffer* mInstanceData;
 	int		mWallIndex;
+
+	
+
+	Objects			m_objects;
+
+	//DEBUG
+	float angle;
+	D3DXMATRIX	m_rotation;
 };
 #endif

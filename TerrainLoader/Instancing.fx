@@ -35,6 +35,7 @@ cbuffer ceveryframe
 {
     float4x4 g_mWorldViewProj;
     float4x4 g_mWorldView;
+	float4x4 g_mRotation;
 };
 
 //cbuffer cmultipleperframe
@@ -142,7 +143,7 @@ PSSceneIn VSInstmain(VSInstIn input)
     //
     // Transform by our Sceneance matrix
     //
-    float4 InstancePosition = mul(float4(input.pos, 1), input.mTransform);
+    float4 InstancePosition = mul(float4(input.pos, 1), mul(g_mRotation,input.mTransform));
     //float4 ViewPos = mul(InstancePosition, g_mWorldView );
     
     //

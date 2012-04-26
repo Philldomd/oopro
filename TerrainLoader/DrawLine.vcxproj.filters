@@ -25,6 +25,9 @@
     <Filter Include="OBJLOADER">
       <UniqueIdentifier>{ff168c3a-0559-44af-ba42-784d4b8bd6fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Instancing">
+      <UniqueIdentifier>{a6344879-b863-4ebb-9e1d-f5131a28537b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>OBJLOADER</Filter>
+    </ClCompile>
+    <ClCompile Include="WallInstancing.cpp">
+      <Filter>Instancing</Filter>
+    </ClCompile>
+    <ClCompile Include="CandyInstancing.cpp">
+      <Filter>Instancing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>OBJLOADER</Filter>
+    </ClInclude>
+    <ClInclude Include="WallInstancing.h">
+      <Filter>Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="CandyInstancing.h">
+      <Filter>Instancing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

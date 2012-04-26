@@ -24,7 +24,7 @@ WorldLoader::~WorldLoader()
 
 void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth, 
 								UINT p_terrainHeight, UINT p_terrainY,
-								vector<Object*>& p_objects)
+								Objects& p_objects)
 {
 	//Set Variables
 	m_terrainHeight = p_terrainHeight;
@@ -123,7 +123,7 @@ void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth,
 	else{}
 }
 
-void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<Object*>& p_objects)
+void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, Objects& p_objects)
 {
 	//Calculate world coordinates
 	D3DXVECTOR3 position = D3DXVECTOR3(p_x * m_terrainScale.x, (float)m_terrainY, p_y * m_terrainScale.y);
@@ -134,38 +134,38 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, vector<O
 	//If it's a Wall (0,0,255)
 	if(p_color->r == 0 && p_color->g == 0 && p_color->b == 255)
 	{
-		p_objects.push_back(m_wallFactory->createObjectInstance(m_device, position, m_terrainScale));
+		p_objects.m_walls.push_back(m_wallFactory->createObjectInstance(m_device, position, m_terrainScale));
 		nrWalls++;
 		m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = 'W';
 	}
 	//If it's a Candy (255,255,0)
 	else if(p_color->r == 255 && p_color->g == 255 && p_color->b == 0)
 	{
-		p_objects.push_back(m_candyFactory->createObjectInstance());
+		p_objects.m_candies.push_back(m_candyFactory->createObjectInstance());
 		nrCandy++;
 	}
 	//If it's a PowerUp (255,0,0)
 	else if(p_color->r == 255 && p_color->g == 0 && p_color->b == 0)
 	{
-		p_objects.push_back(m_powerUpFactory->createObjectInstance());
+		p_objects.m_powerUps.push_back(m_powerUpFactory->createObjectInstance());
 		nrPowerUp++;
 	}
 	//If it's player spawn (255,255,255)
 	else if(p_color->r == 255 && p_color->g == 255 && p_color->b == 255)
 	{
-		p_objects.push_back(m_pacmanFactory->createObjectInstance());
+		p_objects.m_pacman = m_pacmanFactory->createObjectInstance();
 		nrPlayer++;
 	}
 	//If it's Enemy spawn (255,0,255)
 	else if(p_color->r == 255 && p_color->g == 0 && p_color->b == 255)
 	{
-		p_objects.push_back(m_enemyFactory->createObjectInstance());
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance());
 		nrEnemies++;
 	}
 	//If it's Cherry spawn (0,255,0)
 	else if(p_color->r == 0 && p_color->g == 255 && p_color->b == 0)
 	{
-		p_objects.push_back(m_cherryFactory->createObjectInstance());
+		p_objects.m_cherries.push_back(m_cherryFactory->createObjectInstance());
 		nrCherry++;
 	}
 	//If it's tunnel mark on mapMatrix (128,128,128)
@@ -193,7 +193,7 @@ void WorldLoader::findCorners()
 			//Check for m_corners with alpha value 127.5 as int 128 50%
 			if(isCorner(j, i, Color(0,0,0,128)))
 			{
-				m_corners.push_back(D3DXVECTOR2((float)j,(float)i));
+				//m_corners.push_back(D3DXVECTOR2((float)j,(float)i));
 				m_mapMatrix.at(i).at(j) = 'C';
 			}
 		}

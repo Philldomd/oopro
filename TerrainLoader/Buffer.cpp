@@ -2,72 +2,72 @@
 
 Buffer::Buffer()
 {
-	mBuffer = NULL;
-	vertexSize = 0;
-	offset = 0;
+	m_buffer = NULL;
+	m_vertexSize = 0;
+	m_offset = 0;
 }
 
 Buffer::~Buffer()
 {
-	SAFE_RELEASE(mBuffer);
+	SAFE_RELEASE(m_buffer);
 }
 
-HRESULT Buffer::Apply(UINT32 misc)
+HRESULT Buffer::apply(UINT32 p_misc)
 {
 	HRESULT hr = S_OK;
 
-	switch(mType)
+	switch(m_type)
 	{
-	case VERTEX_BUFFER:
-		{
-			vertexSize = mElementSize;
-			offset = 0;
-			mDevice->IASetVertexBuffers(misc, 1, &mBuffer, &vertexSize, &offset );
-		}
-		break;
-	case INDEX_BUFFER:
-		{
-			mDevice->IASetIndexBuffer(mBuffer, DXGI_FORMAT_R32_UINT, 0);
-		}
-		break;
-	case CONSTANT_BUFFER_VS:
-		{
-			mDevice->VSSetConstantBuffers(misc, 1, &mBuffer);
-		}
-		break;
-	case CONSTANT_BUFFER_GS:
-		{
-			mDevice->GSSetConstantBuffers(misc, 1, &mBuffer);
-		}
-		break;
-	case CONSTANT_BUFFER_PS:
-		{
-			mDevice->PSSetConstantBuffers(misc, 1, &mBuffer);
-		}
-		break;
-	default:
-		hr = E_FAIL;
-		break;
+		case VERTEX_BUFFER:
+			{
+				m_vertexSize = m_elementSize;
+				m_offset = 0;
+				m_device->IASetVertexBuffers(p_misc, 1, &m_buffer, &m_vertexSize, &m_offset );
+			}
+			break;
+		case INDEX_BUFFER:
+			{
+				m_device->IASetIndexBuffer(m_buffer, DXGI_FORMAT_R32_UINT, 0);
+			}
+			break;
+		case CONSTANT_BUFFER_VS:
+			{
+				m_device->VSSetConstantBuffers(p_misc, 1, &m_buffer);
+			}
+			break;
+		case CONSTANT_BUFFER_GS:
+			{
+				m_device->GSSetConstantBuffers(p_misc, 1, &m_buffer);
+			}
+			break;
+		case CONSTANT_BUFFER_PS:
+			{
+				m_device->PSSetConstantBuffers(p_misc, 1, &m_buffer);
+			}
+			break;
+		default:
+			hr = E_FAIL;
+			break;
 	};
 
 	return hr;
 }
 
-HRESULT Buffer::Init(ID3D10Device* device,
-		BUFFER_INIT_DESC& initDesc)
+HRESULT Buffer::init(ID3D10Device* p_device,
+		BUFFER_INIT_DESC& p_initDesc)
 {
-	mDevice = device;
+	m_device = p_device;
 	
 	D3D10_BUFFER_DESC bufferDesc;
 
-	mType = initDesc.Type;
-	switch(mType)
+	m_type = p_initDesc.Type;
+	switch(m_type)
 	{
 		case VERTEX_BUFFER:
 			{
 				bufferDesc.BindFlags = D3D10_BIND_VERTEX_BUFFER;
 
-				if(initDesc.Usage == BUFFER_STREAM_OUT_TARGET)
+				if(p_initDesc.Usage == BUFFER_STREAM_OUT_TARGET)
 					bufferDesc.BindFlags |= D3D10_BIND_STREAM_OUTPUT;
 			}
 			break;
@@ -88,24 +88,24 @@ HRESULT Buffer::Init(ID3D10Device* device,
 			break;
 	};
 
-	mUsage = initDesc.Usage;
-	mElementSize = initDesc.ElementSize;
-	mElementCount = initDesc.NumElements;
+	m_usage = p_initDesc.Usage;
+	m_elementSize = p_initDesc.ElementSize;
+	m_elementCount = p_initDesc.NumElements;
 
 	bufferDesc.CPUAccessFlags = 0;
 	bufferDesc.Usage = D3D10_USAGE_DEFAULT;
 
-	if(mUsage == BUFFER_CPU_READ)
+	if(m_usage == BUFFER_CPU_READ)
 	{
 		bufferDesc.Usage = D3D10_USAGE_DYNAMIC;
 		bufferDesc.CPUAccessFlags |= D3D10_CPU_ACCESS_READ;
 	}
-	else if(mUsage == BUFFER_CPU_WRITE)
+	else if(m_usage == BUFFER_CPU_WRITE)
 	{
 		bufferDesc.Usage = D3D10_USAGE_DYNAMIC;
 		bufferDesc.CPUAccessFlags |= D3D10_CPU_ACCESS_WRITE;
 	}
-	else if(mUsage == BUFFER_CPU_WRITE_DISCARD)
+	else if(m_usage == BUFFER_CPU_WRITE_DISCARD)
 	{
 		bufferDesc.Usage = D3D10_USAGE_DYNAMIC;
 		bufferDesc.CPUAccessFlags |= D3D10_CPU_ACCESS_WRITE;
@@ -113,22 +113,22 @@ HRESULT Buffer::Init(ID3D10Device* device,
 
 	//Desc.BindFlags = D3D10_BIND_VERTEX_BUFFER;
 	bufferDesc.MiscFlags = 0;
-	bufferDesc.ByteWidth = initDesc.NumElements * initDesc.ElementSize;
+	bufferDesc.ByteWidth = p_initDesc.NumElements * p_initDesc.ElementSize;
 
 	//set at least 16 bytes
 	if(bufferDesc.ByteWidth < 16)
 		bufferDesc.ByteWidth = 16;
 
 	HRESULT hr = S_OK;
-	if(initDesc.InitData)
+	if(p_initDesc.InitData)
 	{
 		D3D10_SUBRESOURCE_DATA data;
-		data.pSysMem = initDesc.InitData;
-		hr = mDevice->CreateBuffer(&bufferDesc, &data, &mBuffer);
+		data.pSysMem = p_initDesc.InitData;
+		hr = m_device->CreateBuffer(&bufferDesc, &data, &m_buffer);
 	}
 	else
 	{
-		hr = mDevice->CreateBuffer(&bufferDesc, NULL, &mBuffer);
+		hr = m_device->CreateBuffer(&bufferDesc, NULL, &m_buffer);
 	}
 
 	if(FAILED(hr))
@@ -139,48 +139,49 @@ HRESULT Buffer::Init(ID3D10Device* device,
 	return hr;
 }
 
-void Buffer::Map(void** b)
+void Buffer::map(void** p_b)
 {
 	UINT32 mapType = 0;
 
-	if(mUsage == BUFFER_CPU_READ)	mapType = D3D10_MAP_READ;
-	else if(mUsage == BUFFER_CPU_WRITE) mapType = D3D10_MAP_WRITE;
-	else if(mUsage == BUFFER_CPU_WRITE_DISCARD)	mapType = D3D10_MAP_WRITE_DISCARD;
-	else
-	{
+	if(m_usage == BUFFER_CPU_READ)
+		mapType = D3D10_MAP_READ;
+	else if(m_usage == BUFFER_CPU_WRITE)
+		mapType = D3D10_MAP_WRITE;
+	else if(m_usage == BUFFER_CPU_WRITE_DISCARD)
 		mapType = D3D10_MAP_WRITE_DISCARD;
-	}
+	else
+		mapType = D3D10_MAP_WRITE_DISCARD;
 
 	//mBuffer->Map( (D3D10_MAP)mapType, 0, reinterpret_cast< void** >(b) );
-	mBuffer->Map( (D3D10_MAP)mapType, 0, (LPVOID*)b );
+	m_buffer->Map( (D3D10_MAP)mapType, 0, (LPVOID*)p_b );
 }
 
-void Buffer::Unmap()
+void Buffer::unMap()
 {
-	mBuffer->Unmap();
+	m_buffer->Unmap();
 }
 
-ID3D10Buffer* Buffer::GetBufferPointer()
+ID3D10Buffer* Buffer::getBufferPointer()
 {
-	return mBuffer;
+	return m_buffer;
 }
 
-UINT32 Buffer::GetVertexSize()
+UINT32 Buffer::getVertexSize()
 {
-	return mElementSize;
+	return m_elementSize;
 }
 
-UINT32 Buffer::GetElementCount()
+UINT32 Buffer::getElementCount()
 {
-	return mElementCount;
+	return m_elementCount;
 }
 
-UINT32* Buffer::GetOffset()
+UINT32 Buffer::getOffset()
 {
-	return &offset;
+	return m_offset;
 }
 
-void Buffer::SetBufferPointer(ID3D10Buffer* p)
+void Buffer::setBufferPointer(ID3D10Buffer* p_b)
 {
-	mBuffer = p;
+	m_buffer = p_b;
 }

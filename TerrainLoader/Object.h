@@ -14,6 +14,7 @@ public:
 	D3DXMATRIX		getWorldMatrix();
 	D3DXMATRIX		getNormalMatrix(); //Returns a matrix for transforming normals
 	//BoundingVolyme* getBoundingVolyme();
+	//Model*		getModel();
 protected:
 	ID3D10Device*	m_device;
 

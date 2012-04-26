@@ -40,33 +40,33 @@ struct BUFFER_INIT_DESC
 class Buffer
 {
 protected:
-	ID3D10Buffer*	mBuffer;
-	BUFFER_TYPE		mType;
-	BUFFER_USAGE	mUsage;
+	ID3D10Buffer*	m_buffer;
+	BUFFER_TYPE		m_type;
+	BUFFER_USAGE	m_usage;
 
-	UINT32			mElementSize;
-	UINT32			mElementCount;
-	UINT32			vertexSize;
-	UINT32			offset;
+	UINT32			m_elementSize;
+	UINT32			m_elementCount;
+	UINT32			m_vertexSize;
+	UINT32			m_offset;
 
-	ID3D10Device*			mDevice;
+	ID3D10Device*	m_device;
 public:
 	Buffer();
 	virtual ~Buffer();
 
-	HRESULT Init(ID3D10Device* device,
-		BUFFER_INIT_DESC& initDesc);
+	HRESULT			init(	ID3D10Device* p_device,
+							BUFFER_INIT_DESC& p_initDesc);
 
-	void Map(void** b);
-	void Unmap();
+	void			map(void** p_b);
+	void			unMap();
 
-	HRESULT Apply(UINT32 misc = 0);
+	HRESULT			apply(UINT32 p_misc = 0);
 
-	ID3D10Buffer* GetBufferPointer();
-	void SetBufferPointer(ID3D10Buffer* p);
-	UINT32 GetVertexSize();
-	UINT32 GetElementCount();
-	UINT32* GetOffset();
+	ID3D10Buffer*	getBufferPointer();
+	void			setBufferPointer(ID3D10Buffer* p_b);
+
+	UINT32			getVertexSize();
+	UINT32			getElementCount();
+	UINT32			getOffset();
 };
-
 #endif

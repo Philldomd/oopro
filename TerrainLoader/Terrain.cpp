@@ -19,6 +19,9 @@ Terrain::Terrain(ID3D10Device* pDevice, int pHeight, int pWidth)
 	
 	mNrOfVertices = mHeight * mWidth;
 	mNrOfIndices = (mWidth * 2) * (mHeight - 1) + (mHeight - 2);
+
+	/*D3DXMatrixIdentity(&m_rotation);
+	angle = 0.0f;*/
 }
 Terrain::~Terrain()
 {
@@ -80,28 +83,25 @@ HRESULT Terrain::init()
 	//}
 	//SAFE_DELETE_ARRAY(initIndices);
 
-	fx::TerrainFX->SetFloat("gTexScale", mTextureRepeat);
+	//fx::TerrainFX->setFloat("gTexScale", mTextureRepeat);
 
-	D3D10_BUFFER_DESC bufferDesc =
+	/*D3D10_BUFFER_DESC bufferDesc =
     {
         mLoader->getNrWalls() * sizeof( D3DXMATRIX ),
         D3D10_USAGE_DYNAMIC,
         D3D10_BIND_VERTEX_BUFFER,
         D3D10_CPU_ACCESS_WRITE,
         0
-    };
+    };*/
 
 
 	D3DXMATRIX* initMatrices = new D3DXMATRIX[mLoader->getNrWalls()];
 	int index = 0;
-	for(UINT i = 0; i < m_objects.size(); i++)
+	for(UINT i = 0; i < m_objects.m_walls.size(); i++)
 	{
-		if(m_objects.at(i) != NULL)
-		{
-			initMatrices[index] = m_objects.at(i)->getWorldMatrix();
+			initMatrices[index] = m_objects.m_walls.at(i)->getWorldMatrix();
 			index++;
 			mWallIndex = (int)i;
-		}
 	}
 
 	//Instance Buffer Description
@@ -113,9 +113,9 @@ HRESULT Terrain::init()
 	bdInstance.Usage = BUFFER_DEFAULT;
 
 	mInstanceData = new Buffer();
-	mInstanceData->Init(mDevice, bdInstance);
+	mInstanceData->init(mDevice, bdInstance);
 
-	SAFE_DELETE(initMatrices);
+	SAFE_DELETE_ARRAY(initMatrices);
 
 	return S_OK;
 }
@@ -125,8 +125,37 @@ void Terrain::prepToRender(D3DXMATRIX& pWorld, D3DXVECTOR3 pEyePos)//, D3DXMATRI
 	//// Set Input Assembler params
 	//mDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
 	//fx::TerrainFX->SetMatrix("gWVP", pWorld);
-	fx::TerrainFX->SetFloat3("gEyePosW", pEyePos);
-	fx::InstanceFX->SetMatrix("g_mWorldViewProj",pWorld);
+	fx::TerrainFX->setFloat3("gEyePosW", pEyePos);
+	fx::InstanceFX->setMatrix("g_mWorldViewProj",pWorld);
+	angle += 0.0005f;
+
+
+	D3DXMatrixRotationY(&m_rotation, angle);
+
+	fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
+
+	//TESTSTSTSTSTSTSTS
+
+	/*D3DXMATRIX* initMatrices = new D3DXMATRIX[mLoader->getNrWalls()];
+	int index = 0;
+	for(UINT i = 0; i < m_objects.size(); i++)
+	{
+	if(m_objects.at(i) != NULL)
+	{
+	initMatrices[index] = m_objects.at(i)->getWorldMatrix();
+	index++;
+	mWallIndex = (int)i;
+	}
+	}
+
+	D3DXMATRIX* pMatrices = NULL;
+	mInstanceData->map(( void** )&pMatrices);
+
+	memcpy( pMatrices, initMatrices, index * sizeof( D3DXMATRIX ) );
+
+	mInstanceData->unMap();
+
+	SAFE_DELETE_ARRAY(initMatrices);*/
 
 	////set Vertex buffer
 	//mVertexBuffer->Apply(0);
@@ -174,16 +203,16 @@ void Terrain::render(D3DXMATRIX& pView, D3DXMATRIX& pProjection)
     UINT Offsets[2] = {0,0};
 
 	// Render the Walls instanced
-	pVB[0] = m_mesh->GetBufferPointer()->GetBufferPointer();
-	pVB[1] = mInstanceData->GetBufferPointer();
-	Strides[0] = ( UINT )m_mesh->GetBufferPointer()->GetVertexSize();
+	pVB[0] = m_mesh->GetBufferPointer()->getBufferPointer();
+	pVB[1] = mInstanceData->getBufferPointer();
+	Strides[0] = ( UINT )m_mesh->GetBufferPointer()->getVertexSize();
     Strides[1] = sizeof( D3DXMATRIX );
 
     mDevice->IASetVertexBuffers( 0, 2, pVB, Strides, Offsets );
     //pd3dDevice->IASetIndexBuffer( g_MeshIsland.GetIB10( 0 ), g_MeshIsland.GetIBFormat10( 0 ), 0 );
 
     D3D10_TECHNIQUE_DESC techDesc;
-	fx::InstanceFX->GetTechnique()->GetDesc( &techDesc );
+	fx::InstanceFX->getTechnique()->GetDesc( &techDesc );
 
     /*SDKMESH_SUBSET* pSubset = NULL;
     SDKMESH_MATERIAL* pMat = NULL;
@@ -200,7 +229,7 @@ void Terrain::render(D3DXMATRIX& pView, D3DXMATRIX& pProjection)
             if( pMat )
                 g_pDiffuseTex->SetResource( pMat->pDiffuseRV10 );*/
 
-		fx::InstanceFX->Apply(0);
+		fx::InstanceFX->apply(0);
 		mDevice->DrawInstanced(m_mesh->getNrVertices(), mLoader->getNrWalls(), 0, 0 );
         
     }

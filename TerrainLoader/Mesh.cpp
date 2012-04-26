@@ -29,7 +29,7 @@ HRESULT Mesh::Initialize(ID3D10Device* p_d3dDevice)
 	
 	//Create Buffer
 	m_vertexBuffer = new Buffer();
-	if(FAILED(m_vertexBuffer->Init(m_d3dDevice, bdVertex)))
+	if(FAILED(m_vertexBuffer->init(m_d3dDevice, bdVertex)))
 	{
 		return E_FAIL;
 	}
@@ -79,21 +79,21 @@ void Mesh::PrepareToRender(D3DXMATRIX& p_mMVP)
 {
 	// Set Input Assembler params
 	m_d3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_shader->SetMatrix("g_mWorldViewProjection", p_mMVP);
+	m_shader->setMatrix("g_mWorldViewProjection", p_mMVP);
 
 	//set Vertex buffer
-	m_vertexBuffer->Apply(0);
+	m_vertexBuffer->apply(0);
 }
 
 void Mesh::Render()
 {
 	// Render line using the technique g_pRenderTextured
 	D3D10_TECHNIQUE_DESC techDesc;
-	m_shader->GetTechnique()->GetDesc( &techDesc );
+	m_shader->getTechnique()->GetDesc( &techDesc );
 	
 	for( UINT p = 0; p < techDesc.Passes; p++ )
 	{
-		m_shader->Apply(p);
+		m_shader->apply(p);
 		m_d3dDevice->Draw(m_nrVertices,0);
 	}
 }
@@ -105,7 +105,7 @@ void Mesh::AddVertex(D3DXVECTOR3 *p_pos, D3DXVECTOR2 *p_texC, D3DXVECTOR3 *p_nor
 
 void Mesh::SetBuffer()
 {
-	m_vertexBuffer->Apply(0);
+	m_vertexBuffer->apply(0);
 }
 
 int Mesh::getNrVertices()
