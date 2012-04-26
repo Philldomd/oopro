@@ -3,7 +3,6 @@ struct VS_INPUT
 	float4 pos : POSITION;	
 	float2 uv : TEXCOORD;
 	float3 normal : NORMAL;
-	float3 bitangent : BITANGENT;
 };
 
 struct PS_INPUT2
@@ -25,12 +24,12 @@ SamplerState bilinearSampler
 };
 float4 VS2( VS_INPUT input ) : SV_POSITION
 {
-	return float4(0,0,0,0);
+	return float4(0,0,1,1);
 }
 float4 PS2( PS_INPUT2 input ) : SV_TARGET
 {		
-	float4 r = miniMap.Sample(bilinearSampler, input.uv);
-	return float4(r);	
+	float r = miniMap.Sample(bilinearSampler, input.uv).r;
+	return float4(r,r,r,1);	
 }
 [maxvertexcount(6)]
 void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStream )

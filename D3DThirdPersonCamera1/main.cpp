@@ -82,9 +82,9 @@
 
 #define APP_TITLE "D3D Third Person Camera Demo 1"
 
-const float BALL_FORWARD_SPEED = 60.0f;
-const float BALL_HEADING_SPEED = 60.0f;
-const float BALL_ROLLING_SPEED = 140.0f;
+const float BALL_FORWARD_SPEED = 120.0f;
+const float BALL_HEADING_SPEED = 120.0f;
+const float BALL_ROLLING_SPEED = 280.0f;
 
 const float FLOOR_WIDTH = 1024.0f;
 const float FLOOR_HEIGHT = 1024.0f;
@@ -1314,7 +1314,7 @@ void UpdateBall(float elapsedTimeSec)
     // the direction of travel. Consequently the camera's rotation needs to be
     // inverted as well.
 
-    g_camera.rotate((forwardSpeed >= 0.0f) ? heading : -heading, 0.0f);
+    g_camera.rotate((forwardSpeed >= 0.0f) ? heading : -heading, 0.5f);
     g_camera.lookAt(g_ball.getPosition());
     g_camera.update(elapsedTimeSec);
 }

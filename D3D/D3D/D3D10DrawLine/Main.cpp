@@ -1,5 +1,7 @@
 #include "Heightmap.h"
 #include "ParticleSys.h"
+#include "Shader.h"
+#include "Minimap.h"
 //--------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------
@@ -23,13 +25,16 @@ D3DXVECTOR3 tempSpeed;
 ID3D10InputLayout*		g_pVertexLayout;
 Buffer*					g_pVB;
 Buffer*					g_pIB;
+Shader*					g_pMiniShader;
 HeightMap*				g_pHeightMap;
+D3D10_VIEWPORT vp;
 int						numberOfPoints;
 int						numIndices;
 int						mapHeight = 1024, mapWidth = 1024;
 //shader variables
 ID3D10Effect*			g_pEffect;
 ID3D10EffectTechnique*	g_pTechRenderLine;
+Minimap*				m_miniMap;
 
 //Particle system
 PSystem*		mRain;
@@ -105,6 +110,8 @@ HRESULT InitDevice()
 	mFire->setEmitPos(D3DXVECTOR3(-63,88,258));
 	mFire1->setEmitPos(D3DXVECTOR3(115,110,-92));
 	mFire2->setEmitPos(D3DXVECTOR3(75,174,222));
+	g_pMiniShader = new Shader();
+	m_miniMap = new Minimap();
 	HRESULT hr = S_OK;;
 	mesh = new LineVertex[mapWidth*mapHeight];
 	RECT rc;
@@ -212,7 +219,7 @@ HRESULT InitDevice()
 	srvDesc.Texture2D.MostDetailedMip = 0;
 
 	// Setup the viewport
-	D3D10_VIEWPORT vp;
+	
 	vp.Width		= width;
 	vp.Height		= height;
 	vp.MinDepth		= 0.0f;
@@ -370,13 +377,33 @@ HRESULT InitDevice()
 	g_pEffect->GetVariableByName("GRASS")->AsShaderResource()->SetResource(pSRView);
 
 	pSRView->Release();
+	
 	//Create Input Layout (== Vertex Declaration)
+	
+	m_miniMap->initialize(g_pd3dDevice);
+	m_miniMap->CreateTex();
+
 	g_pd3dDevice->CreateInputLayout(lineVertexLayout,
 		sizeof(lineVertexLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC),
 		PassDesc.pIAInputSignature,
 		PassDesc.IAInputSignatureSize,
 		&g_pVertexLayout );
-	
+	const D3D10_INPUT_ELEMENT_DESC minimapLayout[] = 
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0},
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D10_INPUT_PER_VERTEX_DATA, 0},
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D10_INPUT_PER_VERTEX_DATA, 0}
+	};
+
+	if(FAILED( g_pMiniShader->Init(g_pd3dDevice, 
+		"miniMap.fx", 
+		minimapLayout, 
+		sizeof(minimapLayout)/ sizeof(D3D10_INPUT_ELEMENT_DESC),
+		"RenderBillboard", 
+		D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY)))
+	{
+		return E_FAIL;
+	}
 
 	mRain->init(g_pd3dDevice, g_pEffect, 100000,"rain.fx");
 	mFire->init(g_pd3dDevice, g_pEffect, 128, "fire.fx");
@@ -424,7 +451,32 @@ HRESULT Render()
 	
 	mWorldViewProj = g_camera.getViewMatrix() * g_camera.getProjectionMatrix();
 	mEyeWorldView = g_camera.getViewMatrix();
-	
+	//-------------------------------
+	g_pd3dDevice->OMSetRenderTargets(0,0,m_miniMap->getSDepthV());
+	g_pd3dDevice->RSSetViewports(1, m_miniMap->getViewPort());
+	//g_pd3dDevice->ClearDepthStencilView(m_miniMap->getSDepthV(), D3D10_CLEAR_DEPTH, 1.0f, 0);
+
+	//Render 
+	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+	g_pMiniShader->Apply(0);
+	D3D10_TECHNIQUE_DESC techDesc;
+	g_pMiniShader->GetTechnique()->GetDesc( &techDesc );
+
+	g_pVB->Apply(0);
+	g_pIB->Apply(0);
+	for( UINT p = 0; p < techDesc.Passes; p++ )
+	{
+		g_pMiniShader->Apply(0);
+		g_pd3dDevice->Draw(numIndices, 0);
+	}
+	g_pd3dDevice->OMSetRenderTargets(0,0,NULL);
+	//----------------------------------
+
+	static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	g_pd3dDevice->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
+	g_pd3dDevice->RSSetViewports(1, &vp);
+	g_pd3dDevice->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
+	g_pd3dDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 
 	float DetNM = D3DXMatrixDeterminant(&normalMatrix);
 	D3DXMatrixInverse(&normalMatrix, &DetNM, &normalMatrix);
@@ -442,7 +494,6 @@ HRESULT Render()
 
 	g_pVB->Apply(0);
 	g_pIB->Apply(0);
-	static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	
 	//clear render target
 	g_pd3dDevice->ClearRenderTargetView( g_pRenderTargetView, ClearColor );
@@ -451,7 +502,7 @@ HRESULT Render()
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
 
 	// Render line using the technique g_pRenderTextured
-	D3D10_TECHNIQUE_DESC techDesc;
+	
 	g_pTechRenderLine->GetDesc( &techDesc );
 	for( UINT p = 0; p < techDesc.Passes; p++ )
 	{
@@ -466,6 +517,23 @@ HRESULT Render()
 	mFire1->draw(g_camera);
 	mFire2->setEyePos(g_camera.getPosition());
 	mFire2->draw(g_camera);
+
+	//--------------------------------------
+	g_pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+	g_pMiniShader->SetResource("miniMap",m_miniMap->getSResourceV());
+	g_pMiniShader->SetTechniqueByName("RenderBillboard");
+
+	g_pMiniShader->Apply(0);
+	//g_d3dDevice->DrawIndexed(1, 0, 0);
+	g_pd3dDevice->Draw(1,0);
+
+	//release shadow map
+	g_pMiniShader->SetResource("shadowMap", 0);
+	g_pMiniShader->GetTechniqueByName("RenderBillboard")->GetPassByIndex(0)->Apply(0);
+	//Release Ground tex
+	//g_Ground->SetGroundTexNULL();
+
+	//--------------------------------------
 	if(FAILED(g_pSwapChain->Present( 0, 0 )))
 		return E_FAIL;
 	
