@@ -67,7 +67,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d10.lib;d3dx10.lib;DxErr.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -103,32 +103,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Heightmap.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Minimap.cpp" />
-    <ClCompile Include="ParticleSys.cpp" />
+    <ClCompile Include="CreateTex2D.cpp" />
+    <ClCompile Include="DrawLineDemo.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fire.fx" />
     <None Include="Line.fx" />
-    <None Include="miniMap.fx" />
-    <None Include="rain.fx" />
+    <None Include="Map.fx" />
+    <None Include="ShadowMap.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Heightmap.h" />
-    <ClInclude Include="Minimap.h" />
-    <ClInclude Include="ParticleSys.h" />
+    <ClInclude Include="CreateTex2D.h" />
+    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="OBJLoader.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

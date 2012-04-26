@@ -52,7 +52,7 @@ struct Light
 };
 void Keyboard_Input()
 {
-	D3DXVECTOR3 forwardSpeed = D3DXVECTOR3(10,0,0);
+	D3DXVECTOR3 forwardSpeed = D3DXVECTOR3(0,0,0);
 	int rotate = 0;
 	if((GetKeyState(VK_UP) & 0x80) || (GetKeyState('W') & 0x80))
 	{
@@ -115,8 +115,8 @@ HRESULT InitDevice()
 	g_camera.perspective(60,(float)(width/height),1.0f,2048.0f);
 	g_camera.lookAt(D3DXVECTOR3(0,62,-145), D3DXVECTOR3(0,0,0), D3DXVECTOR3(0,1,0));
 	UINT createDeviceFlags = 0;
-#ifdef _DEBUG
-	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
+#ifdef _DEBUGdad
+	createDeviceaFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
 	
 	D3D10_DRIVER_TYPE driverTypes[] = 
@@ -188,7 +188,7 @@ HRESULT InitDevice()
 	hr = g_pd3dDevice->CreateDepthStencilView( g_pDepthStencil, &descDSV, &g_pDepthStencilView );
 	if( FAILED(hr) )
 		return hr;
-
+	
 
 	g_pd3dDevice->OMSetRenderTargets( 1, &g_pRenderTargetView, g_pDepthStencilView );
 
@@ -201,9 +201,15 @@ HRESULT InitDevice()
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D10_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D10_BIND_DEPTH_STENCIL;
+	texDesc.BindFlags = D3D10_BIND_DEPTH_STENCIL | D3D10_BIND_SHADER_RESOURCE;
 	texDesc.CPUAccessFlags = 0;
 	texDesc.MiscFlags = 0; 
+
+	D3D10_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	srvDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
+	srvDesc.Texture2D.MostDetailedMip = 0;
 
 	// Setup the viewport
 	D3D10_VIEWPORT vp;
