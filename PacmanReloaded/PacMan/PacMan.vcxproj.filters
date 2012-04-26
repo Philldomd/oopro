@@ -31,6 +31,12 @@
     <Filter Include="Structs">
       <UniqueIdentifier>{c714742b-277f-4fb2-968b-9909c869fc13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader&amp;Buffer">
+      <UniqueIdentifier>{45e29315-482f-4463-88f2-a989f780d3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General">
+      <UniqueIdentifier>{958e5ea4-849d-4629-be9d-b7a838faf87c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -66,6 +72,15 @@
     <ClInclude Include="VertexStructs.h">
       <Filter>Structs</Filter>
     </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>General</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -91,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
       <Filter>ModelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 
 #include "d3dUtil.h"
 #include "Scene.h"
+#include "ModelManager.h"
 
 class MainMenuScene : public Scene
 {
