@@ -169,3 +169,8 @@ const D3DXMATRIX &Camera::getProjectionMatrix()
 {
 	return m_projMatrix;
 }
+
+const D3DXVECTOR3 &Camera::getTarget()
+{
+	return m_target;
+}

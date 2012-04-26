@@ -24,6 +24,7 @@ public:
 	const D3DXMATRIX		&getViewMatrix();
 	const D3DXVECTOR3		&getLookAt();
 	const D3DXMATRIX		&getProjectionMatrix();
+	const D3DXVECTOR3		&getTarget();
 
 private:
 	static const float DEFAULT_FOVX;
