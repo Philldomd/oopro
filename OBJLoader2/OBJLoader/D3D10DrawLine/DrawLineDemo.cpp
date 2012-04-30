@@ -86,7 +86,7 @@ HRESULT InitDevice()
 	mTimer = GameTimer();
 	mTimer.reset();
 	mTimer.start();
-
+	
 	rot = 10;
 	g_pLoader = new Loader();
 	g_pShader = new Shader();

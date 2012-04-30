@@ -10,7 +10,7 @@ public:
 	Camera();
 	~Camera();
 
-	void	lookAt(const D3DXVECTOR3 &p_target);
+	void	setTarget(const D3DXVECTOR3 &p_target);
 	void	lookAt(const D3DXVECTOR3 &p_eye,
 			 const D3DXVECTOR3 &p_target,
 			 const D3DXVECTOR3 &p_up);

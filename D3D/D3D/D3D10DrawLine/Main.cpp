@@ -120,7 +120,7 @@ HRESULT InitDevice()
 	UINT height = rc.bottom - rc.top;
 	g_camera = Camera();
 	g_camera.perspective(60,(float)(width/height),1.0f,2048.0f);
-	g_camera.lookAt(D3DXVECTOR3(0,62,-145), D3DXVECTOR3(0,0,0), D3DXVECTOR3(0,1,0));
+	g_camera.lookAt(D3DXVECTOR3(0,15,60), D3DXVECTOR3(0,0,0), D3DXVECTOR3(0,1,0));
 	UINT createDeviceFlags = 0;
 #ifdef _DEBUGdad
 	createDeviceaFlags |= D3D10_CREATE_DEVICE_DEBUG;
@@ -390,9 +390,7 @@ HRESULT InitDevice()
 		&g_pVertexLayout );
 	const D3D10_INPUT_ELEMENT_DESC minimapLayout[] = 
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0},
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D10_INPUT_PER_VERTEX_DATA, 0},
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D10_INPUT_PER_VERTEX_DATA, 0}
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0}
 	};
 
 	if(FAILED( g_pMiniShader->Init(g_pd3dDevice, 
@@ -454,20 +452,30 @@ HRESULT Render()
 	//-------------------------------
 	g_pd3dDevice->OMSetRenderTargets(0,0,m_miniMap->getSDepthV());
 	g_pd3dDevice->RSSetViewports(1, m_miniMap->getViewPort());
-	//g_pd3dDevice->ClearDepthStencilView(m_miniMap->getSDepthV(), D3D10_CLEAR_DEPTH, 1.0f, 0);
+	g_pd3dDevice->ClearDepthStencilView(m_miniMap->getSDepthV(), D3D10_CLEAR_DEPTH, 1.0f, 0);
 
+	D3DXMATRIX mLightView,mLightVolume,g_mLightWVP;
+
+	D3DXMatrixLookAtLH(&mLightView, &D3DXVECTOR3(0,100,0),
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f), &D3DXVECTOR3(-1, 0, 0));
+	D3DXMatrixOrthoLH(&mLightVolume, 200, 200, 1.0f, 151.0f);
+
+	g_mLightWVP = mLightView * mLightVolume;
+
+	g_pMiniShader->SetTechniqueByName("RenderBillboard");
+	g_pMiniShader->SetMatrix("g_mLightWVP", g_mLightWVP);
 	//Render 
-	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-	g_pMiniShader->Apply(0);
+	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	//g_pMiniShader->Apply(0);
 	D3D10_TECHNIQUE_DESC techDesc;
-	g_pMiniShader->GetTechnique()->GetDesc( &techDesc );
+	g_pTechRenderLine->GetDesc( &techDesc );
 
 	g_pVB->Apply(0);
 	g_pIB->Apply(0);
 	for( UINT p = 0; p < techDesc.Passes; p++ )
 	{
-		g_pMiniShader->Apply(0);
-		g_pd3dDevice->Draw(numIndices, 0);
+		g_pTechRenderLine->GetPassByIndex( p )->Apply(0);//g_pMiniShader->Apply(0);
+		g_pd3dDevice->DrawIndexed(numIndices, 0,0);
 	}
 	g_pd3dDevice->OMSetRenderTargets(0,0,NULL);
 	//----------------------------------
@@ -530,8 +538,7 @@ HRESULT Render()
 	//release shadow map
 	g_pMiniShader->SetResource("shadowMap", 0);
 	g_pMiniShader->GetTechniqueByName("RenderBillboard")->GetPassByIndex(0)->Apply(0);
-	//Release Ground tex
-	//g_Ground->SetGroundTexNULL();
+
 
 	//--------------------------------------
 	if(FAILED(g_pSwapChain->Present( 0, 0 )))

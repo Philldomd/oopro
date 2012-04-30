@@ -7,14 +7,11 @@
 #include <D3DX10math.h>
 #include <d3dCompiler.h>
 
-
 #include <string>
 #include <vector>
 #include <map>
 #include <fstream>
 
-
-using namespace std;
 
 #define SAFE_RELEASE(x) if( x ) { (x)->Release(); (x) = NULL; }
 #define SAFE_DELETE(x) if( x ) { delete(x); (x) = NULL; }

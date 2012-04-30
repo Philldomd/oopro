@@ -42,24 +42,12 @@ HRESULT DrawTex2D::CreateShadowMap()
 	depthDesc.SampleDesc.Count = 1;
 	depthDesc.SampleDesc.Quality = 0;
 	depthDesc.Usage = D3D10_USAGE_DEFAULT;
-	depthDesc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
+	depthDesc.BindFlags = D3D10_BIND_DEPTH_STENCIL | D3D10_BIND_SHADER_RESOURCE;
 	depthDesc.CPUAccessFlags = 0;
 	depthDesc.MiscFlags = 0;
 
 	//Create depth Texture
 	if(FAILED(m_d3dDevice->CreateTexture2D( &depthDesc, NULL, &depthBuffer)))
-	{
-		return E_FAIL;
-	}
-	D3D10_BUFFER_RTV haj;
-	haj.NumElements =1;
-	haj.FirstElement =0;
-	D3D10_RENDER_TARGET_VIEW_DESC renderDesc;
-	renderDesc.Buffer = haj;
-	renderDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	renderDesc.Texture2D.MipSlice = 0;
-	
-	if(FAILED(m_d3dDevice->CreateRenderTargetView(NULL,&renderDesc,&m_renderthatshit)))
 	{
 		return E_FAIL;
 	}

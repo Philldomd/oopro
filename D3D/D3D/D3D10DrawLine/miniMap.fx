@@ -1,14 +1,17 @@
 struct VS_INPUT
 {
 	float4 pos : POSITION;	
-	float2 uv : TEXCOORD;
-	float3 normal : NORMAL;
 };
 
 struct PS_INPUT2
 {
 	float4 pos : SV_POSITION;
 	float2 uv : TEXCOORD;
+};
+
+cbuffer cbEveryFrame
+{
+	matrix	g_mLightWVP;
 };
 
 RasterizerState backFaceCulling
@@ -24,7 +27,7 @@ SamplerState bilinearSampler
 };
 float4 VS2( VS_INPUT input ) : SV_POSITION
 {
-	return float4(0,0,1,1);
+	return  mul(float4(input.pos, 1.0f), g_mLightWVP);
 }
 float4 PS2( PS_INPUT2 input ) : SV_TARGET
 {		

@@ -36,30 +36,30 @@ HRESULT Minimap::CreateTex()
 	texDesc.Height = m_height;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-	texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	texDesc.Format = DXGI_FORMAT_R32_TYPELESS;
 	texDesc.SampleDesc.Count = 1;
-	//texDesc.SampleDesc.Quality = 0;
+	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D10_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;// | D3D10_BIND_DEPTH_STENCIL;
-	//texDesc.CPUAccessFlags = 0;
-	//texDesc.MiscFlags = 0;
+	texDesc.BindFlags = D3D10_BIND_DEPTH_STENCIL | D3D10_BIND_SHADER_RESOURCE;
+	texDesc.CPUAccessFlags = 0;
+	texDesc.MiscFlags = 0;
 
 	if(FAILED( m_Device->CreateTexture2D( &texDesc, NULL, &m_minimap)))
 	{
 		return E_FAIL;
 	}
 	////Create the depth stencil view desc
-	//D3D10_DEPTH_STENCIL_VIEW_DESC descMap;
-	//descMap.Format = DXGI_FORMAT_D32_FLOAT;
-	//descMap.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2DARRAY;
-	//descMap.Texture2DArray.MipSlice = 0;
+	D3D10_DEPTH_STENCIL_VIEW_DESC descMap;
+	descMap.Format = DXGI_FORMAT_D32_FLOAT;
+	descMap.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2D;
+	descMap.Texture2DArray.MipSlice = 0;
 
-	//if(FAILED( m_Device->CreateDepthStencilView( m_minimap, &descMap, &m_miniDV)))
-	//	return E_FAIL;
+	if(FAILED( m_Device->CreateDepthStencilView( m_minimap, &descMap, &m_miniDV)))
+		return E_FAIL;
 
 	//Create sahder resource view desc
 	D3D10_SHADER_RESOURCE_VIEW_DESC srvDesc;
-	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
 	srvDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
 	srvDesc.Texture2D.MostDetailedMip = 0;
