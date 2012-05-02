@@ -410,7 +410,7 @@ void D3DApp::initDirect3D()
 	// also need to be executed every time the window is resized.  So
 	// just call the onResize method here to avoid code duplication.
 
-	onResize();
+	//onResize();
 }
 
 
