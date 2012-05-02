@@ -1,6 +1,9 @@
+
+Texture2D miniMap;
+
 struct VS_INPUT
 {
-	float4 pos : POSITION;	
+	float3 pos : POSITION;	
 };
 
 struct PS_INPUT2
@@ -18,7 +21,11 @@ RasterizerState backFaceCulling
 {
 	cullmode = back;
 };
-Texture2D miniMap;
+BlendState NoBlending
+{
+ AlphaToCoverageEnable = FALSE;
+ BlendEnable[0] = FALSE;
+};
 SamplerState bilinearSampler
 {
     Filter = min_mag_mip_linear;
@@ -26,13 +33,12 @@ SamplerState bilinearSampler
     AddressV = MIRROR;	
 };
 float4 VS2( VS_INPUT input ) : SV_POSITION
-{
-	return  mul(float4(input.pos, 1.0f), g_mLightWVP);
+{	
+	return  float4(0,0,0,0);
 }
 float4 PS2( PS_INPUT2 input ) : SV_TARGET
 {		
-	float r = miniMap.Sample(bilinearSampler, input.uv).r;
-	return float4(r,r,r,1);	
+	return miniMap.Sample(bilinearSampler, input.uv); 	
 }
 [maxvertexcount(6)]
 void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStream )
@@ -56,12 +62,13 @@ void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStr
 	triStream.Append(p);
 }
 
-technique10 RenderBillboard
+technique10 RB
 {
     pass P0
     {
         SetVertexShader( CompileShader( vs_4_0, VS2() ) );
         SetGeometryShader( CompileShader( gs_4_0, GS() ) );
+		SetBlendState( NoBlending, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
         SetPixelShader( CompileShader( ps_4_0, PS2() ) );	
 		SetRasterizerState( backFaceCulling );		
     }

@@ -50,6 +50,9 @@
     <None Include="miniMap.fx">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="ShadowMap.fx">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

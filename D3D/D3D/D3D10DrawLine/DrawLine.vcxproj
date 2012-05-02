@@ -115,6 +115,7 @@
     <None Include="Line.fx" />
     <None Include="miniMap.fx" />
     <None Include="rain.fx" />
+    <None Include="ShadowMap.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
