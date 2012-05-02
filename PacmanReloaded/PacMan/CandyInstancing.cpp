@@ -85,7 +85,6 @@ void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 		fx::InstanceFX->setMatrix("g_mWorldViewProj", p_view * p_projection);
 		fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
 
-
 		UINT Offsets[2] = {0,0};
 
 		//Always same model as the rest of objects

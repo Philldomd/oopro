@@ -28,19 +28,4 @@ struct Model
 	Material*	m_material;
 };
 
-struct AnimatedModel
-{
-	D3DXVECTOR3 m_topBoundingCorner;
-	D3DXVECTOR3 m_bottomBoundingCorner;
-	Buffer*		m_vertexBuffer;
-	Buffer*		m_indexBuffer;
-	string		m_bufferName;
-	UINT		m_offset;
-	UINT		m_stride;
-	int			m_size;
-	Material*	m_material;
-	int			m_stanceSize;
-	int			m_nrOfStances;
-};
-
 #endif

@@ -6,6 +6,8 @@
 #include "d3dApp.h"
 #include <vector>
 #include "SceneManager.h"
+#include "Observer.h"
+#include "HID.h"
 
 using namespace std;
 
@@ -24,8 +26,8 @@ public:
 
 private:
 	 
-	SceneManager * g_sceneManager;
-
+	SceneManager* g_sceneManager;
+	HID*		  g_hid;
 };
 
 #endif 

@@ -52,6 +52,12 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{d0decd71-f30b-41b6-b94e-3a3bfe4590fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HID">
+      <UniqueIdentifier>{00cc4878-7405-4548-8908-265be279c853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer">
+      <UniqueIdentifier>{4587df44-b0d9-4acb-a1f3-5cb7878389dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -71,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>SceneSystem\System</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuScene.h">
-      <Filter>SceneSystem\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="ModelManager.h">
       <Filter>ModelSystem</Filter>
@@ -138,6 +141,33 @@
     <ClInclude Include="GenerallStructs.h">
       <Filter>Structs</Filter>
     </ClInclude>
+    <ClInclude Include="level.h">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="HID.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="HIDObservable.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ExampleScene.h">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteButton.h">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -154,9 +184,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>SceneSystem\System</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuScene.cpp">
-      <Filter>SceneSystem\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="ModelManager.cpp">
       <Filter>ModelSystem</Filter>
@@ -208,6 +235,33 @@
     </ClCompile>
     <ClCompile Include="Effects.cpp">
       <Filter>TEMPSTUFF</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="HID.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="HIDObservable.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="ExampleScene.cpp">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteButton.cpp">
+      <Filter>HUD&amp;Sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

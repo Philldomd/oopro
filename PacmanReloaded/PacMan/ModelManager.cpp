@@ -18,19 +18,6 @@ Model* ModelManager::getModelByName( string p_modelName )
 	return &m_modelList[0];
 }
 
-AnimatedModel* ModelManager::getAnimatedModelByName( string p_animatedModelName )
-{
-	for (int i = 0; i < (int)m_animatedModelList.size(); i++)
-	{
-		if(m_animatedModelList[i].m_bufferName == p_animatedModelName)
-		{
-			return &m_animatedModelList[i];
-		}
-
-	}
-	return &m_animatedModelList[0];
-}
-
 void ModelManager::createModel( string p_modelName, string p_OBJFileName )
 {
 	ModelLoader* t_modelLoader = new ModelLoader(m_d3dDevice);
@@ -40,13 +27,5 @@ void ModelManager::createModel( string p_modelName, string p_OBJFileName )
 	delete t_modelLoader;
 }
 
-void ModelManager::createAnimatedModel( string p_animatedModelName, string p_OBJFileName )
-{
-	ModelLoader* t_modelLoader = new ModelLoader(m_d3dDevice);
-
-	m_animatedModelList.push_back(t_modelLoader->addAnimatedModel(p_animatedModelName, p_OBJFileName));
-
-	delete t_modelLoader;
-}
 
 

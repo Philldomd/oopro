@@ -26,6 +26,7 @@ public:
 	D3DXMATRIX			getViewMatrix();
 	bool				isCameraFree();
 	void				setCameraFree(bool p);
+	void				setCameraPos(D3DXVECTOR3 p_pos, D3DXVECTOR3 p_dir);
 	//float				getFarPlane();
 
 private:

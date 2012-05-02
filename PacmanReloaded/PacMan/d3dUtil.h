@@ -120,7 +120,7 @@ D3DX10INLINE T Clamp(const T& x, const T& low, const T& high)
 
 const float INFINITY = FLT_MAX;
 //const float PI       = 3.14159265358979323f;
-const float MATH_EPS = 0.0001f;
+//const float MATH_EPS = 0.0001f;
 
 const D3DXCOLOR WHITE(1.0f, 1.0f, 1.0f, 1.0f);
 const D3DXCOLOR BLACK(0.0f, 0.0f, 0.0f, 1.0f);
@@ -137,4 +137,4 @@ const D3DXCOLOR DARK_YELLOW_GREEN(0.1f, 0.48f, 0.19f, 1.0f);
 const D3DXCOLOR DARKBROWN(0.45f, 0.39f, 0.34f, 1.0f);
 
 
-#endif // D3DUTIL_H
+#endif 

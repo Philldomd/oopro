@@ -2,30 +2,31 @@
 //####################
 //	PacmanFactory
 //####################
-Object* PacmanFactory::createObjectInstance()
+Pacman* PacmanFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size)
 {
-	return NULL;
+	return new Pacman(p_device, m_modelManager->getModelByName("Pacman"),p_position, p_size);
 }
 
 //####################
 //	EnemyFactory
 //####################
 
-Object* EnemyFactory::createObjectInstance()
+Object* EnemyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
+											vector<vector<char>> p_mapMatrix)
 {
-	switch(m_type)
+	switch(p_type)
 	{
-		case BLINKY:
-			return NULL;
+		case Enemy::BLINKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case PINKY:
-			return NULL;
+		case Enemy::PINKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case INKY:
-			return NULL;
+		case Enemy::INKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case CLYDE:
-			return NULL;
+		case Enemy::CLYDE:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		default:
 			return NULL;
@@ -45,19 +46,19 @@ Object* WallFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_
 //####################
 Object* CandyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size)
 {
-	return new Candy(p_device, m_modelManager->getModelByName("Wall") ,p_position);
+	return new Candy(p_device, m_modelManager->getModelByName("Candy") ,p_position, p_size);
 }
 //####################
 //	PowerUpFactory
 //####################
-Object* PowerUpFactory::createObjectInstance()
+Object* PowerUpFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size)
 {
-	return NULL;
+	return new PowerUp(p_device, m_modelManager->getModelByName("Candy") ,p_position, p_size);
 }
 //####################
 //	CherryFactory
 //####################
-Object* CherryFactory::createObjectInstance()
+Object* CherryFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size)
 {
-	return NULL;
+	return new Cherry(p_device, m_modelManager->getModelByName("Cherry") ,p_position, p_size);
 }

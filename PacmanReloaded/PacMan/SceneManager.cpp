@@ -39,6 +39,7 @@ void SceneManager::drawScene()
 	m_primaryScene->draw(m_spriteBatch);
 	if(m_secondaryScene)
 		m_secondaryScene->draw(m_spriteBatch);
+	//m_spriteBatch->Flush();
 	m_spriteBatch->End();
 }
 
@@ -68,12 +69,14 @@ void SceneManager::removeOverlayScene()
 
 void SceneManager::addScene( Scene* p_scene )
 {
+	initScene(p_scene);
 	removeCurrentScenes();
 	m_primaryScene = p_scene;
 }
 
 void SceneManager::addOverlayScene( Scene* p_scene)
 {
+	initScene(p_scene);
 	//If there is a secondary scene we know that we can safely replace the 
 	//primary scene(which is a overlay scene) with a new overlay scene!
 	if(m_secondaryScene)
@@ -148,5 +151,10 @@ void SceneManager::recalculateSpriteBatch()
 SceneManager::~SceneManager()
 {
 
+}
+
+void SceneManager::initScene( Scene* p_scene )
+{
+	p_scene->init(m_d3dDevice, &m_viewPort);
 }
 

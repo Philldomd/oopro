@@ -41,6 +41,8 @@ void WallInstancing::initialize(vector<Object*>* p_objects)
 
 	//Delete init data
 	SAFE_DELETE_ARRAY(initMatrices);
+	fx::InstanceFX->setResource("g_txDiffuse",m_objects->at(0)->getModel()->m_material->m_textureResource);
+	
 }
 
 void WallInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)

@@ -82,6 +82,8 @@ void Camera::updateViewMatrix()
 	mView._34 = 0.0f;
 	mView._44 = 1.0f;
 
+	//D3DXMatrixLookAtLH(&mView, &mCameraPos, &mLookAtPos, &mUp);
+
 	/*mFrustum.setPlanes( Vector(mCameraPos.x,	mCameraPos.y,	mCameraPos.z), 
 		Vector(mLookAt.x,		mLookAt.y,		mLookAt.z), 
 		Vector(mUp.x,			mUp.y,			mUp.z)
@@ -213,6 +215,13 @@ bool Camera::isCameraFree()
 void Camera::setCameraFree(bool p)
 {
 	mFree = p;
+}
+
+void Camera::setCameraPos(D3DXVECTOR3 p_pos, D3DXVECTOR3 p_dir)
+{
+	mCameraPos = p_pos;
+
+	mLookAtPos = mCameraPos + p_dir;
 }
 //
 //D3DXVECTOR3 Camera::getLookAt()

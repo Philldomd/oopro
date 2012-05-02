@@ -29,6 +29,7 @@ public:
 private:
 	SceneManager();
 	void createBlendState();
+	void initScene(Scene* p_scene);
 
 private:
 	static bool				m_instanceFlag;

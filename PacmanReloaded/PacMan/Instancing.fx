@@ -177,8 +177,11 @@ PSSceneIn VSInstmain(VSInstIn input)
 //--------------------------------------------------------------------------------------
 float4 PSScenemain(PSSceneIn input) : SV_Target
 {
-    //float4 color = g_txDiffuse.Sample( g_samLinear, input.tex ) * input.color;
-    return input.color;
+	float4 color;
+	//color = g_txDiffuse.Sample( g_samLinear, input.tex ) * input.color;
+
+	color = input.color;
+    return color;
 }
 
 //--------------------------------------------------------------------------------------
