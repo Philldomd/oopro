@@ -1,7 +1,7 @@
 #include "InkyAI.h"
 
 
-InkyAI::InkyAI(void)
+InkyAI::InkyAI(void) : AI()
 {
 }
 
@@ -21,7 +21,7 @@ D3DXVECTOR2 InkyAI::calculateTargetTile(D3DXVECTOR2 p_pacmanPos, D3DXVECTOR2 p_p
 	
 	m_tmpVec = p_pacmanPos + p_pacmanDirection * 2;
 
-	if(p_pacmanDirection.y == -1)
+	if(p_pacmanDirection == UP)
 		m_tmpVec.x = p_pacmanPos.x - 2;
 
 	m_tmpVec =  m_tmpVec - m_blinkyPos;

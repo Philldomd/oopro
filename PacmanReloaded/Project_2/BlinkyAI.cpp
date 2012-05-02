@@ -1,9 +1,8 @@
 #include "BlinkyAI.h"
 
 
-BlinkyAI::BlinkyAI(void)
+BlinkyAI::BlinkyAI(void) : AI()
 {
-	m_elroyMode = false;
 }
 
 
@@ -20,5 +19,6 @@ D3DXVECTOR2 BlinkyAI::calculateTargetTile(D3DXVECTOR2 p_pacmanPos, D3DXVECTOR2 p
 void BlinkyAI::enableElroyMode()
 {
 	m_elroyMode = true;
-	//speed = elroySpeed;
+	*m_speed += 0.05f;
+	m_originalSpeed = *m_speed;
 }

@@ -1,7 +1,7 @@
 #include "PinkyAI.h"
 
 
-PinkyAI::PinkyAI(void)
+PinkyAI::PinkyAI(void) : AI()
 {
 }
 
@@ -16,7 +16,7 @@ D3DXVECTOR2 PinkyAI::calculateTargetTile(D3DXVECTOR2 p_pacmanPos, D3DXVECTOR2 p_
 
 	m_tmpVec = p_pacmanPos + p_pacmanDirection * 4;
 
-	if(p_pacmanDirection.y == -1)
+	if(p_pacmanDirection == UP)
 		m_tmpVec.x = p_pacmanPos.x - 4;
 
 	return m_tmpVec;
