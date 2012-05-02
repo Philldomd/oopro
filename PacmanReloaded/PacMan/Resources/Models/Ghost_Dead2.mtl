@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 02.05.2012 13:16:37
+# File Created: 02.05.2012 13:18:02
 
-newmtl _Ghostlambert5SG
+newmtl _Ghost_Dead2lambert4SG
 	Ns 30.0000
 	Ni 1.5000
 	d 1.0000
@@ -9,11 +9,11 @@ newmtl _Ghostlambert5SG
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
-	Kd 1.0000 0.0000 0.0100
+	Kd 1.0000 0.8600 0.8900
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl _Ghostlambert3SG
+newmtl _Ghost_Dead2lambert3SG
 	Ns 30.0000
 	Ni 1.5000
 	d 1.0000
@@ -25,7 +25,7 @@ newmtl _Ghostlambert3SG
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl _GhostinitialShadingGroup
+newmtl _Ghost_Dead2initialShadingGroup
 	Ns 30.0000
 	Ni 1.5000
 	d 1.0000
@@ -37,7 +37,7 @@ newmtl _GhostinitialShadingGroup
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl _Ghostlambert2SG
+newmtl _Ghost_Dead2lambert2SG
 	Ns 30.0000
 	Ni 1.5000
 	d 1.0000

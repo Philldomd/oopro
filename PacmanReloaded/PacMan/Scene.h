@@ -7,13 +7,21 @@
 class Scene
 {
 public:
-	Scene(ID3D10Device* p_d3dDevice);
+
+	Scene();
 	virtual ~Scene();
+	virtual void  init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort);
 	virtual void  draw(ID3DX10Sprite * p_spriteBatch);
 	virtual void  update(float p_deltaTime);
+	virtual void  keyEvent(USHORT p_key);
+	virtual void  leftMouseClick(POINT p_mousePosition);
+	virtual void  rightMouseClick(POINT p_mousePosition);
+	virtual void  mouseMove( POINT p_mousePosition );
 
 protected:	
-	ID3D10Device * md3dDevice;
+
+	ID3D10Device* m_d3dDevice;
+	D3D10_VIEWPORT* m_viewPort;
 
 };
 
