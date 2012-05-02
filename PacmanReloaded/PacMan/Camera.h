@@ -21,9 +21,9 @@ public:
 	//Getter methods.
 
 	const D3DXVECTOR3		&getPosition();
-	const D3DXMATRIX		&getViewMatrix();
+	D3DXMATRIX		&getViewMatrix();
 	const D3DXVECTOR3		&getLookAt();
-	const D3DXMATRIX		&getProjectionMatrix();
+	D3DXMATRIX		&getProjectionMatrix();
 	const D3DXVECTOR3		&getTarget();
 
 private:

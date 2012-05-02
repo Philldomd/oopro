@@ -60,7 +60,6 @@ private:
 	UINT			m_terrainHeight, m_terrainWidth, m_terrainY;
 	D3DXVECTOR2		m_terrainScale;
 	vector<Color>	m_fileColorData;
-	//vector<D3DXVECTOR2> m_corners; //Behövs troligen inte!
 	//Matrix representation of the map
 	vector<vector<char>> m_mapMatrix;
 
@@ -71,9 +70,6 @@ private:
 	CandyFactory*	m_candyFactory;
 	PowerUpFactory* m_powerUpFactory;
 	CherryFactory*	m_cherryFactory;
-
-	//DEBUG Skall tas bort!!
-	UINT nrCandy, nrCherry, nrPowerUp, nrEnemies, nrPlayer, nrWalls;
 };
 
 #endif

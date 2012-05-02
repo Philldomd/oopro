@@ -29,28 +29,6 @@ ModelLoader::ModelLoader(ID3D10Device* p_d3dDevice)
 	
 }
 
-AnimatedModel ModelLoader::addAnimatedModel( string p_modelName, string p_OBJFileName )
-{
-	loadAnimatedModelFromOBJFile(p_OBJFileName);
-
-	createBuffers();
-
-	AnimatedModel tmpAnimatedModel;
-
-	tmpAnimatedModel.m_bufferName = p_modelName;
-	tmpAnimatedModel.m_vertexBuffer = m_vertexBuffer;
-	tmpAnimatedModel.m_indexBuffer = m_indexBuffer;
-	tmpAnimatedModel.m_offset = 0;
-	tmpAnimatedModel.m_stride = sizeof(Vertex);
-	tmpAnimatedModel.m_size = m_indices.size();
-	tmpAnimatedModel.m_material = m_material;
-	tmpAnimatedModel.m_bottomBoundingCorner = m_bottomCorner;
-	tmpAnimatedModel.m_topBoundingCorner = m_topCorner;
-	tmpAnimatedModel.m_nrOfStances = m_nrOfStances;
-	tmpAnimatedModel.m_stanceSize = m_stanceSize;
-
-	return tmpAnimatedModel;
-}
 
 Model ModelLoader::addStaticModel( string p_modelName, string p_OBJFileName )
 {
@@ -291,10 +269,6 @@ void ModelLoader::loadModelFromOBJFile( string p_OBJFileName )
 
 }
 
-void ModelLoader::loadAnimatedModelFromOBJFile( string p_OBJFileName )
-{
-
-}
 
 ModelLoader::~ModelLoader()
 {

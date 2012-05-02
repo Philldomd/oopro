@@ -16,7 +16,7 @@ public:
 	~CandyInstancing();
 	void	initialize(vector<Object*>* p_objects);
 	void	update(float p_deltaTime);
-	void	render(D3DXMATRIX p_view, D3DXMATRIX p_projection);
+	void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
 private:
 	ID3D10Device*		m_device;
 	vector<Object*>*	m_objects;

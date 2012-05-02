@@ -522,7 +522,7 @@ HRESULT Render()
 	D3DXMatrixInverse(&normalMatrix, &DetNM, &normalMatrix);
 	D3DXMatrixTranspose(&normalMatrix, &normalMatrix);
 	// Set variables
-	g_pEffect->GetVariableByName( "g_mWorldViewProjection" )->AsMatrix()->SetMatrix( (float*)&g_mLightWVP );
+	g_pEffect->GetVariableByName( "g_mWorldViewProjection" )->AsMatrix()->SetMatrix( (float*)&mWorldViewProj );
 	g_pEffect->GetVariableByName( "LPos")->AsVector()->SetFloatVector((float*)&(light.pos));
 	g_pEffect->GetVariableByName( "LCol")->AsVector()->SetFloatVector((float*)&(light.col));
 	g_pEffect->GetVariableByName( "Ld")->AsScalar()->SetFloat(light.Ld);

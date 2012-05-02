@@ -661,7 +661,7 @@ void InitApp()
         static_cast<float>(g_windowWidth) / static_cast<float>(g_windowHeight),
         CAMERA_ZNEAR, CAMERA_ZFAR);
 
-    g_camera.lookAt(D3DXVECTOR3(0.0f, g_ballRadius * 3.0f, -g_ballRadius * 7.0f),
+    g_camera.lookAt(D3DXVECTOR3(400.0f,0, 0),
         D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 }
 
@@ -1315,7 +1315,7 @@ void UpdateBall(float elapsedTimeSec)
     // inverted as well.
 
     g_camera.rotate((forwardSpeed >= 0.0f) ? heading : -heading, 0.5f);
-    g_camera.lookAt(g_ball.getPosition());
+    /*g_camera.lookAt(g_ball.getPosition());*/
     g_camera.update(elapsedTimeSec);
 }
 

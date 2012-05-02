@@ -15,7 +15,7 @@ public:
 	WallInstancing(ID3D10Device* p_device);
 	~WallInstancing();
 	void	initialize(vector<Object*>* p_objects);
-	void	render(D3DXMATRIX p_view, D3DXMATRIX p_projection);
+	void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
 private:
 	ID3D10Device*		m_device;
 	vector<Object*>*	m_objects;

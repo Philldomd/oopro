@@ -8,13 +8,10 @@ WorldLoader::WorldLoader(ID3D10Device* p_device, ModelManager* p_modelManager)
 	//Create all factories
 	m_wallFactory = new WallFactory(m_modelManager);
 	m_pacmanFactory = new PacmanFactory(m_modelManager);
-	m_enemyFactory = new EnemyFactory();
+	m_enemyFactory = new EnemyFactory(m_modelManager);
 	m_candyFactory = new CandyFactory(m_modelManager);
-	m_powerUpFactory = new PowerUpFactory();
-	m_cherryFactory = new CherryFactory();
-
-	//DEBUG variables
-	nrCandy = nrCherry = nrPowerUp = nrEnemies = nrPlayer = nrWalls = 0;
+	m_powerUpFactory = new PowerUpFactory(m_modelManager);
+	m_cherryFactory = new CherryFactory(m_modelManager);
 }
 WorldLoader::~WorldLoader()
 {
@@ -66,7 +63,6 @@ void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth,
 		loadInfo.MipLevels      = D3DX10_FROM_FILE;
 		loadInfo.Usage          = D3D10_USAGE_STAGING;
 		loadInfo.BindFlags      = 0;
-		//loadInfo.CpuAccessFlags = D3D10_CPU_ACCESS_WRITE | D3D10_CPU_ACCESS_READ;
 		loadInfo.CpuAccessFlags = D3D10_CPU_ACCESS_READ;
 		loadInfo.MiscFlags      = 0;
 		loadInfo.Format         = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -109,8 +105,14 @@ void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth,
 				m_fileColorData.push_back(color);
 			}
 		}
-		//ShrinkToFit
+		//ShrinkToFit to save space
 		m_fileColorData.shrink_to_fit();
+
+		p_objects.m_candies.shrink_to_fit();
+		p_objects.m_cherries.shrink_to_fit();
+		p_objects.m_enemies.shrink_to_fit();
+		p_objects.m_walls.shrink_to_fit();
+		p_objects.m_walls.shrink_to_fit();
 
 		//Release pointer
 		spTexture->Unmap( D3D10CalcSubresource(0, 0, 1) );
@@ -136,38 +138,35 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, Objects&
 	if(p_color->r == 0 && p_color->g == 0 && p_color->b == 255)
 	{
 		p_objects.m_walls.push_back(m_wallFactory->createObjectInstance(m_device, position, m_terrainScale));
-		nrWalls++;
 		m_mapMatrix.at((UINT)p_x).at((UINT)p_y) = 'W';
 	}
 	//If it's a Candy (255,255,0)
 	else if(p_color->r == 255 && p_color->g == 255 && p_color->b == 0)
 	{
 		p_objects.m_candies.push_back(m_candyFactory->createObjectInstance(m_device, position, m_terrainScale));
-		nrCandy++;
 	}
 	//If it's a PowerUp (255,0,0)
 	else if(p_color->r == 255 && p_color->g == 0 && p_color->b == 0)
 	{
-		p_objects.m_powerUps.push_back(m_powerUpFactory->createObjectInstance());
-		nrPowerUp++;
+		p_objects.m_powerUps.push_back(m_powerUpFactory->createObjectInstance(m_device, position, m_terrainScale));
 	}
 	//If it's player spawn (255,255,255)
 	else if(p_color->r == 255 && p_color->g == 255 && p_color->b == 255)
 	{
-		p_objects.m_pacman = m_pacmanFactory->createObjectInstance();
-		nrPlayer++;
+		p_objects.m_pacman = m_pacmanFactory->createObjectInstance(m_device, position, m_terrainScale);
 	}
 	//If it's Enemy spawn (255,0,255)
 	else if(p_color->r == 255 && p_color->g == 0 && p_color->b == 255)
 	{
-		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance());
-		nrEnemies++;
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::BLINKY, m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::PINKY, m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::INKY, m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::CLYDE, m_mapMatrix));
 	}
 	//If it's Cherry spawn (0,255,0)
 	else if(p_color->r == 0 && p_color->g == 255 && p_color->b == 0)
 	{
-		p_objects.m_cherries.push_back(m_cherryFactory->createObjectInstance());
-		nrCherry++;
+		p_objects.m_cherries.push_back(m_cherryFactory->createObjectInstance(m_device, position, m_terrainScale));
 	}
 	//If it's tunnel mark on mapMatrix (128,128,128)
 	else if(p_color->r == 128 && p_color->g == 128 && p_color->b == 128)
@@ -194,7 +193,6 @@ void WorldLoader::findCorners()
 			//Check for m_corners with alpha value 127.5 as int 128 50%
 			if(isCorner(j, i, Color(0,0,0,128)))
 			{
-				//m_corners.push_back(D3DXVECTOR2((float)j,(float)i));
 				m_mapMatrix.at(i).at(j) = 'C';
 			}
 		}
@@ -263,9 +261,4 @@ bool WorldLoader::isCorner(int p_x, int p_y, Color p_color)
 D3DXVECTOR2* WorldLoader::getTerrainScale()
 {
 	return &m_terrainScale;
-}
-
-int WorldLoader::getNrWalls()
-{
-	return nrWalls;
 }

@@ -75,7 +75,7 @@ void CandyInstancing::update(float p_gameTime)
 	}
 }
 
-void CandyInstancing::render(D3DXMATRIX p_view, D3DXMATRIX p_projection)
+void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 {
 	//If there's objects in vector
 	if(!m_objects->empty())
@@ -84,7 +84,6 @@ void CandyInstancing::render(D3DXMATRIX p_view, D3DXMATRIX p_projection)
 
 		fx::InstanceFX->setMatrix("g_mWorldViewProj", p_view * p_projection);
 		fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
-
 
 		UINT Offsets[2] = {0,0};
 

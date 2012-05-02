@@ -80,7 +80,6 @@ void Camera::lookAt(const D3DXVECTOR3 &p_eye,
 	m_viewMatrix(2,2) = m_zAxis.z;
 	m_viewMatrix(3,2) = -D3DXVec3Dot(&m_zAxis, &m_eye);//kanske p_eye
 
-	//D3DXMatrixLookAtLH(&m_viewMatrix, &p_eye, &p_target, &p_up);
 
 	D3DXQuaternionRotationMatrix(&m_orientation, &m_viewMatrix);
 }
@@ -90,7 +89,7 @@ void Camera::perspective(float p_fovx, float p_aspect, float p_znear, float p_zf
 	float e = 1.0f / tanf(D3DXToRadian(p_fovx) / 2.0f);
 	float aspectInv = 1.0f / p_aspect;
 	float fovy = 2.0f * atanf(aspectInv / e);
-	float xScale = 1.0f / atanf(0.5f * fovy);
+	float xScale = 1.0f / tanf(0.5f * fovy);
 	float yScale = xScale / aspectInv;
 
     m_projMatrix(0,0) = xScale;
@@ -117,7 +116,6 @@ void Camera::perspective(float p_fovx, float p_aspect, float p_znear, float p_zf
     m_znear = p_znear;
     m_zfar = p_zfar;
 
-	//D3DXMatrixPerspectiveFovLH(&m_projMatrix, p_fovx, p_aspect, p_znear,  p_zfar);
 }
 
 void Camera::rotate(float p_pitch, float p_yaw)
@@ -164,12 +162,12 @@ const D3DXVECTOR3 &Camera::getLookAt()
 	return m_zAxis;
 }
 
-const D3DXMATRIX &Camera::getViewMatrix()
+D3DXMATRIX &Camera::getViewMatrix()
 {
 	return m_viewMatrix;
 }
 
-const D3DXMATRIX &Camera::getProjectionMatrix()
+D3DXMATRIX &Camera::getProjectionMatrix()
 {
 	return m_projMatrix;
 }
