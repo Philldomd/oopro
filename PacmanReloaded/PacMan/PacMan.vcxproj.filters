@@ -135,9 +135,6 @@
     <ClInclude Include="Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Effects.h">
-      <Filter>TEMPSTUFF</Filter>
-    </ClInclude>
     <ClInclude Include="GenerallStructs.h">
       <Filter>Structs</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="SpriteButton.h">
       <Filter>HUD&amp;Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>Shader&amp;Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,6 @@
     <ClCompile Include="Factory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Effects.cpp">
-      <Filter>TEMPSTUFF</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>SceneSystem\Scenes</Filter>
     </ClCompile>
@@ -263,10 +260,14 @@
     <ClCompile Include="SpriteButton.cpp">
       <Filter>HUD&amp;Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Instancing.fx">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="obj.fx" />
   </ItemGroup>
 </Project>

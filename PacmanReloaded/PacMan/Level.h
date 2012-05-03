@@ -9,6 +9,7 @@
 #include "WallInstancing.h"
 #include "CandyInstancing.h"
 #include "SpriteButton.h"
+#include "Shaders.h"
 
 //TEMPORARY STUFF REMOVE !!
 #include "Camera.h"
@@ -32,6 +33,8 @@ private:
 	WorldLoader*	m_worldLoader;
 	Objects			m_objects;
 	float			p_deltaTime;
+	//ShaderManager
+	Shaders*		m_shaderManager;
 
 	//Drawing with Instancing
 	WallInstancing* m_wallInstancing;
