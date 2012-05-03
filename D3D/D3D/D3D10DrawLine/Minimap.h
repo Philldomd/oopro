@@ -12,9 +12,9 @@ public:
 
 	void initialize(ID3D10Device* p_d3dDevice);
 	HRESULT CreateTex();
-	ID3D10RenderTargetView* getSDepthV();
-	ID3D10ShaderResourceView* getSResourceV();
-	const D3D10_VIEWPORT* getViewPort();
+	ID3D10RenderTargetView* getRTV();
+	ID3D10ShaderResourceView* getSRV();
+	const D3D10_VIEWPORT* getVP();
 	
 private:
 	int m_width;

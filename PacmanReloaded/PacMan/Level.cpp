@@ -49,8 +49,8 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	float aspect = float(800)/600;
 	m_camera->lookAt(D3DXVECTOR3(40,35,0),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(0.0f,1.0f,0.0f));
 	m_camera->perspective(45, aspect, 0.5f, 1000.0f);
-	m_miniMap = new Minimap();
-	m_miniMap->initialize(m_d3dDevice);
+	m_miniMap = new MiniMap();
+	m_miniMap->initialize(p_d3dDevice);
 	m_miniMap->CreateTex();
 	p_deltaTime = 0.05f;
 }
@@ -58,6 +58,7 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 void Level::draw( ID3DX10Sprite * p_spriteBatch )
 {
 	m_waddaSprite->draw(p_spriteBatch);
+	m_miniMap->prepareRender();
 	m_wallInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_candyInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_cherryInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());

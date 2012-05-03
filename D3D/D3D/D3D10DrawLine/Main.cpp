@@ -468,20 +468,23 @@ HRESULT Render()
 	//RECT rc;
 	float width = 1024;
 	float height = 768;
-
-	
+		static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	g_pd3dDevice->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
+	g_pd3dDevice->RSSetViewports(1, &vp);
+	g_pd3dDevice->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
+	g_pd3dDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 	
 	mWorldViewProj = g_camera.getViewMatrix() * g_camera.getProjectionMatrix();
 	mEyeWorldView = g_camera.getViewMatrix();
 	//-------------------------------
 	ID3D10RenderTargetView* lol;
-	lol = m_miniMap->getSDepthV();
-	g_pd3dDevice->OMSetRenderTargets(1,&lol, g_pDepthStencilView);
-	g_pd3dDevice->RSSetViewports(1, m_miniMap->getViewPort());
+	lol = m_miniMap->getRTV();
+	//g_pd3dDevice->OMSetRenderTargets(1,&lol, g_pDepthStencilView);
+	//g_pd3dDevice->RSSetViewports(1, m_miniMap->getVP());
 
-	static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	g_pd3dDevice->ClearRenderTargetView(lol, ClearColor);
-	g_pd3dDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
+
+	//g_pd3dDevice->ClearRenderTargetView(lol, ClearColor);
+	//g_pd3dDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 
 
 
@@ -509,14 +512,11 @@ HRESULT Render()
 		g_pTechRenderLine->GetPassByIndex( p )->Apply(0);
 		g_pd3dDevice->DrawIndexed(numIndices, 0,0);
 	}
-	g_pd3dDevice->OMSetRenderTargets(0,0,NULL);
+	//g_pd3dDevice->OMSetRenderTargets(0,0,NULL);
 	//----------------------------------
 
 	
-	g_pd3dDevice->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
-	g_pd3dDevice->RSSetViewports(1, &vp);
-	g_pd3dDevice->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
-	g_pd3dDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
+	
 
 	float DetNM = D3DXMatrixDeterminant(&normalMatrix);
 	D3DXMatrixInverse(&normalMatrix, &DetNM, &normalMatrix);
@@ -560,7 +560,7 @@ HRESULT Render()
 
 	//--------------------------------------
 	g_pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
-	g_pMiniShader->SetResource("miniMap",m_miniMap->getSResourceV());
+	g_pMiniShader->SetResource("miniMap",m_miniMap->getSRV());
 	g_pMiniShader->SetTechniqueByName("RB");
 
 	g_pMiniShader->Apply(0);

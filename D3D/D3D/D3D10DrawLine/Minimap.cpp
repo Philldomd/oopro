@@ -71,17 +71,17 @@ HRESULT Minimap::CreateTex()
 	return S_OK;
 }
 
-ID3D10RenderTargetView* Minimap::getSDepthV()
+ID3D10RenderTargetView* Minimap::getRTV()
 {
 	return m_miniDV;
 }
 
-ID3D10ShaderResourceView* Minimap::getSResourceV()
+ID3D10ShaderResourceView* Minimap::getSRV()
 {
 	return m_miniTexSRV;
 }
 
-const D3D10_VIEWPORT* Minimap::getViewPort()
+const D3D10_VIEWPORT* Minimap::getVP()
 {
 	return &vp;
 }

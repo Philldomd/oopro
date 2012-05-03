@@ -33,7 +33,7 @@ private:
 	WorldLoader*	m_worldLoader;
 	Objects			m_objects;
 	float			p_deltaTime;
-	Minimap*		m_miniMap;
+	MiniMap*		m_miniMap;
 	//Drawing with Instancing
 	WallInstancing* m_wallInstancing;
 	CandyInstancing* m_candyInstancing;
