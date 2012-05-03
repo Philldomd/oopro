@@ -165,7 +165,7 @@ void D3DApp::onResize()
 
 	// Set the viewport transform.
 
-	D3D10_VIEWPORT vp;
+	
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	vp.Width    = mClientWidth;
@@ -414,3 +414,17 @@ void D3DApp::initDirect3D()
 }
 
 
+ID3D10RenderTargetView* D3DApp::getRenderTarget()
+{
+	return mRenderTargetView;
+}
+
+ID3D10DepthStencilView* D3DApp::getDepthStencil()
+{
+	return mDepthStencilView;
+}
+
+D3D10_VIEWPORT D3DApp::getVP()
+{
+	return vp;
+}

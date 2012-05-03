@@ -2,6 +2,7 @@
 #define MENUSCENE
 
 #include "d3dUtil.h"
+#include "d3dApp.h"
 #include "Scene.h"
 #include "ModelManager.h"
 #include "WorldLoader.h"
@@ -21,7 +22,8 @@ public:
 	~Level();
 
 	void	init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort);
-	void	draw(ID3DX10Sprite * p_spriteBatch);
+	void	draw(ID3DX10Sprite * p_spriteBatch, ID3D10RenderTargetView* p_renderTarget,
+		ID3D10DepthStencilView* p_depthStencil, D3D10_VIEWPORT p_VP);
 	void	update(float p_deltaTime);
 	void	keyEvent(USHORT key);
 	void	leftMouseClick(POINT p_mousePosition);

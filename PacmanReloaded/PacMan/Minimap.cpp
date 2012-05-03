@@ -4,9 +4,10 @@ MiniMap::MiniMap()
 {
 	m_miniRTV = NULL;
 	m_miniTexSRV = NULL;
-	m_height = 512;
-	m_width = 512;
+	m_height = 600;
+	m_width = 800;
 	m_miniMapShader = new Shader();
+
 }
 
 MiniMap::~MiniMap()
@@ -20,18 +21,12 @@ void MiniMap::initialize(ID3D10Device* p_Device)
 {
 	m_Device = p_Device;
 	
-	vp.Height = m_height;
-	vp.Width = m_width;
-	vp.TopLeftY = 0;
-	vp.TopLeftX = 0;
-	vp.MinDepth = 0;
-	vp.MaxDepth = 1;
 
-	D3DXMatrixLookAtLH(&m_View, &D3DXVECTOR3(0,500,0),
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f), &D3DXVECTOR3(-1, 0, 0));
-	D3DXMatrixOrthoLH(&m_ViewVolume, 200, 200, 1.0f, 1024.0f);
+	D3DXMatrixLookAtLH(&m_view, &D3DXVECTOR3(277,15,220),
+		&D3DXVECTOR3(277, 0.0f, 220), &D3DXVECTOR3(-1, 0, 0));
+	D3DXMatrixOrthoLH(&m_viewVolume,440, 554, 1.0f, 2048.0f);
 
-	m_ViewWVP = m_View * m_ViewVolume;
+	
 
 	const D3D10_INPUT_ELEMENT_DESC minimapLayout[] = 
 	{
@@ -91,19 +86,30 @@ HRESULT MiniMap::CreateTex()
 	return S_OK;
 }
 
-void MiniMap::prepareRender(ID3D10DepthStencilView* p_depthView)
+void MiniMap::prepareRender(ID3D10DepthStencilView* p_depthView, D3D10_VIEWPORT p_VP)
 {
-	//m_Device->OMSetRenderTargets(1,&m_miniRTV,p_depthView);
-	m_Device->RSSetViewports(1,&vp);
+	if(m_width != p_VP.Width || m_height != p_VP.Height)
+	{
+		m_width = p_VP.Width;
+		m_height = p_VP.Height;
+		CreateTex();
+	}
+	m_Device->OMSetRenderTargets(1,&m_miniRTV, p_depthView);
+	m_Device->RSSetViewports(1,&p_VP);
 	static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	m_Device->ClearRenderTargetView(m_miniRTV, ClearColor);
 	m_Device->ClearDepthStencilView(p_depthView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 	m_miniMapShader->setTechniqueByName("RB");
 }
 
-void MiniMap::normalRender()
+void MiniMap::normalRender(ID3D10DepthStencilView* p_depthView,ID3D10RenderTargetView* p_renderTarget,D3D10_VIEWPORT p_VP)
 {
 	m_Device->OMSetRenderTargets(0,0,NULL);
+	m_Device->OMSetRenderTargets(1, &p_renderTarget, p_depthView);
+	m_Device->RSSetViewports(1, &p_VP);
+	static float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_Device->ClearRenderTargetView(p_renderTarget, ClearColor);
+	m_Device->ClearDepthStencilView(p_depthView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void MiniMap::finalRender()
@@ -135,7 +141,12 @@ const D3D10_VIEWPORT* MiniMap::getVP()
 	return &vp;
 }
 
-D3DXMATRIX MiniMap::getWVPMatrix()
+D3DXMATRIX MiniMap::getViewMatrix()
 {
-	return m_ViewWVP;
+	return m_view;
+}
+
+D3DXMATRIX MiniMap::getProjectionMatrix()
+{
+	return m_viewVolume;
 }

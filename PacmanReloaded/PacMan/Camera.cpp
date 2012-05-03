@@ -86,7 +86,7 @@ void Camera::lookAt(const D3DXVECTOR3 &p_eye,
 
 void Camera::perspective(float p_fovx, float p_aspect, float p_znear, float p_zfar)
 {
-	float e = 1.0f / tanf(D3DXToRadian(p_fovx) / 2.0f);
+	float e = 1.0f / tanf((float)D3DXToRadian(p_fovx) / 2.0f);
 	float aspectInv = 1.0f / p_aspect;
 	float fovy = 2.0f * atanf(aspectInv / e);
 	float xScale = 1.0f / tanf(0.5f * fovy);
@@ -135,8 +135,8 @@ void Camera::update(float gameTime)
 	D3DXQUATERNION rot;
 	D3DXQUATERNION rotInverse;
 
-	D3DXQuaternionRotationYawPitchRoll(&rot, D3DXToRadian(longitudeElapsed),
-		D3DXToRadian(latitudeElapsed), 0.0f);
+	D3DXQuaternionRotationYawPitchRoll(&rot, (FLOAT)D3DXToRadian(longitudeElapsed),
+		(FLOAT)D3DXToRadian(latitudeElapsed), 0.0f);
 	D3DXQuaternionConjugate(&rotInverse, &rot);
 
 	D3DXQUATERNION offsetVector(m_offset.x, m_offset.y, m_offset.z, 0.0f);

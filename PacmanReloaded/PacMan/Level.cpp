@@ -55,14 +55,21 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	p_deltaTime = 0.05f;
 }
 
-void Level::draw( ID3DX10Sprite * p_spriteBatch )
+void Level::draw( ID3DX10Sprite * p_spriteBatch, ID3D10RenderTargetView* p_renderTarget,
+	ID3D10DepthStencilView* p_depthStencil, D3D10_VIEWPORT p_VP )
 {
 	m_waddaSprite->draw(p_spriteBatch);
-	m_miniMap->prepareRender();
+	m_miniMap->prepareRender(p_depthStencil, p_VP);
+	m_wallInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_candyInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_cherryInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_powerUpInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_miniMap->normalRender(p_depthStencil, p_renderTarget, p_VP);
 	m_wallInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_candyInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_cherryInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_powerUpInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	m_miniMap->finalRender();
 }
 
 void Level::update( float p_deltaTime )

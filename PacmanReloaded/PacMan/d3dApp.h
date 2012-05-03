@@ -32,13 +32,19 @@ public:
 	virtual void updateScene(float dt);
 	virtual void drawScene(); 
 	virtual LRESULT msgProc(UINT msg, WPARAM wParam, LPARAM lParam);
+	ID3D10RenderTargetView* getRenderTarget();
+	ID3D10DepthStencilView* getDepthStencil();
+	D3D10_VIEWPORT	getVP();
 
 protected:
 	void initMainWindow();
 	void initDirect3D();
 
 protected:
-
+	
+	ID3D10RenderTargetView* mRenderTargetView;
+	ID3D10DepthStencilView* mDepthStencilView;
+	D3D10_VIEWPORT vp;
 	HINSTANCE mhAppInst;
 	HWND      mhMainWnd;
 	bool      mAppPaused;
@@ -53,10 +59,8 @@ protected:
 	ID3D10Device*    md3dDevice;
 	IDXGISwapChain*  mSwapChain;
 	ID3D10Texture2D* mDepthStencilBuffer;
-	ID3D10RenderTargetView* mRenderTargetView;
-	ID3D10DepthStencilView* mDepthStencilView;
 	ID3DX10Font* mFont;
-
+	
 	// Derived class should set these in derived constructor to customize starting values.
 	std::wstring mMainWndCaption;
 	D3D10_DRIVER_TYPE md3dDriverType;

@@ -11,7 +11,8 @@ public:
 	Scene();
 	virtual ~Scene();
 	virtual void  init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort);
-	virtual void  draw(ID3DX10Sprite * p_spriteBatch);
+	virtual void  draw(ID3DX10Sprite * p_spriteBatch,ID3D10RenderTargetView* p_renderTarget,
+		ID3D10DepthStencilView* p_depthStencil, D3D10_VIEWPORT p_VP);
 	virtual void  update(float p_deltaTime);
 	virtual void  keyEvent(USHORT p_key);
 	virtual void  leftMouseClick(POINT p_mousePosition);

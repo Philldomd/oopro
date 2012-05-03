@@ -30,15 +30,15 @@ void SceneManager::updateScene( float p_deltaTime )
 		m_secondaryScene->update(p_deltaTime);
 }
 
-void SceneManager::drawScene()
+void SceneManager::drawScene(ID3D10RenderTargetView* p_renderTarget, ID3D10DepthStencilView* p_depthStencil, D3D10_VIEWPORT p_VP)
 {
 	m_d3dDevice->OMSetBlendState(m_alphaBlendState, 0, 0xFFFFFFFF); 
 	m_d3dDevice->OMSetDepthStencilState(0, 0);
 	m_spriteBatch->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 	//Always draw m_primaryScene
-	m_primaryScene->draw(m_spriteBatch);
+	m_primaryScene->draw(m_spriteBatch,p_renderTarget,p_depthStencil, p_VP);
 	if(m_secondaryScene)
-		m_secondaryScene->draw(m_spriteBatch);
+		m_secondaryScene->draw(m_spriteBatch,p_renderTarget,p_depthStencil, p_VP);
 	//m_spriteBatch->Flush();
 	m_spriteBatch->End();
 }

@@ -13,7 +13,8 @@ public:
 	static SceneManager* getInstance();
 
 	void updateScene(float p_deltaTime);
-	void drawScene();
+	void drawScene(ID3D10RenderTargetView* p_renderTarget,
+		ID3D10DepthStencilView* p_depthStencil, D3D10_VIEWPORT p_VP);
 
 	void initSceneManager(ID3D10Device* p_d3dDevice);
 	void removeCurrentScenes();
