@@ -11,11 +11,6 @@ Pacman::Pacman(ID3D10Device* p_device, Model* p__model, D3DXVECTOR3 p_position, 
 	m_velocity = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 	m_eulerOrient = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
-Pacman::~Pacman()
-{
-	m_model = NULL;
-	m_device = NULL;
-}
 
 void Pacman::initialize()
 {

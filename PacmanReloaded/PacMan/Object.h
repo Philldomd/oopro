@@ -8,9 +8,8 @@ class Object
 {
 public:
 	Object(ID3D10Device* p_device, D3DXVECTOR3 p_position);
-	virtual ~Object();
 	virtual void	initialize() = 0;
-	virtual void	update(float p_deltaTime);
+	virtual void	update(float p_deltaTime) = 0;
 	virtual void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
 	Model*			getModel();
 	D3DXVECTOR3		getPosition();

@@ -9,6 +9,16 @@
 
 using namespace std;
 
+//struct Objects
+//{
+//	vector<Object*> m_walls;
+//	Object*			m_pacman;
+//	vector<Object*> m_candies;
+//	vector<Object*> m_enemies;
+//	vector<Object*> m_cherries;
+//	vector<Object*> m_powerUps;
+//};
+
 class WorldLoader
 {
 public:
@@ -18,11 +28,8 @@ public:
 								UINT p_terrainHeight, UINT p_terrainY,
 								Objects& p_objects);
 
-	D3DXVECTOR2	getTerrainScale();	
+	D3DXVECTOR2*	getTerrainScale();	
 	int				getNrWalls();
-	UINT			getTerrainWidth();
-	UINT			getTerrainHeight();
-
 private:
 	struct Color
 	{

@@ -11,8 +11,8 @@ Pacman* PacmanFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 
 //	EnemyFactory
 //####################
 
-Enemy* EnemyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
-											vector<vector<char>>* p_mapMatrix)
+Object* EnemyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
+											vector<vector<char>> p_mapMatrix)
 {
 	switch(p_type)
 	{

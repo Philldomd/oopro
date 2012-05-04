@@ -6,7 +6,7 @@
 
 namespace fx
 {
-	extern Shader* TerrainFX;
+	//extern Shader* TerrainFX;
 	extern Shader* InstanceFX;
 
 	void InitAll(ID3D10Device* device);

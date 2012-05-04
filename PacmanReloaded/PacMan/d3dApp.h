@@ -7,7 +7,7 @@
 #ifndef D3DAPP_H
 #define D3DAPP_H
 
-#include "stdafx.h"
+
 #include "d3dUtil.h"
 #include "GameTimer.h"
 #include <string>

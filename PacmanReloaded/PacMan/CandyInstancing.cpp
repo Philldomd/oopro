@@ -13,15 +13,16 @@ CandyInstancing::~CandyInstancing()
 {
 	m_objects = NULL;
 	m_device = NULL;
-	SAFE_RELEASE(m_VB[1]);
+	mInstanceData->~Buffer();
 	mInstanceData = NULL;
-	m_VB[0] = NULL;
-	
+	SAFE_RELEASE(m_VB[0]);
+	SAFE_RELEASE(m_VB[1]);
 }
 
-void CandyInstancing::initialize(vector<Object*>* p_objects)
+void CandyInstancing::initialize(vector<Object*>* p_objects, Shader* p_shader)
 {
 	m_objects = p_objects;
+	m_shader = p_shader;
 
 	m_previousObjectSize = m_objects->size();
 	//Init data
@@ -82,8 +83,11 @@ void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 	{
 		m_device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		fx::InstanceFX->setMatrix("g_mWorldViewProj", p_view * p_projection);
-		fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
+		//fx::InstanceFX->setMatrix("g_mWorldViewProj", p_view * p_projection);
+		//fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
+
+		m_shader->setMatrix("g_mWorldViewProj", p_view * p_projection);
+		m_shader->setMatrix("g_mRotation",m_rotation);
 
 		UINT Offsets[2] = {0,0};
 
@@ -98,11 +102,11 @@ void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 		m_objects->at(0)->getModel()->m_indexBuffer->apply(0);
 
 		D3D10_TECHNIQUE_DESC techDesc;
-		fx::InstanceFX->getTechnique()->GetDesc( &techDesc );
+		m_shader->getTechnique()->GetDesc( &techDesc );
 
 		for( UINT p = 0; p < techDesc.Passes; ++p )
 		{		
-			fx::InstanceFX->apply(0);
+			m_shader->apply(0);
 			m_device->DrawIndexedInstanced( ( UINT )m_objects->at(0)->getModel()->m_size, m_objects->size(),
 				0, 0, 0 );
 		}
