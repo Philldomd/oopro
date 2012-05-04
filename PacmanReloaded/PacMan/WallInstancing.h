@@ -4,7 +4,6 @@
 #include <D3D10.h>
 #include "Object.h"
 #include "Effects.h"
-#include "Shader.h"
 #include <vector>
 #include "Buffer.h"
 
@@ -15,14 +14,13 @@ class WallInstancing
 public:
 	WallInstancing(ID3D10Device* p_device);
 	~WallInstancing();
-	void	initialize(vector<Object*>* p_objects, Shader* p_shader);
+	void	initialize(vector<Object*>* p_objects);
 	void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
 private:
 	ID3D10Device*		m_device;
 	vector<Object*>*	m_objects;
 
 	Buffer*				mInstanceData;
-	Shader*				m_shader;
 
 	ID3D10Buffer*		m_VB[2];
 	UINT				m_strides[2];

@@ -3,15 +3,12 @@
 
 #include "stdafx.h"
 #include <DxErr.h>
-#include <D3Dcompiler.h>
-
-using namespace std;
 
 class Shader
 {
 
 	ID3D10Device*			m_device;
-	ID3D10InputLayout*		m_inputLayout;
+	ID3D10InputLayout*		m_pInputLayout;
 
 	ID3D10Effect*			m_pEffect;
 	ID3D10EffectTechnique*	m_pTechnique;
@@ -20,6 +17,10 @@ public:
 	Shader();
 	~Shader();
 	HRESULT					init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFlags);
+	HRESULT					init(ID3D10Device* p_device, char* p_filename, 
+								const D3D10_INPUT_ELEMENT_DESC* p_inputElementDesc, 
+								unsigned int p_numElements,char* p_tecName, DWORD p_shaderFlags );
+
 	HRESULT					apply(unsigned int p_pass);
 
 	void					setMatrix(char* p_variable, D3DXMATRIX& p_mat);
@@ -36,11 +37,5 @@ public:
 	ID3D10EffectTechnique*	getTechnique();
 	ID3D10EffectTechnique*	getTechniqueByName(char* p_tecName);
 	void					setTechniqueByName(char* p_tecName);
-	string					getFXFileName();
-
-private:
-
-	string					m_FXFileName;
-	void					createInputLayoutDescFromVertexShaderSignature(ID3DBlob* p_shaderBlob);
 };
 #endif
