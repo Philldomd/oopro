@@ -24,6 +24,8 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	m_shaderManager = new Shaders();
 	m_shaderManager->init(p_d3dDevice);
 	m_shaderManager->addShader("Instancing.fx", 12);
+	m_shaderManager->addShader("CandyInstancing.fx", 12);
+	m_shaderManager->addShader("CherryInstancing.fx", 12);
 
 	//Modelloading
 	m_modelManager = new ModelManager(p_d3dDevice);
@@ -40,9 +42,9 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	m_wallInstancing = new WallInstancing(p_d3dDevice);
 	m_wallInstancing->initialize(&m_objects.m_walls, m_shaderManager->getShaderByName("Instancing.fx"));
 	m_candyInstancing = new CandyInstancing(p_d3dDevice);
-	m_candyInstancing->initialize(&m_objects.m_candies, m_shaderManager->getShaderByName("Instancing.fx"));
+	m_candyInstancing->initialize(&m_objects.m_candies, m_shaderManager->getShaderByName("CandyInstancing.fx"));
 	m_cherryInstancing = new CandyInstancing(p_d3dDevice);
-	m_cherryInstancing->initialize(&m_objects.m_cherries, m_shaderManager->getShaderByName("Instancing.fx"));
+	m_cherryInstancing->initialize(&m_objects.m_cherries, m_shaderManager->getShaderByName("CherryInstancing.fx"));
 	m_powerUpInstancing = new CandyInstancing(p_d3dDevice);
 	m_powerUpInstancing->initialize(&m_objects.m_powerUps, m_shaderManager->getShaderByName("Instancing.fx"));
 

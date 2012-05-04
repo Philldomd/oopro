@@ -269,5 +269,11 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="obj.fx" />
+    <None Include="CandyInstancing.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="CherryInstancing.fx">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

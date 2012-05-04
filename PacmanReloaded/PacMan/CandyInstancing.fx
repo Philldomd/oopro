@@ -96,13 +96,13 @@ PSSceneIn VSInstmain(VSInstIn input)
     // dot the norm with the light dir
     //
     float3 norm = mul(input.norm,(float3x3)input.mTransform);
-    output.color = float4(1,1,1,1);//CalcLighting( norm, ViewPos.z );
+    output.color = float4(1,1,0,1);//CalcLighting( norm, ViewPos.z );
     
     //
     // Dim the color by how far up the tree we are.  
     // This is a nice way to fake occlusion of the branches by the leaves.
     //
-    output.color  = float4(1,1,1,1) * saturate(max(dot(float4(norm, 0), normalize(float4(0.0f, 1.0f, 0.0f, 0.0f))), 0.5f) + 0.009f);
+    output.color  = output.color * saturate(max(dot(float4(norm, 0), normalize(float4(0.0f, 1.0f, 0.0f, 0.0f))), 0.5f) + 0.9f);
     
     return output;
 }

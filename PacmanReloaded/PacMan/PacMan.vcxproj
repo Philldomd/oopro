@@ -149,6 +149,8 @@
     <ClCompile Include="WorldLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CandyInstancing.fx" />
+    <None Include="CherryInstancing.fx" />
     <None Include="Instancing.fx" />
     <None Include="obj.fx" />
   </ItemGroup>
