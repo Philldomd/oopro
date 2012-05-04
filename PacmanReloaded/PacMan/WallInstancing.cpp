@@ -10,10 +10,9 @@ WallInstancing::~WallInstancing()
 {
 	m_objects = NULL;
 	m_device = NULL;
-	mInstanceData->~Buffer();
+	SAFE_RELEASE(m_VB[1]);
 	mInstanceData = NULL;
 	SAFE_RELEASE(m_VB[0]);
-	SAFE_RELEASE(m_VB[1]);
 }
 
 void WallInstancing::initialize(vector<Object*>* p_objects)

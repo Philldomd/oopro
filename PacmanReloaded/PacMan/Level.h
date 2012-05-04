@@ -9,6 +9,7 @@
 #include "WallInstancing.h"
 #include "CandyInstancing.h"
 #include "SpriteButton.h"
+#include "Terrain.h"
 
 //TEMPORARY STUFF REMOVE !!
 #include "Camera.h"
@@ -32,12 +33,14 @@ private:
 	WorldLoader*	m_worldLoader;
 	Objects			m_objects;
 	float			p_deltaTime;
+	Terrain*		m_terrain;
 
 	//Drawing with Instancing
 	WallInstancing* m_wallInstancing;
 	CandyInstancing* m_candyInstancing;
 	CandyInstancing* m_cherryInstancing;
 	CandyInstancing* m_powerUpInstancing;
+
 
 	//TEMPORARY STUFF REMOVE !!
 	Camera*		m_camera;

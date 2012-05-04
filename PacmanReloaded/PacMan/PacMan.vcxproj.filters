@@ -58,6 +58,9 @@
     <Filter Include="Observer">
       <UniqueIdentifier>{4587df44-b0d9-4acb-a1f3-5cb7878389dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{fc3ae3c1-3dfe-4765-a7bd-cffb205b9b95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -99,9 +102,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>General</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>TEMPSTUFF</Filter>
-    </ClInclude>
     <ClInclude Include="WorldLoader.h">
       <Filter>WorldLoader</Filter>
     </ClInclude>
@@ -135,9 +135,6 @@
     <ClInclude Include="Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Effects.h">
-      <Filter>TEMPSTUFF</Filter>
-    </ClInclude>
     <ClInclude Include="GenerallStructs.h">
       <Filter>Structs</Filter>
     </ClInclude>
@@ -168,6 +165,30 @@
     <ClInclude Include="SpriteButton.h">
       <Filter>HUD&amp;Sprites</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>WorldLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="PinkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ClydeAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="InkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>TEMPSTUFF</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects.h">
+      <Filter>TEMPSTUFF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -196,9 +217,6 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Shader&amp;Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>TEMPSTUFF</Filter>
     </ClCompile>
     <ClCompile Include="WorldLoader.cpp">
       <Filter>WorldLoader</Filter>
@@ -233,9 +251,6 @@
     <ClCompile Include="Factory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Effects.cpp">
-      <Filter>TEMPSTUFF</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>SceneSystem\Scenes</Filter>
     </ClCompile>
@@ -263,9 +278,36 @@
     <ClCompile Include="SpriteButton.cpp">
       <Filter>HUD&amp;Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>WorldLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="ClydeAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="InkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>TEMPSTUFF</Filter>
+    </ClCompile>
+    <ClCompile Include="Effects.cpp">
+      <Filter>TEMPSTUFF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Instancing.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Terrain.fx">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

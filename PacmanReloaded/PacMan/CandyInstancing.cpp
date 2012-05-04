@@ -13,10 +13,10 @@ CandyInstancing::~CandyInstancing()
 {
 	m_objects = NULL;
 	m_device = NULL;
-	mInstanceData->~Buffer();
-	mInstanceData = NULL;
-	SAFE_RELEASE(m_VB[0]);
 	SAFE_RELEASE(m_VB[1]);
+	mInstanceData = NULL;
+	m_VB[0] = NULL;
+	
 }
 
 void CandyInstancing::initialize(vector<Object*>* p_objects)
