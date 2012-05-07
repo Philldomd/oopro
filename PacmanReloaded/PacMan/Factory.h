@@ -6,6 +6,7 @@
 #include "Candy.h"
 #include "Cherry.h"
 #include "PowerUp.h"
+#include "Enemy.h"
 
 class Factory
 {
@@ -28,16 +29,12 @@ public:
 class EnemyFactory : public Factory
 {
 public:
-	enum Type
+	EnemyFactory(ModelManager* p_modelManager)
 	{
-		BLINKY,
-		PINKY,
-		INKY,
-		CLYDE
-	};
-	Object* createObjectInstance();
-private:
-	Type m_type;
+		m_modelManager = p_modelManager;
+	}
+	Enemy* createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
+											vector<vector<char>>* p_mapMatrix);
 };
 
 class WallFactory : public Factory

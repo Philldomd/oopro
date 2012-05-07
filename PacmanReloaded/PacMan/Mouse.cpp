@@ -10,7 +10,7 @@ Mouse::Mouse( HWND p_hwnd )
     Rid[0].dwFlags = RIDEV_INPUTSINK;   
     Rid[0].hwndTarget = p_hwnd;
     RegisterRawInputDevices(Rid, 1, sizeof(Rid[0]));
-
+	m_hwnd = p_hwnd;
 	ShowCursor(true);
 }
 

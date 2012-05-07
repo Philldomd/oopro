@@ -10,7 +10,7 @@ Camera::Camera(D3DXVECTOR3 initPos)
 	mLookAt		= D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
 
 	mPitch		= 0.0f;
-	mYaw		= 0.0f;
+	mYaw		= PI/2;
 	mLookAtPos	= mCameraPos + mLookAt;
 
 	D3DXMatrixIdentity(&mView);

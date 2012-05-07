@@ -11,21 +11,22 @@ Pacman* PacmanFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 
 //	EnemyFactory
 //####################
 
-Object* EnemyFactory::createObjectInstance()
+Enemy* EnemyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
+											vector<vector<char>>* p_mapMatrix)
 {
-	switch(m_type)
+	switch(p_type)
 	{
-		case BLINKY:
-			return NULL;
+		case Enemy::BLINKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case PINKY:
-			return NULL;
+		case Enemy::PINKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case INKY:
-			return NULL;
+		case Enemy::INKY:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
-		case CLYDE:
-			return NULL;
+		case Enemy::CLYDE:
+			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		default:
 			return NULL;
