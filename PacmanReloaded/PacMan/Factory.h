@@ -33,8 +33,8 @@ public:
 	{
 		m_modelManager = p_modelManager;
 	}
-	Object* createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
-											vector<vector<char>> p_mapMatrix);
+	Enemy* createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size, Enemy::Type p_type,
+											vector<vector<char>>* p_mapMatrix);
 };
 
 class WallFactory : public Factory

@@ -18,6 +18,13 @@ WorldLoader::~WorldLoader()
 	m_device = NULL;
 	m_fileColorData.clear();
 	m_fileColorData.shrink_to_fit();
+	m_modelManager = NULL;
+	m_wallFactory = NULL;
+	m_pacmanFactory = NULL;
+	m_enemyFactory = NULL;
+	m_candyFactory = NULL;
+	m_powerUpFactory = NULL;
+	m_cherryFactory = NULL;
 }
 
 void WorldLoader::loadFromFile(	string p_filename, UINT p_terrainWidth, 
@@ -158,10 +165,10 @@ void WorldLoader::checkColorRules(float p_x, float p_y, Color* p_color, Objects&
 	//If it's Enemy spawn (255,0,255)
 	else if(p_color->r == 255 && p_color->g == 0 && p_color->b == 255)
 	{
-		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::BLINKY, m_mapMatrix));
-		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::PINKY, m_mapMatrix));
-		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::INKY, m_mapMatrix));
-		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::CLYDE, m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::BLINKY, &m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::PINKY, &m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::INKY, &m_mapMatrix));
+		p_objects.m_enemies.push_back(m_enemyFactory->createObjectInstance(m_device, position, m_terrainScale, Enemy::CLYDE, &m_mapMatrix));
 	}
 	//If it's Cherry spawn (0,255,0)
 	else if(p_color->r == 0 && p_color->g == 255 && p_color->b == 0)
@@ -258,7 +265,16 @@ bool WorldLoader::isCorner(int p_x, int p_y, Color p_color)
 		return false;
 }
 
-D3DXVECTOR2* WorldLoader::getTerrainScale()
+D3DXVECTOR2 WorldLoader::getTerrainScale()
 {
-	return &m_terrainScale;
+	return m_terrainScale;
+}
+
+UINT WorldLoader::getTerrainHeight()
+{
+	return (UINT)(m_height * m_terrainScale.x);
+}
+UINT WorldLoader::getTerrainWidth()
+{
+	return (UINT)(m_width * m_terrainScale.y);
 }

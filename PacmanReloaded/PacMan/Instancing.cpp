@@ -1,27 +1,57 @@
-#include "CandyInstancing.h"
+#include "Instancing.h"
 
-CandyInstancing::CandyInstancing(ID3D10Device* p_device)
+Instancing::Instancing(ID3D10Device* p_device)
 {
 	m_device = p_device;
-
-	m_angle = 0.0f;
-
-	D3DXMatrixRotationY(&m_rotation, m_angle);
+	D3DXMatrixIdentity(&m_rotation);
+	m_shader = NULL;
 }
 
-CandyInstancing::~CandyInstancing()
+Instancing::~Instancing()
 {
-	m_objects = NULL;
+	m_shader = NULL;
+	
 	m_device = NULL;
-	mInstanceData->~Buffer();
-	mInstanceData = NULL;
-	SAFE_RELEASE(m_VB[0]);
 	SAFE_RELEASE(m_VB[1]);
+	mInstanceData = NULL;
+	m_VB[0] = NULL;
+
+	m_objects = NULL;
 }
 
-void CandyInstancing::initialize(vector<Object*>* p_objects, Shader* p_shader)
+void Instancing::initializeDefault(vector<Object*>* p_objects, Shader* p_shader)
 {
 	m_objects = p_objects;
+	m_shader = p_shader;
+
+	//Init data
+	D3DXMATRIX* initMatrices = new D3DXMATRIX[m_objects->size()];
+
+	for(UINT i = 0; i < m_objects->size(); i++)
+	{
+		initMatrices[i] = m_objects->at(i)->getWorldMatrix();
+	}
+
+	BUFFER_INIT_DESC bdInstance;
+	//Instance Buffer Description
+	bdInstance.ElementSize = sizeof( D3DXMATRIX );
+	bdInstance.InitData = initMatrices;
+	bdInstance.NumElements = m_objects->size();
+	bdInstance.Type = VERTEX_BUFFER;
+	bdInstance.Usage = BUFFER_DEFAULT;
+
+	mInstanceData = new Buffer();
+	mInstanceData->init(m_device, bdInstance);
+
+	//Delete init data
+	SAFE_DELETE_ARRAY(initMatrices);
+
+}
+
+void Instancing::initializeDynamic(vector<Object*>* p_objects, Shader* p_shader)
+{
+	m_objects = p_objects;
+
 	m_shader = p_shader;
 
 	m_previousObjectSize = m_objects->size();
@@ -48,7 +78,11 @@ void CandyInstancing::initialize(vector<Object*>* p_objects, Shader* p_shader)
 	SAFE_DELETE_ARRAY(initMatrices);
 }
 
-void CandyInstancing::update(float p_gameTime)
+void Instancing::updateDefault(float p_gameTime)
+{
+
+}
+void Instancing::updateDynamic(float p_gameTime)
 {
 	m_angle += p_gameTime;
 	D3DXMatrixRotationY(&m_rotation, m_angle);
@@ -76,19 +110,16 @@ void CandyInstancing::update(float p_gameTime)
 	}
 }
 
-void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
+void Instancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 {
 	//If there's objects in vector
 	if(!m_objects->empty())
 	{
 		m_device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		//fx::InstanceFX->setMatrix("g_mWorldViewProj", p_view * p_projection);
-		//fx::InstanceFX->setMatrix("g_mRotation",m_rotation);
-
+		
 		m_shader->setMatrix("g_mWorldViewProj", p_view * p_projection);
 		m_shader->setMatrix("g_mRotation",m_rotation);
-
+		
 		UINT Offsets[2] = {0,0};
 
 		//Always same model as the rest of objects
@@ -103,12 +134,12 @@ void CandyInstancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 
 		D3D10_TECHNIQUE_DESC techDesc;
 		m_shader->getTechnique()->GetDesc( &techDesc );
-
+	
 		for( UINT p = 0; p < techDesc.Passes; ++p )
 		{		
-			m_shader->apply(0);
+			m_shader->apply(p);
 			m_device->DrawIndexedInstanced( ( UINT )m_objects->at(0)->getModel()->m_size, m_objects->size(),
-				0, 0, 0 );
+                                            0, 0, 0 );
 		}
 	}
 }

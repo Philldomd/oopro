@@ -6,9 +6,9 @@
 #include "ModelManager.h"
 #include "WorldLoader.h"
 #include "GenerallStructs.h"
-#include "WallInstancing.h"
-#include "CandyInstancing.h"
+#include "Instancing.h"
 #include "SpriteButton.h"
+#include "Terrain.h"
 #include "Shaders.h"
 
 //TEMPORARY STUFF REMOVE !!
@@ -33,14 +33,16 @@ private:
 	WorldLoader*	m_worldLoader;
 	Objects			m_objects;
 	float			p_deltaTime;
+	Terrain*		m_terrain;
 	//ShaderManager
 	Shaders*		m_shaderManager;
 
 	//Drawing with Instancing
-	WallInstancing* m_wallInstancing;
-	CandyInstancing* m_candyInstancing;
-	CandyInstancing* m_cherryInstancing;
-	CandyInstancing* m_powerUpInstancing;
+	Instancing* m_wallInstancing;
+	Instancing* m_candyInstancing;
+	Instancing* m_cherryInstancing;
+	Instancing* m_powerUpInstancing;
+
 
 	//TEMPORARY STUFF REMOVE !!
 	Camera*		m_camera;

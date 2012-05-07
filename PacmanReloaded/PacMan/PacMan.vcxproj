@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3dx10d.lib;d3d10.lib;dxerr.lib;dxguid.lib;D3Dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3dx10d.lib;d3d10.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,11 +78,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
+    <ClInclude Include="BlinkyAI.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Candy.h" />
-    <ClInclude Include="CandyInstancing.h" />
     <ClInclude Include="Cherry.h" />
+    <ClInclude Include="ClydeAI.h" />
     <ClInclude Include="d3dApp.h" />
     <ClInclude Include="d3dUtil.h" />
     <ClInclude Include="Enemy.h" />
@@ -92,9 +94,10 @@
     <ClInclude Include="GenerallStructs.h" />
     <ClInclude Include="HID.h" />
     <ClInclude Include="HIDObservable.h" />
+    <ClInclude Include="InkyAI.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="level.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="ModelStructs.h" />
@@ -102,6 +105,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="PinkyAI.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -110,17 +114,20 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteButton.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="VertexStructs.h" />
     <ClInclude Include="Wall.h" />
-    <ClInclude Include="WallInstancing.h" />
+    <ClInclude Include="Instancing.h" />
     <ClInclude Include="WorldLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="BlinkyAI.cpp" />
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Candy.cpp" />
-    <ClCompile Include="CandyInstancing.cpp" />
     <ClCompile Include="Cherry.cpp" />
+    <ClCompile Include="ClydeAI.cpp" />
     <ClCompile Include="d3dApp.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
@@ -128,6 +135,7 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="HID.cpp" />
     <ClCompile Include="HIDObservable.cpp" />
+    <ClCompile Include="InkyAI.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -137,6 +145,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="PinkyAI.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -144,15 +153,14 @@
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteButton.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="WallInstancing.cpp" />
+    <ClCompile Include="Instancing.cpp" />
     <ClCompile Include="WorldLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CandyInstancing.fx" />
-    <None Include="CherryInstancing.fx" />
     <None Include="Instancing.fx" />
-    <None Include="obj.fx" />
+    <None Include="Terrain.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

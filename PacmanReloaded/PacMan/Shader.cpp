@@ -37,8 +37,10 @@ HRESULT Shader::init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFla
 			compilationErrors->Release();
 		}
 	}
-
-	createInputLayoutDescFromVertexShaderSignature(pBlobEffect);
+	if(pBlobEffect)
+		createInputLayoutDescFromVertexShaderSignature(pBlobEffect);
+	else
+		return S_FALSE;
 
 	//DWORD dwShaderFlags = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY;
 
@@ -76,94 +78,94 @@ HRESULT Shader::init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFla
 
 void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shaderBlob)
 {
-		m_inputLayout = NULL;
-		bool firstInstanceLayout = true;
-		// Reflect shader info
-		ID3D10ShaderReflection* pVertexShaderReflection = NULL;	
-		D3D10ReflectShader( p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &pVertexShaderReflection);
-		
- 
-		// Get shader info
-		D3D10_SHADER_DESC shaderDesc;
-		pVertexShaderReflection->GetDesc( &shaderDesc );
+	m_inputLayout = NULL;
+	bool firstInstanceLayout = true;
+	// Reflect shader info
+	ID3D10ShaderReflection* pVertexShaderReflection = NULL;	
+	D3D10ReflectShader( p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &pVertexShaderReflection);
 
-		// Read input layout description from shader info
-		UINT32 byteOffset = 0;
-		std::vector<D3D10_INPUT_ELEMENT_DESC> inputLayoutDesc;
-		for (UINT32 i=0; i< shaderDesc.InputParameters; i++)
+
+	// Get shader info
+	D3D10_SHADER_DESC shaderDesc;
+	pVertexShaderReflection->GetDesc( &shaderDesc );
+
+	// Read input layout description from shader info
+	UINT32 byteOffset = 0;
+	std::vector<D3D10_INPUT_ELEMENT_DESC> inputLayoutDesc;
+	for (UINT32 i=0; i< shaderDesc.InputParameters; i++)
+	{
+		D3D10_SIGNATURE_PARAMETER_DESC paramDesc;		
+		pVertexShaderReflection->GetInputParameterDesc(i, &paramDesc );
+
+		// fill out input element desc
+		D3D10_INPUT_ELEMENT_DESC elementDesc;	
+		elementDesc.SemanticName = paramDesc.SemanticName;		
+		elementDesc.SemanticIndex = paramDesc.SemanticIndex;
+		//elementDesc.InstanceDataStepRate = 0;
+		//elementDesc.InputSlot = 0;
+
+		string tempSemanticName = paramDesc.SemanticName;
+
+		if(tempSemanticName == "mTransform")
 		{
-			D3D10_SIGNATURE_PARAMETER_DESC paramDesc;		
-			pVertexShaderReflection->GetInputParameterDesc(i, &paramDesc );
-
-			// fill out input element desc
-			D3D10_INPUT_ELEMENT_DESC elementDesc;	
-			elementDesc.SemanticName = paramDesc.SemanticName;		
-			elementDesc.SemanticIndex = paramDesc.SemanticIndex;
-			//elementDesc.InstanceDataStepRate = 0;
-			//elementDesc.InputSlot = 0;
-
-			string tempSemanticName = paramDesc.SemanticName;
-
-			if(tempSemanticName == "mTransform")
+			if (firstInstanceLayout)
 			{
-				if (firstInstanceLayout)
-				{
-					byteOffset = 0;
-					firstInstanceLayout = false;
-				}
-				elementDesc.InputSlot = 1;
-				elementDesc.InputSlotClass = D3D10_INPUT_PER_INSTANCE_DATA;
-				elementDesc.InstanceDataStepRate = 1;
+				byteOffset = 0;
+				firstInstanceLayout = false;
 			}
-			else
-			{
-				elementDesc.InputSlot = 0;
-				elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
-				elementDesc.InstanceDataStepRate = 0;
-			}
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_INSTANCE_DATA;
+			elementDesc.InstanceDataStepRate = 1;
+		}
+		else
+		{
+			elementDesc.InputSlot = 0;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
+		}
 
-			elementDesc.AlignedByteOffset = byteOffset;
+		elementDesc.AlignedByteOffset = byteOffset;
 
-			// determine DXGI format
-			if ( paramDesc.Mask == 1 )
-			{
-				if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32_UINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32_SINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32_FLOAT;
-				byteOffset += 4;
-			}
-			else if ( paramDesc.Mask <= 3 )
-			{
-				if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_UINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_SINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
-				byteOffset += 8;
-			}
-			else if ( paramDesc.Mask <= 7 )
-			{
-				if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_SINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+		// determine DXGI format
+		if ( paramDesc.Mask == 1 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32_FLOAT;
+			byteOffset += 4;
+		}
+		else if ( paramDesc.Mask <= 3 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
+			byteOffset += 8;
+		}
+		else if ( paramDesc.Mask <= 7 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
 			byteOffset += 12;
-			}
-			else if ( paramDesc.Mask <= 15 )
-			{
-				if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_SINT;
-				else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-				byteOffset += 16;
-			}
+		}
+		else if ( paramDesc.Mask <= 15 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			byteOffset += 16;
+		}
 
-			//save element desc
-			inputLayoutDesc.push_back(elementDesc);
-		}		
+		//save element desc
+		inputLayoutDesc.push_back(elementDesc);
+	}		
 
-		// Try to create Input Layout
-		HRESULT hr = m_device->CreateInputLayout( &inputLayoutDesc[0], inputLayoutDesc.size(), p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &m_inputLayout );
+	// Try to create Input Layout
+	HRESULT hr = m_device->CreateInputLayout( &inputLayoutDesc[0], inputLayoutDesc.size(), p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &m_inputLayout );
 
-		//Free allocation shader reflection memory
-		pVertexShaderReflection->Release();
-		
+	//Free allocation shader reflection memory
+	pVertexShaderReflection->Release();
+
 }
 
 
@@ -172,7 +174,7 @@ HRESULT Shader::apply(unsigned int p_pass)
 	ID3D10EffectPass* p = m_pTechnique->GetPassByIndex(p_pass);
 	if(p)
 	{
-		 m_pTechnique->GetPassByIndex(p_pass)->Apply(0);
+		m_pTechnique->GetPassByIndex(p_pass)->Apply(0);
 
 		if(m_inputLayout)
 		{

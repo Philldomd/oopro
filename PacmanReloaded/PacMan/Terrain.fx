@@ -10,37 +10,30 @@
 struct VSInstIn
 {
     float3 pos : POSITION;
-    float3 norm : NORMAL;
-    float2 tex : TEXTURE0;
-    row_major float4x4 mTransform : mTransform;
+    float2 tex : TEXCOORD;
+	float3 norm : NORMAL;
 };
 
 struct PSSceneIn
 {
-    float4 pos : SV_Position;
-    float2 tex : TEXTURE0;
-    float4 color : COLOR0;
+	float4 pos : SV_POSITION;
+    float2 tex : TEXCOORD;
+    float3 norm : NORMAL;
 };
 
 //--------------------------------------------------------------------------------------
 // Constant buffers 
 //--------------------------------------------------------------------------------------
-cbuffer crarely
-{
-    float4x4 g_mTreeMatrices[50];
-    uint g_iNumTrees;
-};
-
 cbuffer ceveryframe
 {
     float4x4 g_mWorldViewProj;
-    float4x4 g_mWorldView;
-	float4x4 g_mRotation;
 };
+
 //--------------------------------------------------------------------------------------
 // Textures and Samplers
 //--------------------------------------------------------------------------------------
 Texture2D g_txDiffuse;
+
 SamplerState g_samLinear
 {
     Filter = ANISOTROPIC;
@@ -52,8 +45,8 @@ SamplerState g_samLinear
 //--------------------------------------------------------------------------------------
 RasterizerState EnableMSAA
 {
-    CullMode = BACK;
-    MultisampleEnable = TRUE;
+	FillMode = SOLID;
+    CullMode = FRONT;
 };
 
 DepthStencilState EnableDepthTestWrite
@@ -74,36 +67,19 @@ BlendState NoBlending
 PSSceneIn VSInstmain(VSInstIn input)
 {
     PSSceneIn output;
-    
-    //
-    // Transform by our Sceneance matrix
-    //
-    float4 InstancePosition = mul(float4(input.pos, 1), mul(g_mRotation,input.mTransform));
     //float4 ViewPos = mul(InstancePosition, g_mWorldView );
     
     //
     // Transform the vert to view-space
     //
-    float4 v4Position = mul(InstancePosition, g_mWorldViewProj);
-    output.pos = v4Position;
+    output.pos = mul(float4(input.pos, 1.0f), g_mWorldViewProj);
     
     //  
     // Transfer the rest
     //
     output.tex = input.tex;
-    
-    //
-    // dot the norm with the light dir
-    //
-    float3 norm = mul(input.norm,(float3x3)input.mTransform);
-    output.color = float4(1,0,0,1);//CalcLighting( norm, ViewPos.z );
-    
-    //
-    // Dim the color by how far up the tree we are.  
-    // This is a nice way to fake occlusion of the branches by the leaves.
-    //
-    output.color  = output.color * saturate(max(dot(float4(norm, 0), normalize(float4(0.0f, 1.0f, 0.0f, 0.0f))), 0.05f) + 0.9f);
-    
+	output.norm = input.norm;
+
     return output;
 }
 
@@ -112,17 +88,14 @@ PSSceneIn VSInstmain(VSInstIn input)
 //--------------------------------------------------------------------------------------
 float4 PSScenemain(PSSceneIn input) : SV_Target
 {
-	float4 color;
-	//color = g_txDiffuse.Sample( g_samLinear, input.tex ) * input.color;
-
-	color = input.color;
-    return color;
+	return float4(1,0,1,1);
+	//return g_txDiffuse.Sample( g_samLinear, input.tex );
 }
 
 //--------------------------------------------------------------------------------------
 // Render instanced meshes with vertex lighting
 //--------------------------------------------------------------------------------------
-technique10 RenderInstancedVertLighting
+technique10 RenderTerrain
 {
     pass p0
     {

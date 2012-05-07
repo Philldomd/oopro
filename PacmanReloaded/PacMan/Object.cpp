@@ -13,6 +13,17 @@ Object::Object(ID3D10Device* p_device, D3DXVECTOR3 p_position)
 	D3DXMatrixTranslation(&m_translate, m_position.x, m_position.y, m_position.z);
 }
 
+Object::~Object()
+{
+	m_model = NULL;
+	m_device = NULL;
+}
+
+void Object::update(float p_deltaTime)
+{
+
+}
+
 void Object::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 {
 	D3DXMATRIX worldViewProj = getWorldMatrix() * p_view * p_projection;
