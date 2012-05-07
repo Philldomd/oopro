@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="SceneSystem">
+      <UniqueIdentifier>{2650e3d9-37ba-4c7f-9a0d-e669ecb893c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneSystem\System">
+      <UniqueIdentifier>{bc1a02e6-39ab-4fc5-8141-9165453725e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneSystem\Scenes">
+      <UniqueIdentifier>{e6204ef4-b03a-4b3b-8dc6-d040d3f54053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD&amp;Sprites">
+      <UniqueIdentifier>{ffe9b2dc-0ccd-46bb-88d0-2c0565d72947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelSystem">
+      <UniqueIdentifier>{8a0e55a8-979d-40a3-8dbc-4a729e190a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structs">
+      <UniqueIdentifier>{c714742b-277f-4fb2-968b-9909c869fc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader&amp;Buffer">
+      <UniqueIdentifier>{45e29315-482f-4463-88f2-a989f780d3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General">
+      <UniqueIdentifier>{958e5ea4-849d-4629-be9d-b7a838faf87c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldLoader">
+      <UniqueIdentifier>{6ef4b888-d001-4032-a5fb-1d94369e2060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{83448659-661e-4166-b153-6e87f71cbee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Instancing">
+      <UniqueIdentifier>{f92d8556-f1e9-4b35-b08b-66aa8532fa33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{d0decd71-f30b-41b6-b94e-3a3bfe4590fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HID">
+      <UniqueIdentifier>{00cc4878-7405-4548-8908-265be279c853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer">
+      <UniqueIdentifier>{4587df44-b0d9-4acb-a1f3-5cb7878389dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{fc3ae3c1-3dfe-4765-a7bd-cffb205b9b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera &amp; Minimap">
+      <UniqueIdentifier>{4bd8788d-45ab-4966-8f82-9723db22e029}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="d3dApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>SceneSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>SceneSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelManager.h">
+      <Filter>ModelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelStructs.h">
+      <Filter>Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>ModelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexStructs.h">
+      <Filter>Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>General</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldLoader.h">
+      <Filter>WorldLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Candy.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Cherry.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Pacman.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerallStructs.h">
+      <Filter>Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="HID.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="HIDObservable.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ExampleScene.h">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteButton.h">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>WorldLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="PinkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ClydeAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="InkyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera &amp; Minimap</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Instancing.h">
+      <Filter>Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="Minimap.h">
+      <Filter>Camera &amp; Minimap</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="d3dApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>SceneSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>SceneSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelManager.cpp">
+      <Filter>ModelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>ModelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldLoader.cpp">
+      <Filter>WorldLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Candy.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cherry.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Pacman.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="HID.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="HIDObservable.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="ExampleScene.cpp">
+      <Filter>SceneSystem\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteButton.cpp">
+      <Filter>HUD&amp;Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>WorldLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="ClydeAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="InkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="PinkyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera &amp; Minimap</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Shader&amp;Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Instancing.cpp">
+      <Filter>Instancing</Filter>
+    </ClCompile>
+    <ClCompile Include="Minimap.cpp">
+      <Filter>Camera &amp; Minimap</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Instancing.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Terrain.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Obj.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="miniMap.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
