@@ -17,14 +17,34 @@ Pacman::~Pacman()
 	m_device = NULL;
 }
 
-void Pacman::initialize()
+void Pacman::initialize(Shader* p_shader)
 {
-
+	m_shader = p_shader;
 }
 
 void Pacman::update(float p_deltaTime)
 {
 	m_position += m_velocity * m_forwardSpeed * p_deltaTime;
+}
+
+void Pacman::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
+{
+	m_device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	D3DXMATRIX worldViewProj = getWorldMatrix() * p_view * p_projection;
+	
+	m_model->m_vertexBuffer->apply(0);
+	m_model->m_indexBuffer->apply(0);
+	
+	m_shader->setMatrix("g_mWorldViewProj", worldViewProj);	
+
+	D3D10_TECHNIQUE_DESC techDesc;
+	m_shader->getTechnique()->GetDesc( &techDesc );
+	for( UINT p = 0; p < techDesc.Passes; p++ )
+	{
+		m_shader->apply(p);
+		m_device->DrawIndexed( m_model->m_size,0, 0);
+	}
 }
 
 void Pacman::setDirection(D3DXVECTOR3 p_direction)

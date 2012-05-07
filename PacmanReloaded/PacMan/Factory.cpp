@@ -17,16 +17,16 @@ Enemy* EnemyFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_
 	switch(p_type)
 	{
 		case Enemy::BLINKY:
-			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
+			return new Enemy(p_device, m_modelManager->getModelByName("Ghost"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		case Enemy::PINKY:
-			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
+			return new Enemy(p_device, m_modelManager->getModelByName("Ghost"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		case Enemy::INKY:
-			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
+			return new Enemy(p_device, m_modelManager->getModelByName("Ghost"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		case Enemy::CLYDE:
-			return new Enemy(p_device, m_modelManager->getModelByName("Candy"),p_position, p_size, p_mapMatrix, p_type);
+			return new Enemy(p_device, m_modelManager->getModelByName("Ghost"),p_position, p_size, p_mapMatrix, p_type);
 			break;
 		default:
 			return NULL;

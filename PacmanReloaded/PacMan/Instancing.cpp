@@ -5,6 +5,7 @@ Instancing::Instancing(ID3D10Device* p_device)
 	m_device = p_device;
 	D3DXMatrixIdentity(&m_rotation);
 	m_shader = NULL;
+	m_angle = 0.0f;
 }
 
 Instancing::~Instancing()
@@ -12,9 +13,9 @@ Instancing::~Instancing()
 	m_shader = NULL;
 	
 	m_device = NULL;
-	SAFE_RELEASE(m_VB[1]);
 	mInstanceData = NULL;
 	m_VB[0] = NULL;
+	m_VB[1] = NULL;
 
 	m_objects = NULL;
 }
@@ -119,6 +120,9 @@ void Instancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 		
 		m_shader->setMatrix("g_mWorldViewProj", p_view * p_projection);
 		m_shader->setMatrix("g_mRotation",m_rotation);
+
+		//if(m_objects->at(0)->getModel()->m_material->m_textureResource)
+			//m_shader->setResource("g_txDiffuse",m_objects->at(0)->getModel()->m_material->m_textureResource);
 		
 		UINT Offsets[2] = {0,0};
 
@@ -142,4 +146,9 @@ void Instancing::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
                                             0, 0, 0 );
 		}
 	}
+}
+
+void Instancing::temp(vector<Object*>* p_objects)
+{
+	m_shader->setResource("g_txDiffuse",p_objects->at(0)->getModel()->m_material->m_textureResource);
 }

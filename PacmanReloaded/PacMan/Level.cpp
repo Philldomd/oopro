@@ -24,16 +24,16 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	m_shaderManager = new Shaders();
 	m_shaderManager->init(p_d3dDevice);
 	m_shaderManager->addShader("Instancing.fx", 12);
-	m_shaderManager->addShader("CandyInstancing.fx", 12);
-	m_shaderManager->addShader("CherryInstancing.fx", 12);
 	m_shaderManager->addShader("Terrain.fx", 12);
+	m_shaderManager->addShader("Obj.fx", 12);
 
 	//Modelloading
 	m_modelManager = new ModelManager(p_d3dDevice);
 	m_modelManager->createModel("Wall", "Box.obj");
 	m_modelManager->createModel("Candy", "diamond.obj");
-	//m_modelManager->createModel("Pacman", "PacMan_Open.obj");
-	m_modelManager->createModel("Cherry", "Cherry.obj");
+	m_modelManager->createModel("Pacman", "PacMan_Open.obj");
+	m_modelManager->createModel("Ghost", "Ghost.obj");
+	m_modelManager->createModel("Cherry", "Cherry1.obj");
 
 	//Terrain
 	m_terrain = new Terrain(p_d3dDevice, 512,512,5);
@@ -59,6 +59,13 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 
 	//Init All Objects
 	m_objects.initialize();
+	//Run pacman Init to gain shader
+	m_objects.m_pacman->initialize(m_shaderManager->getShaderByName("Obj.fx"));
+	//Run Enemies Init to gain shader
+	for each(Enemy* o in m_objects.m_enemies)
+	{
+		o->initialize(m_shaderManager->getShaderByName("Obj.fx"));
+	}
 
 	//TEMPORARY STUFF REMOVE !!
 	m_camera = new Camera(D3DXVECTOR3( 200, 14, 200 ));
@@ -70,10 +77,17 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 
 void Level::draw( ID3DX10Sprite * p_spriteBatch )
 {
-	
+	for each(Enemy* o in m_objects.m_enemies)
+	{
+		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	}
+
+	m_objects.m_pacman->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	//m_waddaSprite->draw(p_spriteBatch);
 
 	m_terrain->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+
+
 
 	m_wallInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_candyInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
@@ -85,7 +99,7 @@ void Level::draw( ID3DX10Sprite * p_spriteBatch )
 
 void Level::update( float p_deltaTime )
 {
-
+	m_cherryInstancing->temp(&m_objects.m_cherries);
 
 	m_candyInstancing->updateDynamic(p_deltaTime);
 	m_cherryInstancing->updateDynamic(p_deltaTime);

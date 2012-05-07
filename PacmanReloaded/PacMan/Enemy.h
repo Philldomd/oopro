@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include "Object.h"
+#include "Shader.h"
 #include "AI.h"
 #include "BlinkyAI.h"
 #include "InkyAI.h"
@@ -20,7 +21,8 @@ public:
 	Enemy(	ID3D10Device* p_device, Model* p__model, D3DXVECTOR3 p_position, 
 		D3DXVECTOR2 p_size,vector<vector<char>>* p_mapMatrix, Type p_type);
 	virtual ~Enemy();
-	virtual void	initialize();
+	void	initialize(Shader* p_shader);
+	void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
 	virtual void	update(D3DXVECTOR2 p_pacmanPos, D3DXVECTOR2 p_pacmanDirection, float gameTime); //Speed depends on return enum, chase, shatter, frightened
 private:
 	AI* m_ai;
@@ -29,6 +31,7 @@ private:
 	D3DXVECTOR2 m_tileSize; //Pixelsize
 	vector<vector<char>>* m_mapMatrix;
 	Type m_type;
+	Shader*	m_shader;
 
 };
 #endif

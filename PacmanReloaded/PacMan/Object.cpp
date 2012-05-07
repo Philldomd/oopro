@@ -19,6 +19,11 @@ Object::~Object()
 	m_device = NULL;
 }
 
+void Object::initialize()
+{
+
+}
+
 void Object::update(float p_deltaTime)
 {
 

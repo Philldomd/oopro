@@ -159,6 +159,7 @@
     <ClCompile Include="WorldLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Obj.fx" />
     <None Include="Instancing.fx" />
     <None Include="Terrain.fx" />
   </ItemGroup>

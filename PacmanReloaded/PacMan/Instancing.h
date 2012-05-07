@@ -19,6 +19,9 @@ public:
 	void	updateDefault(float p_gameTime);
 	void	updateDynamic(float p_gameTime);
 	void	render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection);
+
+	//TEMP
+	void temp(vector<Object*>* p_objects);
 private:
 	ID3D10Device*		m_device;
 	vector<Object*>*	m_objects;
