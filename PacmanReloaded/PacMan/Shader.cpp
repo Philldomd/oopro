@@ -4,12 +4,12 @@ Shader::Shader()
 {
 	m_pEffect = NULL;
 	m_pTechnique = NULL;
-	m_pInputLayout = NULL;
+	m_inputLayout = NULL;
 }
 
 Shader::~Shader()
 {
-	SAFE_RELEASE(m_pInputLayout);
+	SAFE_RELEASE(m_inputLayout);
 	//SAFE_RELEASE(m_pEffect);
 
 	if(m_pEffect)
@@ -22,11 +22,25 @@ HRESULT Shader::init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFla
 {
 	m_device = p_device;
 
+	m_FXFileName =  p_filename;
+
 	HRESULT hr = S_OK;
 
-	ID3DBlob*	pBlobEffect = NULL;
-	ID3DBlob*	pBlobErrors = NULL;
+	ID3D10Blob*	pBlobEffect = NULL;
 	ID3D10Blob* compilationErrors = 0;
+
+	if(D3DX10CompileFromFile( p_filename, NULL, NULL, "VSInstmain", "vs_4_0", p_shaderFlags, NULL, NULL, &pBlobEffect, &compilationErrors, NULL ))
+	{
+		if ( compilationErrors != NULL )
+		{
+			MessageBoxA(0, (char*)compilationErrors->GetBufferPointer(), 0, 0);
+			compilationErrors->Release();
+		}
+	}
+	if(pBlobEffect)
+		createInputLayoutDescFromVertexShaderSignature(pBlobEffect);
+	else
+		return S_FALSE;
 
 	//DWORD dwShaderFlags = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY;
 
@@ -57,83 +71,114 @@ HRESULT Shader::init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFla
 		//DXTrace(__FILE__, (DWORD)__LINE__, hr, "D3DX10CreateEffectFromFile", true);
 	}
 
+	m_pTechnique = m_pEffect->GetTechniqueByIndex(0);
+
 	return hr;
 }
 
-HRESULT Shader::init(ID3D10Device* p_device, char* p_filename,
-		const D3D10_INPUT_ELEMENT_DESC* p_inputElementDesc, 
-		unsigned int p_numElements, char* p_tecName, DWORD p_shaderFlags)
+void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shaderBlob)
 {
-	m_device = p_device;
+	m_inputLayout = NULL;
+	bool firstInstanceLayout = true;
+	// Reflect shader info
+	ID3D10ShaderReflection* pVertexShaderReflection = NULL;	
+	D3D10ReflectShader( p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &pVertexShaderReflection);
 
-	HRESULT hr = S_OK;
 
-	ID3DBlob*	pBlobEffect = NULL;
-	ID3DBlob*	pBlobErrors = NULL;
-	ID3D10Blob* compilationErrors = 0;
-	
-	//DWORD dwShaderFlags = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY;
+	// Get shader info
+	D3D10_SHADER_DESC shaderDesc;
+	pVertexShaderReflection->GetDesc( &shaderDesc );
 
-#if defined(DEBUG) || defined(_DEBUG)
-	//dwShaderFlags |= D3D10_SHADER_DEBUG;
-	p_shaderFlags |= D3D10_SHADER_DEBUG;
-	//shaderFlags |= D3D10_SHADER_SKIP_OPTIMIZATION;
-#endif
-	
-	if(FAILED(D3DX10CreateEffectFromFile(	p_filename,
-											NULL,
-											NULL,
-											"fx_4_0",
-											p_shaderFlags,
-											0,
-											m_device,
-											NULL,
-											NULL,
-											&m_pEffect,
-											&compilationErrors,
-											NULL)))
+	// Read input layout description from shader info
+	UINT32 byteOffset = 0;
+	std::vector<D3D10_INPUT_ELEMENT_DESC> inputLayoutDesc;
+	for (UINT32 i=0; i< shaderDesc.InputParameters; i++)
 	{
-		if( compilationErrors )
+		D3D10_SIGNATURE_PARAMETER_DESC paramDesc;		
+		pVertexShaderReflection->GetInputParameterDesc(i, &paramDesc );
+
+		// fill out input element desc
+		D3D10_INPUT_ELEMENT_DESC elementDesc;	
+		elementDesc.SemanticName = paramDesc.SemanticName;		
+		elementDesc.SemanticIndex = paramDesc.SemanticIndex;
+		//elementDesc.InstanceDataStepRate = 0;
+		//elementDesc.InputSlot = 0;
+
+		string tempSemanticName = paramDesc.SemanticName;
+
+		if(tempSemanticName == "mTransform")
 		{
-			MessageBoxA(0, (char*)compilationErrors->GetBufferPointer(), 0, 0);
-			compilationErrors->Release();
+			if (firstInstanceLayout)
+			{
+				byteOffset = 0;
+				firstInstanceLayout = false;
+			}
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_INSTANCE_DATA;
+			elementDesc.InstanceDataStepRate = 1;
 		}
-		//DXTrace(__FILE__, (DWORD)__LINE__, hr, "D3DX10CreateEffectFromFile", true);
-	}
-
-	m_pTechnique = m_pEffect->GetTechniqueByName(p_tecName);
-
-
-	if(p_inputElementDesc)
-	{
-		D3D10_PASS_DESC PassDesc;
-		m_pTechnique->GetPassByIndex(0)->GetDesc(&PassDesc);
-		if(FAILED(hr = m_device->CreateInputLayout(
-			p_inputElementDesc,
-			p_numElements,
-			PassDesc.pIAInputSignature,
-			PassDesc.IAInputSignatureSize,
-			&m_pInputLayout
-			)))
+		else
 		{
-			MessageBox(0, "Cannot create input layout.", "CreateInputLayout error", MB_OK | MB_ICONERROR);
-			return hr;
+			elementDesc.InputSlot = 0;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
 		}
-	}
 
-	return hr;
+		elementDesc.AlignedByteOffset = byteOffset;
+
+		// determine DXGI format
+		if ( paramDesc.Mask == 1 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32_FLOAT;
+			byteOffset += 4;
+		}
+		else if ( paramDesc.Mask <= 3 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
+			byteOffset += 8;
+		}
+		else if ( paramDesc.Mask <= 7 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+			byteOffset += 12;
+		}
+		else if ( paramDesc.Mask <= 15 )
+		{
+			if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_SINT;
+			else if ( paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32 ) elementDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			byteOffset += 16;
+		}
+
+		//save element desc
+		inputLayoutDesc.push_back(elementDesc);
+	}		
+
+	// Try to create Input Layout
+	HRESULT hr = m_device->CreateInputLayout( &inputLayoutDesc[0], inputLayoutDesc.size(), p_shaderBlob->GetBufferPointer(), p_shaderBlob->GetBufferSize(), &m_inputLayout );
+
+	//Free allocation shader reflection memory
+	pVertexShaderReflection->Release();
+
 }
+
 
 HRESULT Shader::apply(unsigned int p_pass)
 {
 	ID3D10EffectPass* p = m_pTechnique->GetPassByIndex(p_pass);
 	if(p)
 	{
-		 m_pTechnique->GetPassByIndex(p_pass)->Apply(0);
+		m_pTechnique->GetPassByIndex(p_pass)->Apply(0);
 
-		if(m_pInputLayout)
+		if(m_inputLayout)
 		{
-			m_device->IASetInputLayout(m_pInputLayout);
+			m_device->IASetInputLayout(m_inputLayout);
 		}
 		return S_OK;
 	}
@@ -194,4 +239,9 @@ ID3D10EffectTechnique* Shader::getTechniqueByName(char* p_tecName)
 void Shader::setTechniqueByName(char* p_tecName)
 {
 	m_pTechnique = m_pEffect->GetTechniqueByName(p_tecName);
+}
+
+string Shader::getFXFileName()
+{
+	return m_FXFileName;
 }

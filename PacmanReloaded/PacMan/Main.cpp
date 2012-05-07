@@ -20,6 +20,11 @@ Main::~Main(void)
 {
 	if(md3dDevice)
 		md3dDevice->ClearState();
+	g_sceneManager->removeCurrentScenes();
+	g_sceneManager->~SceneManager();
+	g_sceneManager = NULL;
+	g_hid->~HID();
+	g_hid = NULL;
 }
 
 
