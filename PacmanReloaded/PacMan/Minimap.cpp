@@ -22,12 +22,10 @@ void MiniMap::initialize(ID3D10Device* p_Device)
 	m_Device = p_Device;
 	
 
-	D3DXMatrixLookAtLH(&m_view, &D3DXVECTOR3(277,15,220),
+	D3DXMatrixLookAtLH(&m_view, &D3DXVECTOR3(277,150,220),
 		&D3DXVECTOR3(277, 0.0f, 220), &D3DXVECTOR3(-1, 0, 0));
 	D3DXMatrixOrthoLH(&m_viewVolume,440, 554, 1.0f, 2048.0f);
-
 	m_miniMapShader->init(m_Device, "miniMap.fx", 12);
-	
 }
 
 HRESULT MiniMap::CreateTex()
@@ -76,6 +74,8 @@ HRESULT MiniMap::CreateTex()
 
 void MiniMap::prepareRender(ID3D10DepthStencilView* p_depthView, D3D10_VIEWPORT p_VP)
 {
+	
+	
 	if(m_width != p_VP.Width || m_height != p_VP.Height)
 	{
 		m_width = p_VP.Width;

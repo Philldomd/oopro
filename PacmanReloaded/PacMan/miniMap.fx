@@ -14,7 +14,7 @@ struct PS_INPUT2
 
 cbuffer cbEveryFrame
 {
-	matrix	g_mLightWVP;
+	matrix	m_viewWVP;
 };
 
 RasterizerState backFaceCulling
@@ -34,7 +34,7 @@ SamplerState bilinearSampler
 };
 float4 VSInstmain( VS_INPUT input ) : SV_POSITION
 {	
-	return  float4(0,0,0,0);
+	return  mul(float4(0,0,0,0),m_viewWVP);
 }
 float4 PS2( PS_INPUT2 input ) : SV_TARGET
 {		
@@ -45,11 +45,11 @@ void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStr
 {
 	PS_INPUT2 p;
 	
-	p.pos = float4(0.125f,-1,0,1);
+	p.pos = float4(0.525f,-1,0,1);
 	p.uv = float2(0,1);
 	triStream.Append(p);
 	
-	p.pos = float4(0.125f,-0.125f,0,1);
+	p.pos = float4(0.525f,-0.525f,0,1);
 	p.uv = float2(0,0);
 	triStream.Append(p);
 
@@ -57,7 +57,7 @@ void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStr
 	p.uv = float2(1,1);
 	triStream.Append(p);
 
-	p.pos = float4(1,-0.125f,0,1);
+	p.pos = float4(1,-0.525f,0,1);
 	p.uv = float2(1,0);
 	triStream.Append(p);
 }

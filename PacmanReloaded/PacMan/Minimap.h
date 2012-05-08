@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "Shader.h"
-#include "d3dApp.h"
 
 class MiniMap
 {
@@ -28,7 +27,7 @@ private:
 	int m_height;
 	
 	Shader* m_miniMapShader;
-	D3DXMATRIX m_view, m_viewVolume;
+	D3DXMATRIX m_view, m_viewVolume, m_viewWVP;
 	ID3D10Device* m_Device;
 	ID3D10Texture2D* m_miniMap;
 	ID3D10RenderTargetView* m_miniRTV;

@@ -84,15 +84,15 @@ void Level::draw( ID3DX10Sprite * p_spriteBatch, ID3D10DepthStencilView* p_depth
 	m_miniMap->prepareRender(p_depthView,p_VP);
 	for each(Enemy* o in m_objects.m_enemies)
 	{
-		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+		o->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
 	}
-	m_objects.m_pacman->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	m_objects.m_pacman->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
 	//m_waddaSprite->draw(p_spriteBatch);
-	m_terrain->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
-	m_wallInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
-	m_candyInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
-	m_cherryInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
-	m_powerUpInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	m_terrain->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_wallInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_candyInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_cherryInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
+	m_powerUpInstancing->render(m_miniMap->getViewMatrix(), m_miniMap->getProjectionMatrix());
 	m_miniMap->normalRender(p_depthView, p_renderTarget, p_VP);
 	for each(Enemy* o in m_objects.m_enemies)
 	{

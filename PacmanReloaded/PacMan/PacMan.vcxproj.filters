@@ -61,6 +61,9 @@
     <Filter Include="Camera &amp; Minimap">
       <UniqueIdentifier>{4bd8788d-45ab-4966-8f82-9723db22e029}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{beeee008-9383-451f-9ce8-8d4aa7c707ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3dApp.h">
@@ -189,6 +192,12 @@
     <ClInclude Include="Minimap.h">
       <Filter>Camera &amp; Minimap</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GeoListener.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -301,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="Minimap.cpp">
       <Filter>Camera &amp; Minimap</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GeoListener.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
