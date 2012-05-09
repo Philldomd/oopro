@@ -23,7 +23,7 @@ public:
 	HWND      getMainWnd();
 
 	int run();
-
+	D3D10_VIEWPORT vp;
 	// Framework methods.  Derived client class overrides these methods to 
 	// implement specific application requirements.
 
@@ -32,7 +32,9 @@ public:
 	virtual void updateScene(float dt);
 	virtual void drawScene(); 
 	virtual LRESULT msgProc(UINT msg, WPARAM wParam, LPARAM lParam);
-
+	ID3D10DepthStencilView* getDSV();
+	ID3D10RenderTargetView* getRTV();
+	D3D10_VIEWPORT getVP();
 protected:
 	void initMainWindow();
 	void initDirect3D();
@@ -63,6 +65,7 @@ protected:
 	D3DXCOLOR mClearColor;
 	int mClientWidth;
 	int mClientHeight;
+	
 };
 
 

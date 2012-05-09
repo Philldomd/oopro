@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------------
 // Input and output structures 
 //--------------------------------------------------------------------------------------
-struct VSInstIn
+struct VSVertextIn
 {
     float3 pos : POSITION;
     float3 norm : NORMAL;
@@ -67,7 +67,7 @@ BlendState NoBlending
 // Instancing vertex shader.  Positions the vertices based upon the matrix stored
 // in the second vertex stream.
 //--------------------------------------------------------------------------------------
-PSSceneIn VSInstmain(VSInstIn input)
+PSSceneIn VSInstmain(VSVertextIn input)
 {
     PSSceneIn output;
     

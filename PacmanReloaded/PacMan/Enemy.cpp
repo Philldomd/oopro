@@ -38,6 +38,8 @@ void Enemy::update(D3DXVECTOR2 p_pacmanPos, D3DXVECTOR2 p_pacmanDirection, float
 
 	m_position.x += m_direction.x * m_speed * gameTime;
 	m_position.z += m_direction.y * m_speed * gameTime;
+
+	D3DXMatrixTranslation(&m_translate, m_position.x, m_position.y, m_position.z);
 }
 
 void Enemy::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)

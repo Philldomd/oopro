@@ -37,9 +37,6 @@
     <Filter Include="General">
       <UniqueIdentifier>{958e5ea4-849d-4629-be9d-b7a838faf87c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TEMPSTUFF">
-      <UniqueIdentifier>{4bd8788d-45ab-4966-8f82-9723db22e029}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WorldLoader">
       <UniqueIdentifier>{6ef4b888-d001-4032-a5fb-1d94369e2060}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,9 @@
     </Filter>
     <Filter Include="AI">
       <UniqueIdentifier>{fc3ae3c1-3dfe-4765-a7bd-cffb205b9b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera &amp; Minimap">
+      <UniqueIdentifier>{4bd8788d-45ab-4966-8f82-9723db22e029}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClInclude Include="Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="GenerallStructs.h">
-      <Filter>Structs</Filter>
-    </ClInclude>
     <ClInclude Include="HID.h">
       <Filter>HID</Filter>
     </ClInclude>
@@ -175,7 +172,7 @@
       <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>TEMPSTUFF</Filter>
+      <Filter>Camera &amp; Minimap</Filter>
     </ClInclude>
     <ClInclude Include="Shaders.h">
       <Filter>Shader&amp;Buffer</Filter>
@@ -185,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="Instancing.h">
       <Filter>Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="Minimap.h">
+      <Filter>Camera &amp; Minimap</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralStructs.h">
+      <Filter>Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -288,13 +291,16 @@
       <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>TEMPSTUFF</Filter>
+      <Filter>Camera &amp; Minimap</Filter>
     </ClCompile>
     <ClCompile Include="Shaders.cpp">
       <Filter>Shader&amp;Buffer</Filter>
     </ClCompile>
     <ClCompile Include="Instancing.cpp">
       <Filter>Instancing</Filter>
+    </ClCompile>
+    <ClCompile Include="Minimap.cpp">
+      <Filter>Camera &amp; Minimap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +311,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Obj.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="miniMap.fx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Pacman.fx">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

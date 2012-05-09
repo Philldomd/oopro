@@ -106,7 +106,7 @@ void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shader
 
 		string tempSemanticName = paramDesc.SemanticName;
 
-		if(tempSemanticName == "mTransform")
+		if(tempSemanticName == "mTransform") //Instancing rule
 		{
 			if (firstInstanceLayout)
 			{
@@ -116,6 +116,29 @@ void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shader
 			elementDesc.InputSlot = 1;
 			elementDesc.InputSlotClass = D3D10_INPUT_PER_INSTANCE_DATA;
 			elementDesc.InstanceDataStepRate = 1;
+		}
+		else if(tempSemanticName == "mPOSITION") //Morph rule
+		{
+			if (firstInstanceLayout)
+			{
+				byteOffset = 0;
+				firstInstanceLayout = false;
+			}
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
+		}
+		else if(tempSemanticName == "mNORMAL") //Morph rule
+		{
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
+		}
+		else if(tempSemanticName == "mTEXTURE") //Morph rule
+		{
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
 		}
 		else
 		{

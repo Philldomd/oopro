@@ -4,7 +4,7 @@
 //####################
 Pacman* PacmanFactory::createObjectInstance(ID3D10Device* p_device, D3DXVECTOR3 p_position, D3DXVECTOR2 p_size)
 {
-	return new Pacman(p_device, m_modelManager->getModelByName("Pacman"),p_position, p_size);
+	return new Pacman(p_device, m_modelManager->getModelByName("PacmanO"),m_modelManager->getModelByName("PacmanC"),p_position, p_size);
 }
 
 //####################

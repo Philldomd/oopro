@@ -69,6 +69,11 @@ D3DXMATRIX Object::getNormalMatrix()
 	return normalMatrix;
 }
 
+D3DXMATRIX Object::getRotationMatrix()
+{
+	return m_rotation;
+}
+
 Model* Object::getModel()
 {
 	return m_model;

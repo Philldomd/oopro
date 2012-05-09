@@ -4,7 +4,7 @@
 #include "d3dApp.h"
 #include "Factory.h"
 #include "Buffer.h"
-#include "GenerallStructs.h"
+#include "GeneralStructs.h"
 #include "ModelManager.h"
 
 using namespace std;

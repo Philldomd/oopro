@@ -15,6 +15,7 @@ public:
 	Model*			getModel();
 	D3DXVECTOR3		getPosition();
 	D3DXMATRIX		getWorldMatrix();
+	D3DXMATRIX		getRotationMatrix();
 	D3DXMATRIX		getNormalMatrix(); //Returns a matrix for transforming normals
 	//BoundingVolyme* getBoundingVolyme();
 	//Model*		getModel();

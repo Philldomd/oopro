@@ -91,13 +91,14 @@
     <ClInclude Include="ExampleScene.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GameTimer.h" />
-    <ClInclude Include="GenerallStructs.h" />
+    <ClInclude Include="GeneralStructs.h" />
     <ClInclude Include="HID.h" />
     <ClInclude Include="HIDObservable.h" />
     <ClInclude Include="InkyAI.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Minimap.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="ModelStructs.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
@@ -159,8 +161,10 @@
     <ClCompile Include="WorldLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="miniMap.fx" />
     <None Include="Obj.fx" />
     <None Include="Instancing.fx" />
+    <None Include="Pacman.fx" />
     <None Include="Terrain.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
