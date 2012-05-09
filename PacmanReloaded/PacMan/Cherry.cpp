@@ -17,4 +17,5 @@ void Cherry::initialize()
 
 void Cherry::update(float gameTime)
 {
+
 }

@@ -17,4 +17,5 @@ void PowerUp::initialize()
 
 void PowerUp::update(float gameTime)
 {
+
 }

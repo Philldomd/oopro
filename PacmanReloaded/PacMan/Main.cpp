@@ -61,7 +61,7 @@ void Main::drawScene()
 {
 	D3DApp::drawScene();
 
-	g_sceneManager->drawScene();
+	g_sceneManager->drawScene(D3DApp::getDSV(), D3DApp::getRTV(), D3DApp::getVP());
 
 	//Draw information about things(ONLY FOR DEBUGGING)
 	RECT R = {5, 5, 0, 0};

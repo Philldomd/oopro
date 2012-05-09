@@ -7,7 +7,7 @@ Scene::~Scene(){}
 
 void Scene::update(float p_deltaTime){}
 
-void Scene::draw(ID3DX10Sprite * p_spriteBatch){}
+void Scene::draw(ID3DX10Sprite * p_spriteBatch, ID3D10DepthStencilView* p_depthView,ID3D10RenderTargetView* p_renderTarget,D3D10_VIEWPORT p_VP){}
 
 void Scene::init( ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort )
 {

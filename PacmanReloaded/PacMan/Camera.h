@@ -6,53 +6,48 @@
 class Camera
 {
 public:
-	Camera(D3DXVECTOR3 initPos);
+	//Constructor and Destructors
+	Camera();
 	~Camera();
 
-	void				createProjectionMatrix( float pFOV, float pAspect,
-												float pNearPlane, float pFarPlane );
-	void				updateCameraPos();
-	void				updateViewMatrix();
-	//void				setViewMatrix(D3DXVECTOR3 pPos);
-	void				setY( float f );
-	//void				setPosition(float x, float y, float z);
-	void				walk( float f );
-	void				strafe( float f );
-	void				updateYaw( float d );
-	void				updatePitch( float d );
-	D3DXVECTOR3			getPosition();
-	//D3DXVECTOR3			getLookAt();
-	D3DXMATRIX			getProjectionMatrix();
-	D3DXMATRIX			getViewMatrix();
-	bool				isCameraFree();
-	void				setCameraFree(bool p);
-	void				setCameraPos(D3DXVECTOR3 p_pos, D3DXVECTOR3 p_dir);
-	//float				getFarPlane();
+	void	setTarget(const D3DXVECTOR3 &p_target);
+	void	lookAt(const D3DXVECTOR3 &p_eye,
+			 const D3DXVECTOR3 &p_target,
+			 const D3DXVECTOR3 &p_up);
+	void	perspective(float p_fovx, float p_aspect, float p_znear, float p_zfar);
+	void	rotate(float p_pitch, float p_yaw);
+	void	update(float p_gameTime);
+
+	//Getter methods.
+
+	const D3DXVECTOR3		&getPosition();
+	D3DXMATRIX		&getViewMatrix();
+	const D3DXVECTOR3		&getLookAt();
+	D3DXMATRIX		&getProjectionMatrix();
+	const D3DXVECTOR3		&getTarget();
 
 private:
-	D3DXVECTOR3		mCameraPos;
-	D3DXVECTOR3		mUp;
-	D3DXVECTOR3		mLookAtPos;
-	D3DXVECTOR3		mVelocity;
-	D3DXVECTOR3		mLookAt;
-	D3DXVECTOR3		mRight;
+	static const float DEFAULT_FOVX;
+	static const float DEFAULT_ZNEAR;
+	static const float DEFAULT_ZFAR;
+	static const D3DXVECTOR3 WORLD_XAXIS;
+	static const D3DXVECTOR3 WORLD_YAXIS;
+	static const D3DXVECTOR3 WORLD_ZAXIS;
 
-	D3DXMATRIX		mView;
-	D3DXMATRIX		mProjection;
-
-	float			mFOV;
-	float			mAspect;
-	float			mNearPlane;
-	float			mFarPlane;
-
-	float			mPitch;
-	float			MAXpitch;
-	float			MINpitch;
-	float			mYaw;
-	float			mCameraSpeed;
-	bool			mFree;
-
-	float			cotan(float i);
+	float m_longitudeDegrees; //Pitch
+	float m_latitudeDegrees; //Yaw
+	float m_fovx;
+	float m_znear;
+	float m_zfar;
+	D3DXVECTOR3 m_eye;
+	D3DXVECTOR3 m_target;
+	D3DXVECTOR3 m_offset;
+	D3DXVECTOR3 m_xAxis;
+	D3DXVECTOR3 m_yAxis;
+	D3DXVECTOR3 m_zAxis;
+	D3DXMATRIX m_viewMatrix;
+	D3DXMATRIX m_projMatrix;
+	D3DXQUATERNION m_orientation;
 };
 
-#endif CAMERA_H
+#endif

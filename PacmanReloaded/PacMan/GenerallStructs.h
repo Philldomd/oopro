@@ -86,13 +86,6 @@ struct Objects
 		{
 			o->initialize();
 		}
-		//Init enemies
-		for each(Object* o in m_enemies)
-		{
-			o->initialize();
-		}
-		//Init Pacman
-		m_pacman->initialize();
 	}
 
 	void update(float p_deltaTime)

@@ -76,70 +76,6 @@ HRESULT Shader::init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFla
 	return hr;
 }
 
-HRESULT Shader::init(ID3D10Device* p_device, char* p_filename,
-		const D3D10_INPUT_ELEMENT_DESC* p_inputElementDesc, 
-		unsigned int p_numElements, char* p_tecName, DWORD p_shaderFlags)
-{
-	m_device = p_device;
-
-	HRESULT hr = S_OK;
-
-	ID3DBlob*	pBlobEffect = NULL;
-	ID3DBlob*	pBlobErrors = NULL;
-	ID3D10Blob* compilationErrors = 0;
-	
-	//DWORD dwShaderFlags = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY;
-
-#if defined(DEBUG) || defined(_DEBUG)
-	//dwShaderFlags |= D3D10_SHADER_DEBUG;
-	p_shaderFlags |= D3D10_SHADER_DEBUG;
-	//shaderFlags |= D3D10_SHADER_SKIP_OPTIMIZATION;
-#endif
-	
-	if(FAILED(D3DX10CreateEffectFromFile(	p_filename,
-											NULL,
-											NULL,
-											"fx_4_0",
-											p_shaderFlags,
-											0,
-											m_device,
-											NULL,
-											NULL,
-											&m_pEffect,
-											&compilationErrors,
-											NULL)))
-	{
-		if( compilationErrors )
-		{
-			MessageBoxA(0, (char*)compilationErrors->GetBufferPointer(), 0, 0);
-			compilationErrors->Release();
-		}
-		//DXTrace(__FILE__, (DWORD)__LINE__, hr, "D3DX10CreateEffectFromFile", true);
-	}
-
-	m_pTechnique = m_pEffect->GetTechniqueByName(p_tecName);
-
-
-	if(p_inputElementDesc)
-	{
-		D3D10_PASS_DESC PassDesc;
-		m_pTechnique->GetPassByIndex(0)->GetDesc(&PassDesc);
-		if(FAILED(hr = m_device->CreateInputLayout(
-			p_inputElementDesc,
-			p_numElements,
-			PassDesc.pIAInputSignature,
-			PassDesc.IAInputSignatureSize,
-			&m_inputLayout
-			)))
-		{
-			MessageBox(0, "Cannot create input layout.", "CreateInputLayout error", MB_OK | MB_ICONERROR);
-			return hr;
-		}
-	}
-
-	return hr;
-}
-
 void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shaderBlob)
 {
 	m_inputLayout = NULL;
@@ -170,7 +106,7 @@ void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shader
 
 		string tempSemanticName = paramDesc.SemanticName;
 
-		if(tempSemanticName == "mTransform")
+		if(tempSemanticName == "mTransform") //Instancing rule
 		{
 			if (firstInstanceLayout)
 			{
@@ -180,6 +116,29 @@ void Shader::createInputLayoutDescFromVertexShaderSignature(ID3D10Blob* p_shader
 			elementDesc.InputSlot = 1;
 			elementDesc.InputSlotClass = D3D10_INPUT_PER_INSTANCE_DATA;
 			elementDesc.InstanceDataStepRate = 1;
+		}
+		else if(tempSemanticName == "mPOSITION") //Morph rule
+		{
+			if (firstInstanceLayout)
+			{
+				byteOffset = 0;
+				firstInstanceLayout = false;
+			}
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
+		}
+		else if(tempSemanticName == "mNORMAL") //Morph rule
+		{
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
+		}
+		else if(tempSemanticName == "mTEXTURE") //Morph rule
+		{
+			elementDesc.InputSlot = 1;
+			elementDesc.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+			elementDesc.InstanceDataStepRate = 0;
 		}
 		else
 		{
@@ -308,10 +267,4 @@ void Shader::setTechniqueByName(char* p_tecName)
 string Shader::getFXFileName()
 {
 	return m_FXFileName;
-}
-
-//TEMP FULKOD
-void Shader::setInputLayout(ID3D10InputLayout* p_inputLayout)
-{
-	m_inputLayout = p_inputLayout;
 }
