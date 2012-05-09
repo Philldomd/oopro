@@ -17,5 +17,4 @@ void PowerUp::initialize()
 
 void PowerUp::update(float gameTime)
 {
-	m_volume->draw();
 }

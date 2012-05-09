@@ -43,6 +43,8 @@ void Object::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 		m_shader->Apply(p);
 		mDevice->DrawIndexed( mModel->size,0, 0);
 	}*/
+
+	m_volume->draw( getWorldMatrix(), p_view, p_projection);
 }
 
 D3DXVECTOR3 Object::getPosition()

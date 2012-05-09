@@ -33,24 +33,29 @@ struct Plane
 		distance = - D3DXVec3Dot( &normal, &a );
 	}
 
-	float calculateDistance( D3DXVECTOR3 v )
+	float calculateDistance( D3DXVECTOR3* v )
 	{
-		return ( distance + D3DXVec3Dot( &normal, &v ) );
+		return ( distance + D3DXVec3Dot( &normal, v ) );
 	}
 };
 
 class AABB : public BoundingVolume
 {
 public:
+	static enum { OUTSIDE = 0, INTERSECT, INSIDE };
+
 	AABB( D3DXVECTOR3 p_top, D3DXVECTOR3 p_bot, D3DXVECTOR4 p_color, ID3D10Device* device );
 	~AABB();
 
 	void				calculateBounds();
-	bool				aabbVSaabb( AABB* p_aabb );
-	void				draw();
+	void				draw( D3DXMATRIX& p_world, D3DXMATRIX& p_view, D3DXMATRIX& p_proj );
 	void				buildCubeIndices( int offset );
 	void				updatePosition( D3DXMATRIX p_scale, D3DXMATRIX p_translate );
-	void				fulkod();
+	void				initialize();
+	D3DXVECTOR3*		getMax();
+	D3DXVECTOR3*		getMin();
+	int					boxVsBox( AABB* p_box );
+
 private:
 	enum {
 		TOP = 0,
@@ -60,6 +65,8 @@ private:
 		NEARP,
 		FARP
 	};
+
+	bool				debug;
 
 	D3DXVECTOR3			m_bottom;
 	D3DXVECTOR3			m_top;

@@ -66,11 +66,31 @@ void Level::init(ID3D10Device* p_d3dDevice, D3D10_VIEWPORT* p_viewPort)
 	m_camera->createProjectionMatrix(0.25f*PI, aspect, 0.5f, 1000.0f);
 
 	p_deltaTime = 0.05f;
+	m_testBox = new AABB(D3DXVECTOR3(100,100,100), D3DXVECTOR3(0,0,0), D3DXVECTOR4(1,1,1,1), p_d3dDevice);
+	m_testBox2 = new AABB(D3DXVECTOR3(75, 75, 75), D3DXVECTOR3(25, 25, 25), D3DXVECTOR4(1,1,1,1), p_d3dDevice);
 }
 
 void Level::draw( ID3DX10Sprite * p_spriteBatch )
 {
+	for each(Object* o in m_objects.m_walls)
+	{
+		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	}
 	
+	for each(Object* o in m_objects.m_cherries)
+	{
+		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	}
+	
+	for each(Object* o in m_objects.m_candies)
+	{
+		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	}
+	
+	for each(Object* o in m_objects.m_powerUps)
+	{
+		o->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
+	}
 	//m_waddaSprite->draw(p_spriteBatch);
 
 	m_terrain->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
@@ -80,13 +100,16 @@ void Level::draw( ID3DX10Sprite * p_spriteBatch )
 	m_cherryInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 	m_powerUpInstancing->render(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 
-	
+	D3DXMATRIX tempMatrix;
+	D3DXMatrixIdentity( &tempMatrix );
+	m_testBox->draw( tempMatrix, m_camera->getViewMatrix(), m_camera->getProjectionMatrix() );
+	m_testBox2->draw( tempMatrix, m_camera->getViewMatrix(), m_camera->getProjectionMatrix() );
+
+	int test = m_testBox->boxVsBox( m_testBox2 );
 }
 
 void Level::update( float p_deltaTime )
 {
-
-
 	m_candyInstancing->updateDynamic(p_deltaTime);
 	m_cherryInstancing->updateDynamic(p_deltaTime);
 	m_powerUpInstancing->updateDynamic(p_deltaTime);
@@ -123,12 +146,10 @@ void Level::keyEvent(USHORT key)
 	if(key == 0x41) // A
 	{
 		m_camera->strafe( -p_deltaTime );
-		//m_objects.m_pacman->turnLeft();
 	}
 	if(key == 0x44) // D
 	{
 		m_camera->strafe( p_deltaTime );
-		//m_objects.m_pacman->turnRight();
 	}
 	if(key == 0x57) // W
 	{
@@ -137,7 +158,6 @@ void Level::keyEvent(USHORT key)
 	if(key == 0x53) // S
 	{
 		m_camera->walk( -p_deltaTime );
-		//m_objects.m_pacman->uTurn();
 	}
 	
 

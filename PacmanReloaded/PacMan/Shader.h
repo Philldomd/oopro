@@ -20,6 +20,9 @@ public:
 	Shader();
 	~Shader();
 	HRESULT					init(ID3D10Device* p_device, char* p_filename, DWORD p_shaderFlags);
+	HRESULT					init(ID3D10Device* p_device, char* p_filename, 
+								const D3D10_INPUT_ELEMENT_DESC* p_inputElementDesc, 
+								unsigned int p_numElements,char* p_tecName, DWORD p_shaderFlags );
 	HRESULT					apply(unsigned int p_pass);
 
 	void					setMatrix(char* p_variable, D3DXMATRIX& p_mat);

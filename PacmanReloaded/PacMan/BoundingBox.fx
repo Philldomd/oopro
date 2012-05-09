@@ -65,7 +65,7 @@ BlendState NoBlend
 	BlendEnable[0] = FALSE;
 };
 
-RasterizerState Wireframe
+RasterizerState wireFrame
 {
 	FillMode = WireFrame;
 	CullMode = NONE;
@@ -73,9 +73,9 @@ RasterizerState Wireframe
 };
 
 //-----------------------------------------------------------------------------------------
-// VertexShader: VSScene
+// VertexShader: VSInstmain
 //-----------------------------------------------------------------------------------------
-PSSceneIn VSScene(VSSceneIn input)
+PSSceneIn VSInstmain(VSSceneIn input)
 {
 	PSSceneIn output = (PSSceneIn)0;
 	
@@ -101,12 +101,12 @@ technique10 DrawLine
     pass p0
     {
 		// Set VS, GS, and PS
-        SetVertexShader( CompileShader( vs_4_0, VSScene() ) );
+        SetVertexShader( CompileShader( vs_4_0, VSInstmain() ) );
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PSScene() ) );
 
 		//SetBlendState(NoBlend, float4(0.0f,0.0f,0.0f,0.0f), 0xFFFFFFFF);
-	    SetRasterizerState( Wireframe );
+	    SetRasterizerState( NoCulling );
 
 	    SetDepthStencilState( EnableDepth, 0 );
 	    //SetDepthStencilState( DisableDepth, 0 );

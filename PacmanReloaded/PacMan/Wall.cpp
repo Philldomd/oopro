@@ -16,5 +16,4 @@ void Wall::initialize()
 
 void Wall::update(float p_deltaTIme)
 {
-	m_volume->draw();
 }

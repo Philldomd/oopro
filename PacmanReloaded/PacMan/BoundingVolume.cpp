@@ -40,4 +40,4 @@ D3DXVECTOR3* BoundingVolume::getPrevPosition()
 	return &m_prevPosition;
 }
 
-void BoundingVolume::draw(){}
+void BoundingVolume::draw(D3DXMATRIX& p_world, D3DXMATRIX& p_view, D3DXMATRIX& p_proj){}

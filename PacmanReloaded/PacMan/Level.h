@@ -46,7 +46,8 @@ private:
 
 	//TEMPORARY STUFF REMOVE !!
 	Camera*		m_camera;
-
+	AABB*		m_testBox;
+	AABB*		m_testBox2;
 	//Test Sprite
 	SpriteButton* m_waddaSprite;
 };

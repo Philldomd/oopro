@@ -4,15 +4,55 @@ AABB::AABB(D3DXVECTOR3 p_top, D3DXVECTOR3 p_bot, D3DXVECTOR4 p_color, ID3D10Devi
 {
 	m_top		= p_top;
 	m_bottom	= p_bot;
+	
+	m_bounds[0] = m_bottom;
+	m_bounds[7] = m_top;
 
-	//m_index		= p_index;
-	//mDevice = device;
+	m_device	= device;
 	m_color		= p_color;
 	m_type		= AABBOX;
+	debug		= false;
 
-	fulkod();
+	initialize();
 }
 AABB::~AABB(){}
+
+void AABB::initialize()
+{
+	calculateBounds();
+
+	if (debug)
+	{
+		buildCubeIndices(0);
+
+		BUFFER_INIT_DESC desc;
+		desc.Type				= VERTEX_BUFFER;
+		desc.NumElements		= 8;
+		desc.ElementSize		= sizeof( D3DXVECTOR3 );
+		desc.Usage				= BUFFER_DEFAULT;
+		desc.InitData			= m_bounds;
+		m_vertexBuffer = new Buffer();
+		m_vertexBuffer->init(m_device, desc);
+
+		int						temp[24];
+		for (UINT i = 0; i < 24; i++)
+		{
+			temp[i]				= m_indices.at(i);
+		}
+
+		desc.Type				= INDEX_BUFFER;
+		desc.NumElements		= 24;
+		desc.ElementSize		= sizeof(UINT);
+		desc.Usage				= BUFFER_DEFAULT;
+		desc.InitData			= temp;
+
+		m_indexBuffer = new Buffer();
+		m_indexBuffer->init(m_device, desc);
+
+		m_shader = new Shader();
+		m_shader->init(m_device, "BoundingBox.fx", 12);
+	}
+}
 
 void AABB::calculateBounds()
 {
@@ -22,13 +62,6 @@ void AABB::calculateBounds()
 	m_bounds[4] = D3DXVECTOR3( m_bounds[0].x,		m_bounds[0].y,		m_bounds[7].z ); // xyZ
 	m_bounds[5] = D3DXVECTOR3( m_bounds[7].x,		m_bounds[0].y,		m_bounds[7].z ); // XyZ
 	m_bounds[6] = D3DXVECTOR3( m_bounds[0].x,		m_bounds[7].y,		m_bounds[7].z ); // xYZ
-	
-	m_planes[NEARP] .setUpPlane( m_bounds[2], m_bounds[0], m_bounds[1] );
-	m_planes[LEFT].  setUpPlane( m_bounds[4], m_bounds[0], m_bounds[2] );
-	m_planes[BOTTOM].setUpPlane( m_bounds[4], m_bounds[0], m_bounds[1] );
-	m_planes[RIGHT]. setUpPlane( m_bounds[3], m_bounds[1], m_bounds[5] );
-	m_planes[FARP].	 setUpPlane( m_bounds[7], m_bounds[5], m_bounds[4] );
-	m_planes[TOP].	 setUpPlane( m_bounds[3], m_bounds[2], m_bounds[6] );
 }
 
 void AABB::updatePosition(D3DXMATRIX p_scale, D3DXMATRIX p_translate)
@@ -38,8 +71,6 @@ void AABB::updatePosition(D3DXMATRIX p_scale, D3DXMATRIX p_translate)
 
 	D3DXVec3TransformCoord( &m_bounds[0], &m_bottom, &scalate );
 	D3DXVec3TransformCoord( &m_bounds[7], &m_top, &scalate );
-
-	calculateBounds();
 }
 
 void AABB::buildCubeIndices(int offset)
@@ -73,66 +104,50 @@ void AABB::buildCubeIndices(int offset)
 	}
 }
 
-void AABB::fulkod()
+D3DXVECTOR3* AABB::getMax()
 {
-	buildCubeIndices(0);
-
-	BUFFER_INIT_DESC desc;
-	desc.Type				= VERTEX_BUFFER;
-	desc.NumElements		= 8;
-	desc.ElementSize		= sizeof( D3DXVECTOR3 );
-    desc.Usage				= BUFFER_DEFAULT;
-	desc.InitData			= m_bounds;
-	m_vertexBuffer = new Buffer();
-	m_vertexBuffer->init(m_device, desc);
-
-	int						temp[24];
-	for (UINT i = 0; i < 24; i++)
-	{
-		temp[i]				= m_indices.at(i);
-	}
-
-	desc.Type				= INDEX_BUFFER;
-	desc.NumElements		= 36;
-	desc.ElementSize		= sizeof(UINT);
-	desc.Usage				= BUFFER_DEFAULT;
-	desc.InitData			= temp;
-	m_indexBuffer = new Buffer();
-	m_indexBuffer->init(m_device, desc);
-
-	m_shader = new Shader();
-
-	const D3D10_INPUT_ELEMENT_DESC lineVertexLayout[] =
-	{
-		{ "POS", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 }
-	};
-
-	m_shader->init(m_device, "../PacMan/BoundingBox.fx", 12);
-
-	D3D10_PASS_DESC PassDesc;
-	m_shader->getTechniqueByName("DrawLine")->GetPassByIndex(0)->GetDesc(&PassDesc);
-    m_device->CreateInputLayout(lineVertexLayout, 1, PassDesc.pIAInputSignature,
-		PassDesc.IAInputSignatureSize, &m_inputLayout);
-
-	m_shader->setTechniqueByName("DrawLine");
-	m_shader->setInputLayout(m_inputLayout);
+	return &m_bounds[7];
 }
 
-void AABB::draw()
+D3DXVECTOR3* AABB::getMin()
 {
-	D3DXMATRIX		WorldViewProj;
-	D3DXMatrixIdentity(&WorldViewProj);
+	return &m_bounds[0];
+}
 
-	m_device->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
-	m_indexBuffer->apply(0);
-	m_vertexBuffer->apply(0);
+int AABB::boxVsBox( AABB* p_box )
+{
+	D3DXVECTOR3* max = p_box->getMax();
+	D3DXVECTOR3* min = p_box->getMin();
 
-	D3D10_TECHNIQUE_DESC techDesc;
-	m_shader->getTechnique()->GetDesc( &techDesc );
-			
-	m_shader->setFloat4("gColor", D3DXVECTOR4(1,0,1,1));
-	m_shader->setMatrix("gWVP", WorldViewProj);
+	if ( getMin()->x > max->x || min->x > getMax()->x )
+		return OUTSIDE;
+	if ( getMin()->y > max->y || min->y > getMax()->y )
+		return OUTSIDE;
+	if ( getMin()->z > max->z || min->z > getMax()->z )
+		return OUTSIDE;
 
-	m_shader->apply(0);
-	m_device->DrawIndexed(24, 0, 0);
+	return INTERSECT;
+}
+
+void AABB::draw(D3DXMATRIX& p_world, D3DXMATRIX& p_view, D3DXMATRIX& p_proj)
+{
+	if (debug)
+	{
+		D3DXMATRIX WorldViewProj;
+		D3DXMatrixMultiply( &WorldViewProj, &p_world, &p_view );
+		D3DXMatrixMultiply( &WorldViewProj, &WorldViewProj, &p_proj );
+
+		m_device->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
+		m_indexBuffer->apply(0);
+		m_vertexBuffer->apply(0);
+
+		D3D10_TECHNIQUE_DESC techDesc;
+		m_shader->getTechnique()->GetDesc( &techDesc );
+				
+		m_shader->setFloat4("gColor", m_color);
+		m_shader->setMatrix("g_mWorldViewProjection", WorldViewProj);
+
+		m_shader->apply(0);
+		m_device->DrawIndexed(24, 0, 0);
+	}
 }

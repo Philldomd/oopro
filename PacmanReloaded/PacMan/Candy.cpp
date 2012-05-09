@@ -17,5 +17,5 @@ void Candy::initialize()
 
 void Candy::update(float gameTime)
 {
-	m_volume->draw();
+
 }

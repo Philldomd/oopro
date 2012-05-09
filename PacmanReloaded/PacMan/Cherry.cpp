@@ -17,5 +17,4 @@ void Cherry::initialize()
 
 void Cherry::update(float gameTime)
 {
-	m_volume->draw();
 }
