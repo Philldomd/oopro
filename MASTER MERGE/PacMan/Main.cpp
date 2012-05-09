@@ -35,6 +35,7 @@ void Main::initApp()
 	D3DApp::initApp();
 
 	g_hid = new HID(mhMainWnd);
+	g_player = new Player();
 
 	g_sceneManager = SceneManager::getInstance();
 	g_sceneManager->initSceneManager(md3dDevice);
@@ -42,6 +43,7 @@ void Main::initApp()
 	onResize();
 
 	Scene* tempScene = new Level();
+	tempScene->setPlayer(g_player);
 	g_sceneManager->addScene(tempScene);
 	g_hid->getObservable()->addSubscriber(new Observer(tempScene));
 }

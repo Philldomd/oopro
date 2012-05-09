@@ -19,7 +19,7 @@ public:
 	D3DXMATRIX		getWorldMatrix();
 	D3DXMATRIX		getRotationMatrix();
 	D3DXMATRIX		getNormalMatrix(); //Returns a matrix for transforming normals
-	BoundingVolume* getBoundingVolume();
+	AABB*			getBoundingBox();
 	//Model*		getModel();
 protected:
 	void			createBoundingVolume();
@@ -33,6 +33,6 @@ protected:
 	D3DXMATRIX		m_normalMatrix; //Used to transform normals
 	Model* m_model;
 	//Shader* m_shader;
-	BoundingVolume* m_volume;
+	AABB* m_volume;
 };
 #endif

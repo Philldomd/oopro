@@ -64,4 +64,6 @@ void Enemy::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 		m_shader->apply(p);
 		m_device->DrawIndexed( m_model->m_size,0, 0);
 	}
+
+	m_volume->draw( getWorldMatrix(), p_view, p_projection );
 }

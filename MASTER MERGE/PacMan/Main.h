@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Observer.h"
 #include "HID.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -26,8 +27,9 @@ public:
 
 private:
 	 
-	SceneManager* g_sceneManager;
-	HID*		  g_hid;
+	SceneManager*	g_sceneManager;
+	HID*			g_hid;
+	Player*			g_player;
 };
 
 #endif 

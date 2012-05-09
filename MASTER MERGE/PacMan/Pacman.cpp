@@ -34,6 +34,9 @@ Pacman::~Pacman()
 
 void Pacman::initialize(Shader* p_shader)
 {
+	createBoundingVolume();
+	m_volume->updatePosition( m_scale, m_translate );
+
 	m_shader = p_shader;
 }
 
@@ -63,7 +66,7 @@ void Pacman::update(float p_deltaTime)
 			m_invertLerp = false;
 	}
 
-
+	m_volume->updatePosition( m_scale, m_translate );
 }
 void Pacman::render(D3DXMATRIX& p_view, D3DXMATRIX& p_projection)
 {

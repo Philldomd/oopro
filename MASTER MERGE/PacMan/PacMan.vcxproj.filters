@@ -198,6 +198,9 @@
     <ClInclude Include="BoundingVolume.h">
       <Filter>Bounding Volume</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dApp.cpp">
@@ -316,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="BoundingVolume.cpp">
       <Filter>Bounding Volume</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

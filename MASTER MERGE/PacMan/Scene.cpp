@@ -23,3 +23,8 @@ void Scene::rightMouseClick( POINT p_mousePosition ){}
 
 void Scene::mouseMove( POINT p_mousePosition ){}
 
+void Scene::setPlayer(Player* p_player)
+{
+	m_player = p_player;
+}
+

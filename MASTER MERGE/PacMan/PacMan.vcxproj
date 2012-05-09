@@ -109,6 +109,7 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="PinkyAI.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="PinkyAI.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />

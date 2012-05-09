@@ -11,7 +11,7 @@ AABB::AABB(D3DXVECTOR3 p_top, D3DXVECTOR3 p_bot, D3DXVECTOR4 p_color, ID3D10Devi
 	m_device	= device;
 	m_color		= p_color;
 	m_type		= AABBOX;
-	debug		= false;
+	debug		= true;
 
 	initialize();
 }

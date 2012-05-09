@@ -85,7 +85,7 @@ void Object::createBoundingVolume()
 	m_volume = new AABB( m_model->m_topBoundingCorner, m_model->m_bottomBoundingCorner, D3DXVECTOR4(1,1,1,1), m_device );
 }
 
-BoundingVolume* Object::getBoundingVolume()
+AABB* Object::getBoundingBox()
 {
 	return m_volume;
 }
