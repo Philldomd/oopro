@@ -7,6 +7,7 @@
 #include "InkyAI.h"
 #include "PinkyAI.h"
 #include "ClydeAI.h"
+#include "Sound.h"
 
 class Enemy : public Object
 {
@@ -32,6 +33,9 @@ private:
 	vector<vector<char>>* m_mapMatrix;
 	Type m_type;
 	Shader*	m_shader;
-
+	Sound* m_sound;
+	FMOD::Sound* m_soundManager;
+	FMOD::System* m_systemSound;
+	FMOD::Channel* m_myChannel;
 };
 #endif

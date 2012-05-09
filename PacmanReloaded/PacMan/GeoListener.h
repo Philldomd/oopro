@@ -19,7 +19,7 @@ public:
 
 private:
 
-	void ERRCHECK(FMOD_RESULT result)
+	void ERRCHECK(FMOD_RESULT result);
 		
 	FMOD::Sound* m_sound;
 	FMOD::System* m_system;
